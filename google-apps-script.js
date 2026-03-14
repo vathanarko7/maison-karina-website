@@ -1,5 +1,5 @@
 // ============================================================
-// MAISON ELARA — Google Apps Script
+// MAISON KARINA — Google Apps Script
 // Receives booking form data → creates Google Calendar event
 // → sends confirmation emails to client + atelier
 //
@@ -26,19 +26,20 @@
 const CONFIG = {
   // Your Google Calendar ID (find in Calendar Settings → "Calendar ID")
   // Usually your Gmail address for the main calendar
-  CALENDAR_ID: 'your-email@gmail.com',
+  CALENDAR_ID: 'sovathana.soun@gmail.com',
 
   // Your atelier email — receives a copy of every booking
-  ATELIER_EMAIL: 'atelier@maisonelara.com',
+  ATELIER_EMAIL: 'atelier@maisonkarina.com',
 
   // Atelier name shown in emails
-  ATELIER_NAME: 'Maison Elara',
+  ATELIER_NAME: 'Maison Karina',
 
   // Default consultation duration in minutes
   CONSULTATION_DURATION_MINUTES: 60,
 
-  // Default time if client's preferred date has no time specified (24h format)
-  DEFAULT_HOUR: 10, // 10:00 AM
+  // Default time if client does not specify a preferred time (24h format)
+  DEFAULT_HOUR: 8, // 08:00 AM
+  DEFAULT_MINUTE: 0,
 };
 // ────────────────────────────────────────────────────────────
 
@@ -64,7 +65,7 @@ function doPost(e) {
  */
 function doGet(e) {
   return ContentService
-    .createTextOutput(JSON.stringify({ status: 'ok', message: 'Maison Elara booking service is running.' }))
+    .createTextOutput(JSON.stringify({ status: 'ok', message: 'Maison Karina booking service is running.' }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -85,16 +86,8 @@ function createBooking(data) {
   const clientName = `${firstName} ${lastName}`.trim();
 
   // ── Parse preferred date ──────────────────────────────────
-  let startDate, endDate;
-  if (preferredDate) {
-    startDate = new Date(preferredDate);
-    startDate.setHours(CONFIG.DEFAULT_HOUR, 0, 0, 0);
-  } else {
-    // Default: next business day at 10am
-    startDate = getNextBusinessDay();
-    startDate.setHours(CONFIG.DEFAULT_HOUR, 0, 0, 0);
-  }
-  endDate = new Date(startDate.getTime() + CONFIG.CONSULTATION_DURATION_MINUTES * 60 * 1000);
+  const startDate = resolveStartDate(preferredDate);
+  const endDate = new Date(startDate.getTime() + CONFIG.CONSULTATION_DURATION_MINUTES * 60 * 1000);
 
   // ── Create Google Calendar event ──────────────────────────
   const calendar = CalendarApp.getCalendarById(CONFIG.CALENDAR_ID);
@@ -106,12 +99,13 @@ function createBooking(data) {
     `EMAIL: ${email}`,
     `PHONE: ${phone || 'Not provided'}`,
     `CREATION TYPE: ${creationType}`,
+    `PREFERRED DATE: ${formatDate(startDate)}`,
     ``,
     `CLIENT VISION:`,
     vision || 'Not specified',
     ``,
     `---`,
-    `Booked via maisonelara.com`
+    `Booked via maisonkarina.com`
   ].join('\n');
 
   const event = calendar.createEvent(eventTitle, startDate, endDate, {
@@ -126,7 +120,7 @@ function createBooking(data) {
 
   // ── Send confirmation email to CLIENT ─────────────────────
   if (email) {
-    const clientSubject = `Your Maison Elara Consultation Request — ${clientName}`;
+    const clientSubject = `Your Maison Karina Consultation Request — ${clientName}`;
     const clientBody = buildClientEmail(clientName, creationType, startDate, vision);
     GmailApp.sendEmail(email, clientSubject, clientBody, {
       htmlBody: buildClientEmailHtml(clientName, creationType, startDate, vision),
@@ -139,7 +133,7 @@ function createBooking(data) {
   const atelierSubject = `New Consultation Request — ${clientName} (${creationType})`;
   const atelierBody = buildAtelierEmail(clientName, email, phone, creationType, startDate, vision);
   GmailApp.sendEmail(CONFIG.ATELIER_EMAIL, atelierSubject, atelierBody, {
-    name: 'Maison Elara Booking System'
+    name: 'Maison Karina Booking System'
   });
 
   return {
@@ -155,7 +149,7 @@ function createBooking(data) {
 function buildClientEmail(name, type, date, vision) {
   return `Dear ${name},
 
-Thank you for reaching out to Maison Elara.
+Thank you for reaching out to Maison Karina.
 
 We have received your consultation request for ${type} and a member of our atelier team will be in touch within 24 hours to confirm your appointment.
 
@@ -164,8 +158,8 @@ Proposed date: ${formatDate(date)}
 If you have any questions in the meantime, please do not hesitate to contact us at ${CONFIG.ATELIER_EMAIL}.
 
 With warmth,
-Maison Elara
-12 Rue du Faubourg Saint-Honoré, 75008 Paris`;
+Maison Karina
+6 Rue de la butte verte, 75008 Phnom Penh`;
 }
 
 function buildClientEmailHtml(name, type, date, vision) {
@@ -176,12 +170,12 @@ function buildClientEmailHtml(name, type, date, vision) {
 <body style="margin:0;padding:0;background:#F6F1EB;font-family:Georgia,serif;">
   <div style="max-width:560px;margin:40px auto;background:#fff;padding:48px;">
     <div style="text-align:center;margin-bottom:40px;">
-      <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#C6A75E;margin:0 0 8px;">Maison Elara</p>
+      <p style="font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#C6A75E;margin:0 0 8px;">Maison Karina</p>
       <h1 style="font-family:Georgia,serif;font-size:28px;font-weight:400;color:#111;margin:0;">Private Couture Atelier</h1>
       <div style="width:40px;height:1px;background:#C6A75E;margin:20px auto;"></div>
     </div>
     <p style="font-size:14px;color:#5A4A46;line-height:1.8;">Dear ${name},</p>
-    <p style="font-size:14px;color:#5A4A46;line-height:1.8;">Thank you for reaching out to Maison Elara. We have received your consultation request and are delighted to welcome you to our atelier.</p>
+    <p style="font-size:14px;color:#5A4A46;line-height:1.8;">Thank you for reaching out to Maison Karina. We have received your consultation request and are delighted to welcome you to our atelier.</p>
     <div style="background:#F6F1EB;padding:24px;margin:28px 0;border-left:2px solid #C6A75E;">
       <p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#C6A75E;margin:0 0 8px;">Request Details</p>
       <p style="font-size:13px;color:#5A4A46;margin:4px 0;"><strong>Creation Type:</strong> ${type}</p>
@@ -189,9 +183,9 @@ function buildClientEmailHtml(name, type, date, vision) {
     </div>
     <p style="font-size:14px;color:#5A4A46;line-height:1.8;">A member of our team will be in touch within 24 hours to confirm your appointment and answer any questions.</p>
     <p style="font-size:14px;color:#5A4A46;line-height:1.8;">For immediate assistance, please contact us at <a href="mailto:${CONFIG.ATELIER_EMAIL}" style="color:#C6A75E;">${CONFIG.ATELIER_EMAIL}</a>.</p>
-    <p style="font-size:14px;color:#5A4A46;line-height:1.8;margin-top:32px;">With warmth,<br><em>Maison Elara</em></p>
+    <p style="font-size:14px;color:#5A4A46;line-height:1.8;margin-top:32px;">With warmth,<br><em>Maison Karina</em></p>
     <div style="border-top:1px solid #EDE8E0;margin-top:40px;padding-top:24px;text-align:center;">
-      <p style="font-size:10px;color:#8A7470;letter-spacing:.12em;">12 Rue du Faubourg Saint-Honoré, 75008 Paris<br>By Appointment Only</p>
+      <p style="font-size:10px;color:#8A7470;letter-spacing:.12em;">6 Rue de la butte verte, 75008 Phnom Penh<br>By Appointment Only</p>
     </div>
   </div>
 </body>
@@ -217,17 +211,29 @@ Please confirm or reschedule directly with the client.`;
 
 // ── Helpers ──────────────────────────────────────────────────
 
+function resolveStartDate(preferredDate) {
+  let startDate;
+  if (preferredDate) {
+    startDate = new Date(preferredDate);
+    if (isNaN(startDate.getTime())) {
+      startDate = getNextDay();
+    }
+  } else {
+    startDate = getNextDay();
+  }
+
+  startDate.setHours(CONFIG.DEFAULT_HOUR, CONFIG.DEFAULT_MINUTE, 0, 0);
+  return startDate;
+}
+
 function formatDate(date) {
   return date.toLocaleDateString('en-GB', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
 }
 
-function getNextBusinessDay() {
+function getNextDay() {
   const d = new Date();
   d.setDate(d.getDate() + 1);
-  while (d.getDay() === 0 || d.getDay() === 6) {
-    d.setDate(d.getDate() + 1);
-  }
   return d;
 }

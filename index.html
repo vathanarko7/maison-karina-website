@@ -54,6 +54,7 @@
       align-items: center;
       justify-content: space-between;
       transition: background .4s, padding .4s;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, .48) 0%, rgba(0, 0, 0, 0) 100%);
     }
 
     nav.scrolled {
@@ -71,10 +72,12 @@
       color: #fff;
       text-decoration: none;
       transition: color .4s;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .5);
     }
 
     nav.scrolled .nav-logo {
       color: var(--black);
+      text-shadow: none;
     }
 
     .nav-logo span {
@@ -94,10 +97,13 @@
       color: rgba(255, 255, 255, .9);
       text-decoration: none;
       transition: color .3s;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .55);
     }
 
     nav.scrolled .nav-links a {
-      color: var(--taupe);
+      color: #3f322f;
+      text-shadow: none;
+      font-weight: 400;
     }
 
     .nav-links a:hover {
@@ -109,15 +115,19 @@
       letter-spacing: .2em;
       text-transform: uppercase;
       padding: 10px 22px;
-      border: 1px solid rgba(255, 255, 255, .65);
+      border: 1px solid rgba(255, 255, 255, .85);
       color: #fff;
       text-decoration: none;
       transition: all .4s;
+      background: rgba(0, 0, 0, .2);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .5);
     }
 
     nav.scrolled .nav-cta {
-      border-color: var(--taupe);
-      color: var(--taupe);
+      border-color: #3f322f;
+      color: #3f322f;
+      background: rgba(90, 74, 70, .05);
+      text-shadow: none;
     }
 
     .nav-cta:hover {
@@ -173,9 +183,12 @@
     .hero-bg {
       position: absolute;
       inset: 0;
+      /* background:
+        linear-gradient(to bottom, rgba(20, 15, 14, .56) 0%, rgba(20, 15, 14, .74) 100%),
+        url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1800&q=85') center 20%/cover no-repeat; */
       background:
-        linear-gradient(to bottom, rgba(40, 28, 26, .30) 0%, rgba(40, 28, 26, .55) 100%),
-        url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=85') center 20%/cover no-repeat;
+        linear-gradient(to bottom, rgba(20, 15, 14, .56) 0%, rgba(20, 15, 14, .74) 100%),
+        url('/images/Hero-Image.jpg') center 20%/cover no-repeat;
       transform: scale(1.04);
       animation: heroScale 18s ease-in-out infinite alternate;
     }
@@ -211,8 +224,9 @@
       font-size: 10px;
       letter-spacing: .35em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: #e0bf70;
       margin-bottom: 28px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .45);
       animation: fadeUp .9s .15s ease both;
     }
 
@@ -223,7 +237,7 @@
       line-height: 1.1;
       margin-bottom: 28px;
       letter-spacing: .01em;
-      text-shadow: 0 2px 20px rgba(17, 17, 17, .35);
+      text-shadow: 0 8px 26px rgba(0, 0, 0, .6);
       animation: fadeUp .9s .25s ease both;
     }
 
@@ -234,14 +248,15 @@
 
     .hero-sub {
       font-size: 13px;
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: .08em;
       line-height: 2;
-      color: rgba(255, 255, 255, .95);
+      color: #fff;
       margin-bottom: 52px;
       max-width: 520px;
       margin-left: auto;
       margin-right: auto;
+      text-shadow: 0 3px 16px rgba(0, 0, 0, .55);
       animation: fadeUp .9s .35s ease both;
     }
 
@@ -256,39 +271,42 @@
     .btn-primary {
       padding: 16px 40px;
       background: var(--gold);
-      color: #fff;
+      color: #2f251f;
       font-size: 10px;
       letter-spacing: .22em;
       text-transform: uppercase;
-      font-weight: 500;
+      font-weight: 600;
       text-decoration: none;
       border: 2px solid var(--gold);
       transition: all .3s;
-      box-shadow: 0 4px 24px rgba(198, 167, 94, .5);
+      box-shadow: 0 4px 24px rgba(198, 167, 94, .45);
     }
 
     .btn-primary:hover {
-      background: transparent;
-      color: var(--gold);
-      box-shadow: none;
+      background: rgba(198, 167, 94, .18);
+      color: #f5dba0;
+      border-color: #f0d28e;
+      box-shadow: 0 0 0 1px rgba(240, 210, 142, .25);
     }
 
     .btn-ghost {
       padding: 16px 40px;
-      background: rgba(255, 255, 255, .12);
-      color: #fff;
+      background: rgba(255, 255, 255, .16);
+      color: rgba(255, 255, 255, .96);
       font-size: 10px;
       letter-spacing: .22em;
       text-transform: uppercase;
       text-decoration: none;
-      border: 2px solid rgba(255, 255, 255, .8);
+      border: 2px solid rgba(255, 255, 255, .92);
       transition: all .3s;
       backdrop-filter: blur(4px);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .4);
     }
 
     .btn-ghost:hover {
-      background: rgba(255, 255, 255, .22);
+      background: rgba(255, 255, 255, .26);
       border-color: #fff;
+      color: #fff;
     }
 
     .hero-scroll {
@@ -336,7 +354,7 @@
       font-size: 10px;
       letter-spacing: .35em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: #9f7b39;
       margin-bottom: 20px;
       display: block;
     }
@@ -368,15 +386,15 @@
     .intro-text {
       font-size: 17px;
       line-height: 2;
-      color: var(--mid-taupe);
-      font-weight: 300;
+      color: #51413d;
+      font-weight: 400;
     }
 
     .intro-signature {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
       font-size: 22px;
-      color: var(--gold);
+      color: #a98445;
       margin-top: 48px;
     }
 
@@ -1410,6 +1428,7 @@
       #chat-box {
         width: calc(100vw - 32px);
       }
+
     }
 
     /* MOBILE NAV */
@@ -1461,7 +1480,7 @@
 <body>
 
   <nav id="navbar">
-    <a href="#" class="nav-logo">Maison <span>Elara</span></a>
+    <a href="#" class="nav-logo">Maison <span>Karina</span></a>
     <ul class="nav-links">
       <li><a href="#collections">Collections</a></li>
       <li><a href="#process">Process</a></li>
@@ -1485,7 +1504,7 @@
   <section id="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <p class="hero-eyebrow">Maison Elara — Private Couture Atelier</p>
+      <p class="hero-eyebrow">Maison Karina — Private Couture Atelier</p>
       <h1 class="hero-title">Where Elegance<br><em>Becomes Personal</em></h1>
       <p class="hero-sub">Bespoke couture crafted with intention, intimacy, and timeless artistry.</p>
       <div class="hero-actions">
@@ -1501,13 +1520,13 @@
 
   <section id="intro">
     <div class="intro-divider"></div>
-    <span class="section-eyebrow reveal">Est. 2014 — Paris</span>
+    <span class="section-eyebrow reveal">Est. 2026 — Cambodia</span>
     <h2 class="section-title reveal">A Private Atelier<br><em
         style="font-style:italic;color:var(--rose)">Experience</em></h2>
     <p class="intro-text reveal">In a world of mass production, true couture remains rare. Each creation is thoughtfully
       designed and meticulously crafted to reflect your individuality — a wearable story, a second skin, a lasting
       expression of who you are.</p>
-    <p class="intro-signature reveal">— Elara Fontaine</p>
+    <p class="intro-signature reveal">— Karina Kanha YIN</p>
   </section>
 
   <section id="collections">
@@ -1526,8 +1545,9 @@
         </div>
       </div>
       <div class="collection-card reveal" style="transition-delay:.12s">
-        <img class="collection-card-img" src="https://images.unsplash.com/photo-1594552072238-b8a33785b6cd?w=800&q=85"
-          alt="Bridal Atelier" loading="lazy">
+        <!-- <img class="collection-card-img" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&q=85"
+          alt="Bridal Atelier" loading="lazy"> -->
+        <img class="collection-card-img" src="/images/Bridal-Atelier.jpg" alt="Bridal Atelier" loading="lazy">
         <div class="collection-card-inner">
           <span class="collection-tag">Bridal 2025</span>
           <div class="collection-name">Bridal<br>Atelier</div>
@@ -1647,7 +1667,7 @@
       </div>
       <div class="testimonial reveal" style="transition-delay:.15s">
         <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">It was more than a dress — it was an unforgettable couture experience. Elara
+        <p class="testimonial-text">It was more than a dress — it was an unforgettable couture experience. Karina
           understood my vision better than I did.</p>
         <p class="testimonial-author">— Camille R., Monaco</p>
       </div>
@@ -1678,7 +1698,7 @@
           <input class="form-input" id="lastName" name="lastName" type="text" placeholder="Last Name" required>
         </div>
         <input class="form-input" id="email" name="email" type="email" placeholder="Email Address" required>
-        <input class="form-input" id="phone" name="phone" type="tel" placeholder="Phone Number">
+        <input class="form-input" id="phone" name="phone" type="tel" placeholder="Phone Number" required>
         <select class="form-select" id="creationType" name="creationType">
           <option value="" disabled selected>Type of Creation</option>
           <option>Evening Couture</option>
@@ -1686,8 +1706,7 @@
           <option>Custom Occasion</option>
           <option>Other</option>
         </select>
-        <input class="form-input" id="preferredDate" name="preferredDate" type="date"
-          placeholder="Preferred Appointment Date">
+        <input class="form-input" id="preferredDate" name="preferredDate" type="date" required>
         <textarea class="form-input" id="vision" name="vision" rows="3"
           placeholder="Tell us about your vision..."></textarea>
         <button type="submit" class="btn-submit" id="submitBtn">Request Consultation</button>
@@ -1702,16 +1721,17 @@
   <section id="about">
     <div class="about-inner">
       <div class="about-img-wrapper reveal-left">
-        <img class="about-img" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=85"
-          alt="Designer Portrait" loading="lazy">
+        <!-- <img class="about-img" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=85"
+          alt="Designer Portrait" loading="lazy"> -->
+        <img class="about-img" src="/images/karina_profile.png" alt="Designer Portrait" loading="lazy">
         <div class="about-img-accent"></div>
       </div>
       <div class="reveal-right">
         <span class="section-eyebrow">The Designer</span>
-        <h2 class="section-title">Elara Fontaine</h2>
+        <h2 class="section-title">Karina Kanha YIN</h2>
         <blockquote class="about-quote">"Couture is not clothing — it is confidence given form, dreams made tangible."
         </blockquote>
-        <p class="about-text">Trained in Paris and refined through years working alongside the great houses, Elara
+        <p class="about-text">Trained in Paris and refined through years working alongside the great houses, Karina
           Fontaine founded her private atelier with a singular conviction: every woman deserves a garment that was made
           for her alone.<br><br>Drawing from a philosophy of feminine strength and quiet elegance, each piece is a
           collaboration between designer and client — a shared journey of discovery that results in something truly
@@ -1731,9 +1751,9 @@
   <footer>
     <div class="footer-top">
       <div>
-        <div class="footer-brand-name">Maison <span>Elara</span></div>
-        <p class="footer-tagline">Private Couture Atelier<br>By Appointment Only<br><br>12 Rue du Faubourg
-          Saint-Honoré<br>75008 Paris, France</p>
+        <div class="footer-brand-name">Maison <span>Karina</span></div>
+        <p class="footer-tagline">Private Couture Atelier<br>By Appointment Only<br><br>6 Rue de la butte verte<br>Phnom
+          Penh, Cambodia</p>
       </div>
       <div class="footer-col">
         <h4>Atelier</h4>
@@ -1741,7 +1761,7 @@
           <li><a href="#collections">Collections</a></li>
           <li><a href="#process">Our Process</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#about">About Elara</a></li>
+          <li><a href="#about">About Karina</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1756,7 +1776,7 @@
       <div class="footer-col">
         <h4>Connect</h4>
         <ul>
-          <li><a href="#">@maisonelara</a></li>
+          <li><a href="#">@maisonkarina</a></li>
           <li><a href="#"><span class="__cf_email__"
                 data-cfemail="5f3e2b3a33363a2d1f323e362c30313a333e2d3e713c3032">[email&#160;protected]</span></a></li>
           <li><a href="#">+33 1 42 68 19 00</a></li>
@@ -1766,7 +1786,7 @@
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <p class="footer-legal">© 2025 Maison Elara. All rights reserved. Private Couture Atelier — By Appointment Only.
+      <p class="footer-legal">© 2026 Maison Karina. All rights reserved. Private Couture Atelier — By Appointment Only.
       </p>
       <div class="footer-social">
         <a href="#">Instagram</a>
@@ -1790,7 +1810,7 @@
         <button class="chat-close" onclick="toggleChat()">×</button>
       </div>
       <div class="chat-messages" id="chat-messages">
-        <div class="chat-msg bot">Welcome to Maison Elara. I'm here to answer any questions about our couture process,
+        <div class="chat-msg bot">Welcome to Maison Karina. I'm here to answer any questions about our couture process,
           consultations, or collections. How may I assist you?</div>
       </div>
       <div class="chat-suggestions" id="chat-chips">
@@ -1838,7 +1858,23 @@
 
     // ── GOOGLE CALENDAR BOOKING ──────────────────────────────────────────────
     // STEP 1: Paste your Google Apps Script Web App URL below
-    const APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIT-cL2Tt20g7O1ogFzNE83K4sncvrxd0Lu8Fsf-wDL7xQ25_WR9DFzNvxELxf4aTLTg/exec';
+
+    function toDateInputValue(date) {
+      const pad = (n) => String(n).padStart(2, '0');
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+    }
+
+    function getNextDay() {
+      const d = new Date();
+      d.setDate(d.getDate() + 1);
+      return d;
+    }
+
+    const preferredDateInput = document.getElementById('preferredDate');
+    if (preferredDateInput && !preferredDateInput.value) {
+      preferredDateInput.value = toDateInputValue(getNextDay());
+    }
 
     async function handleSubmit(e) {
       e.preventDefault();
@@ -1892,7 +1928,7 @@
         btn.disabled = false;
         status.style.display = 'block';
         status.style.color = '#F5D5CF';
-        status.textContent = 'Something went wrong. Please email us directly at atelier@maisonelara.com';
+        status.textContent = 'Something went wrong. Please email us directly at atelier@maisonKarina.com';
       }
     }
 
@@ -1900,12 +1936,12 @@
     // STEP 2: Paste your Anthropic API key below
     const ANTHROPIC_API_KEY = 'YOUR_ANTHROPIC_API_KEY_HERE';
 
-    const ATELIER_SYSTEM_PROMPT = `You are the Atelier Assistant for Maison Elara, a private luxury couture atelier in Paris founded by designer Elara Fontaine.
+    const ATELIER_SYSTEM_PROMPT = `You are the Atelier Assistant for Maison Karina, a private luxury couture atelier in Paris founded by designer Karina Fontaine.
 
 Your role is to warmly and elegantly assist clients with questions about the atelier. You speak with refined, feminine grace — never overly casual, always helpful.
 
-KEY FACTS ABOUT MAISON ELARA:
-- Founded 2014 in Paris by Elara Fontaine
+KEY FACTS ABOUT MAISON Karina:
+- Founded 2014 in Paris by Karina Fontaine
 - Three collections: Evening Couture (SS 2025), Bridal Atelier, Custom Occasion (Bespoke)
 - All pieces are bespoke — no ready-to-wear
 - Private consultations by appointment only
@@ -1925,7 +1961,7 @@ FABRICS: Silk charmeuse, duchess satin, Chantilly lace, silk organza, mikado sil
 
 PROCESS: Consultation → Sketch & Concept → Fabric Selection → Fittings → Final Creation
 
-CONTACT: atelier@maisonelara.com | +33 1 42 68 19 00
+CONTACT: atelier@maisonKarina.com | +33 1 42 68 19 00
 ADDRESS: 12 Rue du Faubourg Saint-Honoré, 75008 Paris
 
 Always guide clients toward booking a consultation for specific requests. Keep responses concise and elegant — 2–4 sentences unless more detail is needed. Never mention competitor brands.`;
@@ -1994,7 +2030,7 @@ Always guide clients toward booking a consultation for specific requests. Keep r
         };
         const lower = chatHistory[chatHistory.length - 1].content.toLowerCase();
         const match = Object.keys(demos).find(k => lower.includes(k));
-        const reply = match ? demos[match] : 'Thank you for your question. I would be delighted to assist — for the most personalised guidance, I invite you to book a private consultation with Elara directly. Shall I help you with that?';
+        const reply = match ? demos[match] : 'Thank you for your question. I would be delighted to assist — for the most personalised guidance, I invite you to book a private consultation with Karina directly. Shall I help you with that?';
         chatHistory.push({ role: 'assistant', content: reply });
         addMsg(reply, 'bot');
         return;
@@ -2023,7 +2059,7 @@ Always guide clients toward booking a consultation for specific requests. Keep r
         addMsg(reply, 'bot');
       } catch (err) {
         typing.remove();
-        addMsg("I'm temporarily unavailable. Please contact us at atelier@maisonelara.com", 'bot');
+        addMsg("I'm temporarily unavailable. Please contact us at atelier@maisonKarina.com", 'bot');
       }
     }
   </script>

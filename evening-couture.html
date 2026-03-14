@@ -1,302 +1,950 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evening Couture — Maison Elara</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ivory: #F6F1EB; --rose: #D8B7B1; --taupe: #5A4A46;
-    --gold: #C6A75E; --black: #111111; --beige: #EDE8E0;
-    --light-rose: #F0E4E1; --mid-taupe: #8A7470;
-  }
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Montserrat', sans-serif; font-weight: 300; background: var(--ivory); color: var(--taupe); overflow-x: hidden; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evening Couture — Maison Elara</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ivory: #F6F1EB;
+      --rose: #D8B7B1;
+      --taupe: #5A4A46;
+      --gold: #C6A75E;
+      --black: #111111;
+      --beige: #EDE8E0;
+      --light-rose: #F0E4E1;
+      --mid-taupe: #8A7470;
+    }
 
-  /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 60px; display: flex; align-items: center; justify-content: space-between; transition: background .4s, padding .4s; background: rgba(246,241,235,.97); border-bottom: 1px solid rgba(198,167,94,.15); }
-  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; letter-spacing: .12em; color: var(--black); text-decoration: none; }
-  .nav-logo span { color: var(--gold); }
-  .nav-back { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--taupe); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color .3s; }
-  .nav-back:hover { color: var(--gold); }
-  .nav-back::before { content: '←'; }
-  .nav-cta { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; padding: 10px 22px; border: 1px solid var(--taupe); color: var(--taupe); text-decoration: none; transition: all .3s; }
-  .nav-cta:hover { background: var(--taupe); color: var(--ivory); }
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  /* COLLECTION HERO */
-  .col-hero { height: 85vh; min-height: 600px; display: flex; align-items: flex-end; justify-content: flex-start; position: relative; overflow: hidden; }
-  .col-hero-bg { position: absolute; inset: 0; background: linear-gradient(to right, rgba(17,17,17,.65) 0%, rgba(17,17,17,.15) 60%), url('https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=1800&q=85') center/cover no-repeat; transform: scale(1.03); animation: heroScale 16s ease-in-out infinite alternate; }
-  @keyframes heroScale { to { transform: scale(1.0); } }
-  .col-hero-content { position: relative; padding: 0 80px 80px; max-width: 680px; color: #fff; animation: fadeUp .8s ease both; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
-  .col-hero-tag { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
-  .col-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 7vw, 88px); font-weight: 300; line-height: 1.0; margin-bottom: 24px; text-shadow: 0 2px 20px rgba(0,0,0,.3); }
-  .col-hero-title em { font-style: italic; color: #F5D5CF; }
-  .col-hero-desc { font-size: 13px; line-height: 2; color: rgba(255,255,255,.85); max-width: 460px; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  /* BREADCRUMB */
-  .breadcrumb { padding: 28px 80px; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--mid-taupe); display: flex; gap: 12px; align-items: center; border-bottom: 1px solid rgba(90,74,70,.08); }
-  .breadcrumb a { color: var(--mid-taupe); text-decoration: none; transition: color .2s; }
-  .breadcrumb a:hover { color: var(--gold); }
-  .breadcrumb span { color: var(--rose); }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      background: var(--ivory);
+      color: var(--taupe);
+      overflow-x: hidden;
+    }
 
-  /* COLLECTION INTRO */
-  .col-intro { padding: 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1300px; margin: 0 auto; }
-  .col-intro-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 3.5vw, 48px); font-weight: 300; color: var(--black); line-height: 1.2; margin-bottom: 28px; }
-  .col-intro-text h2 em { font-style: italic; color: var(--rose); }
-  .col-intro-text p { font-size: 14px; line-height: 2.1; color: var(--mid-taupe); margin-bottom: 20px; }
-  .col-intro-text .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; }
-  .col-intro-stats { display: flex; gap: 40px; margin-top: 48px; padding-top: 40px; border-top: 1px solid rgba(90,74,70,.12); }
-  .col-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: var(--gold); display: block; }
-  .col-stat-label { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--mid-taupe); }
-  .col-intro-img { position: relative; }
-  .col-intro-img img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
-  .col-intro-img-accent { position: absolute; bottom: -16px; left: -16px; width: 160px; height: 160px; border: 1px solid var(--gold); z-index: -1; }
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 24px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background .4s, padding .4s;
+      background: rgba(246, 241, 235, .97);
+      border-bottom: 1px solid rgba(198, 167, 94, .15);
+    }
 
-  /* GALLERY GRID */
-  .col-gallery { padding: 0 80px 100px; }
-  .col-gallery-header { text-align: center; margin-bottom: 60px; }
-  .col-gallery-header h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 42px); font-weight: 300; color: var(--black); }
-  .col-gallery-header .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; }
-  .col-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 4px; }
-  .col-gallery-grid-2 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4px; }
-  .gallery-item { position: relative; overflow: hidden; cursor: pointer; }
-  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 2/3; transition: transform .7s cubic-bezier(.25,.46,.45,.94); background: var(--beige); }
-  .gallery-item.tall img { aspect-ratio: 3/5; }
-  .gallery-item:hover img { transform: scale(1.05); }
-  .gallery-item-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(to top, rgba(17,17,17,.7), transparent); opacity: 0; transition: opacity .35s; }
-  .gallery-item:hover .gallery-item-caption { opacity: 1; }
-  .gallery-item-caption p { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--ivory); font-weight: 300; }
-  .gallery-item-caption span { font-size: 9px; letter-spacing: .2em; color: var(--gold); }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: .12em;
+      color: var(--black);
+      text-decoration: none;
+    }
 
-  /* DETAILS STRIP */
-  .col-details { background: var(--beige); padding: 80px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
-  .col-detail-item h4 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: var(--black); margin-bottom: 12px; }
-  .col-detail-item p { font-size: 12px; line-height: 1.9; color: var(--mid-taupe); }
+    .nav-logo span {
+      color: var(--gold);
+    }
 
-  /* FEATURED PIECE */
-  .col-featured { padding: 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; background: var(--ivory); max-width: 1300px; margin: 0 auto; }
-  .col-featured-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
-  .col-featured-imgs img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; background: var(--beige); }
-  .col-featured-text .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
-  .col-featured-text h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 44px); font-weight: 300; color: var(--black); line-height: 1.2; margin-bottom: 24px; }
-  .col-featured-text h3 em { font-style: italic; color: var(--rose); }
-  .col-featured-text p { font-size: 14px; line-height: 2; color: var(--mid-taupe); margin-bottom: 20px; }
-  .col-featured-text blockquote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; color: var(--gold); line-height: 1.6; border-left: 2px solid var(--gold); padding-left: 24px; margin: 36px 0; }
+    .nav-back {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--taupe);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color .3s;
+    }
 
-  /* FABRICS */
-  .col-fabrics { padding: 80px; background: var(--light-rose); }
-  .col-fabrics h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 40px); font-weight: 300; color: var(--black); margin-bottom: 48px; text-align: center; }
-  .col-fabrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; max-width: 1100px; margin: 0 auto; }
-  .fabric-swatch { padding: 32px 24px; text-align: center; }
-  .fabric-swatch-color { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 16px; border: 1px solid rgba(90,74,70,.15); }
-  .fabric-swatch h5 { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: var(--black); margin-bottom: 6px; }
-  .fabric-swatch p { font-size: 11px; color: var(--mid-taupe); letter-spacing: .06em; }
+    .nav-back:hover {
+      color: var(--gold);
+    }
 
-  /* CTA */
-  .col-cta { background: var(--taupe); padding: 100px 80px; text-align: center; }
-  .col-cta .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
-  .col-cta h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 56px); font-weight: 300; color: var(--ivory); line-height: 1.2; margin-bottom: 24px; }
-  .col-cta h3 em { font-style: italic; color: #F5D5CF; }
-  .col-cta p { font-size: 13px; color: rgba(246,241,235,.7); letter-spacing: .06em; line-height: 2; margin-bottom: 48px; max-width: 500px; margin-left: auto; margin-right: auto; }
-  .btn-cta { padding: 18px 48px; background: var(--gold); color: #fff; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; text-decoration: none; border: 2px solid var(--gold); transition: all .3s; font-weight: 500; display: inline-block; box-shadow: 0 4px 24px rgba(198,167,94,.4); }
-  .btn-cta:hover { background: transparent; color: var(--gold); box-shadow: none; }
-  .btn-back { padding: 18px 48px; background: transparent; color: rgba(246,241,235,.7); font-size: 10px; letter-spacing: .25em; text-transform: uppercase; text-decoration: none; border: 1px solid rgba(246,241,235,.3); transition: all .3s; display: inline-block; margin-left: 16px; }
-  .btn-back:hover { border-color: rgba(246,241,235,.7); color: var(--ivory); }
+    .nav-back::before {
+      content: '←';
+    }
 
-  /* FOOTER */
-  footer { background: var(--black); padding: 60px 80px 32px; }
-  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 32px; border-top: 1px solid rgba(246,241,235,.08); }
-  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; color: var(--ivory); text-decoration: none; }
-  .footer-logo span { color: var(--gold); }
-  .footer-legal { font-size: 10px; color: rgba(246,241,235,.2); letter-spacing: .12em; }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: rgba(246,241,235,.35); text-decoration: none; transition: color .3s; }
-  .footer-links a:hover { color: var(--gold); }
+    /* COLLECTION HERO */
+    .col-hero {
+      height: 85vh;
+      min-height: 600px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      position: relative;
+      overflow: hidden;
+    }
 
-  /* REVEAL */
-  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s, transform .8s; }
-  .reveal.visible { opacity: 1; transform: none; }
-  .reveal-left { opacity: 0; transform: translateX(-28px); transition: opacity .8s, transform .8s; }
-  .reveal-left.visible { opacity: 1; transform: none; }
-  .reveal-right { opacity: 0; transform: translateX(28px); transition: opacity .8s, transform .8s; }
-  .reveal-right.visible { opacity: 1; transform: none; }
+    .col-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(20, 15, 14, .52) 0%, rgba(20, 15, 14, .74) 100%), url('https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=1800&q=85') center/cover no-repeat;
+      transform: scale(1.03);
+      animation: heroScale 16s ease-in-out infinite alternate;
+    }
 
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    nav { padding: 18px 24px; }
-    .col-hero-content { padding: 0 24px 60px; }
-    .breadcrumb { padding: 20px 24px; }
-    .col-intro, .col-featured { padding: 60px 24px; grid-template-columns: 1fr; gap: 40px; }
-    .col-intro-img-accent { display: none; }
-    .col-gallery { padding: 0 24px 60px; }
-    .col-gallery-grid, .col-gallery-grid-2 { grid-template-columns: 1fr 1fr; }
-    .col-details { padding: 60px 24px; grid-template-columns: 1fr 1fr; }
-    .col-fabrics { padding: 60px 24px; }
-    .col-fabrics-grid { grid-template-columns: 1fr 1fr; }
-    .col-cta { padding: 80px 24px; }
-    .btn-back { margin-left: 0; margin-top: 12px; display: block; }
-    footer { padding: 40px 24px 24px; }
-    .col-intro-stats { flex-wrap: wrap; gap: 24px; }
-    .col-featured-imgs { grid-template-columns: 1fr 1fr; }
-  }
-</style>
+    @keyframes heroScale {
+      to {
+        transform: scale(1.0);
+      }
+    }
+
+    .col-hero-content {
+      position: relative;
+      padding: 0 80px 80px;
+      max-width: 680px;
+      color: #fff;
+      animation: fadeUp .8s ease both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .col-hero-tag {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: #e0bf70;
+      margin-bottom: 20px;
+      display: block;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, .45);
+    }
+
+    .col-hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 300;
+      line-height: 1.0;
+      margin-bottom: 24px;
+      text-shadow: 0 8px 26px rgba(0, 0, 0, .6);
+    }
+
+    .col-hero-title em {
+      font-style: italic;
+      color: #F5D5CF;
+    }
+
+    .col-hero-desc {
+      font-size: 13px;
+      line-height: 2;
+      font-weight: 400;
+      color: #fff;
+      max-width: 460px;
+      text-shadow: 0 3px 16px rgba(0, 0, 0, .55);
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      padding: 28px 80px;
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--mid-taupe);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      border-bottom: 1px solid rgba(90, 74, 70, .08);
+    }
+
+    .breadcrumb a {
+      color: var(--mid-taupe);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--gold);
+    }
+
+    .breadcrumb span {
+      color: var(--rose);
+    }
+
+    /* COLLECTION INTRO */
+    .col-intro {
+      padding: 100px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .col-intro-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 300;
+      color: var(--black);
+      line-height: 1.2;
+      margin-bottom: 28px;
+    }
+
+    .col-intro-text h2 em {
+      font-style: italic;
+      color: var(--rose);
+    }
+
+    .col-intro-text p {
+      font-size: 14px;
+      line-height: 2.1;
+      color: var(--mid-taupe);
+      margin-bottom: 20px;
+    }
+
+    .col-intro-text .eyebrow {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .col-intro-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(90, 74, 70, .12);
+    }
+
+    .col-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 300;
+      color: var(--gold);
+      display: block;
+    }
+
+    .col-stat-label {
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--mid-taupe);
+    }
+
+    .col-intro-img {
+      position: relative;
+    }
+
+    .col-intro-img img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+    }
+
+    .col-intro-img-accent {
+      position: absolute;
+      bottom: -16px;
+      left: -16px;
+      width: 160px;
+      height: 160px;
+      border: 1px solid var(--gold);
+      z-index: -1;
+    }
+
+    /* GALLERY GRID */
+    .col-gallery {
+      padding: 0 80px 100px;
+    }
+
+    .col-gallery-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .col-gallery-header h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 300;
+      color: var(--black);
+    }
+
+    .col-gallery-header .eyebrow {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .col-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+
+    .col-gallery-grid-2 {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 4px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      aspect-ratio: 2/3;
+      transition: transform .7s cubic-bezier(.25, .46, .45, .94);
+      background: var(--beige);
+    }
+
+    .gallery-item.tall img {
+      aspect-ratio: 3/5;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-item-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(17, 17, 17, .7), transparent);
+      opacity: 0;
+      transition: opacity .35s;
+    }
+
+    .gallery-item:hover .gallery-item-caption {
+      opacity: 1;
+    }
+
+    .gallery-item-caption p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      color: var(--ivory);
+      font-weight: 300;
+    }
+
+    .gallery-item-caption span {
+      font-size: 9px;
+      letter-spacing: .2em;
+      color: var(--gold);
+    }
+
+    /* DETAILS STRIP */
+    .col-details {
+      background: var(--beige);
+      padding: 80px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+
+    .col-detail-item h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--black);
+      margin-bottom: 12px;
+    }
+
+    .col-detail-item p {
+      font-size: 12px;
+      line-height: 1.9;
+      color: var(--mid-taupe);
+    }
+
+    /* FEATURED PIECE */
+    .col-featured {
+      padding: 100px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      background: var(--ivory);
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .col-featured-imgs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+
+    .col-featured-imgs img {
+      width: 100%;
+      aspect-ratio: 2/3;
+      object-fit: cover;
+      display: block;
+      background: var(--beige);
+    }
+
+    .col-featured-text .eyebrow {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .col-featured-text h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 300;
+      color: var(--black);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    .col-featured-text h3 em {
+      font-style: italic;
+      color: var(--rose);
+    }
+
+    .col-featured-text p {
+      font-size: 14px;
+      line-height: 2;
+      color: var(--mid-taupe);
+      margin-bottom: 20px;
+    }
+
+    .col-featured-text blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 20px;
+      color: var(--gold);
+      line-height: 1.6;
+      border-left: 2px solid var(--gold);
+      padding-left: 24px;
+      margin: 36px 0;
+    }
+
+    /* FABRICS */
+    .col-fabrics {
+      padding: 80px;
+      background: var(--light-rose);
+    }
+
+    .col-fabrics h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 300;
+      color: var(--black);
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    .col-fabrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .fabric-swatch {
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .fabric-swatch-color {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      border: 1px solid rgba(90, 74, 70, .15);
+    }
+
+    .fabric-swatch h5 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--black);
+      margin-bottom: 6px;
+    }
+
+    .fabric-swatch p {
+      font-size: 11px;
+      color: var(--mid-taupe);
+      letter-spacing: .06em;
+    }
+
+    /* CTA */
+    .col-cta {
+      background: var(--taupe);
+      padding: 100px 80px;
+      text-align: center;
+    }
+
+    .col-cta .eyebrow {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .col-cta h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 300;
+      color: var(--ivory);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    .col-cta h3 em {
+      font-style: italic;
+      color: #F5D5CF;
+    }
+
+    .col-cta p {
+      font-size: 13px;
+      color: rgba(246, 241, 235, .7);
+      letter-spacing: .06em;
+      line-height: 2;
+      margin-bottom: 48px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn-cta {
+      padding: 18px 48px;
+      background: var(--gold);
+      color: #2f251f;
+      font-size: 10px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid var(--gold);
+      transition: all .3s;
+      font-weight: 600;
+      display: inline-block;
+      box-shadow: 0 4px 24px rgba(198, 167, 94, .45);
+    }
+
+    .btn-cta:hover {
+      background: rgba(198, 167, 94, .18);
+      color: #f5dba0;
+      border-color: #f0d28e;
+      box-shadow: 0 0 0 1px rgba(240, 210, 142, .25);
+    }
+
+    .btn-back {
+      padding: 18px 48px;
+      background: rgba(246, 241, 235, .08);
+      color: rgba(246, 241, 235, .92);
+      font-size: 10px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(246, 241, 235, .65);
+      transition: all .3s;
+      display: inline-block;
+      margin-left: 16px;
+    }
+
+    .btn-back:hover {
+      background: rgba(246, 241, 235, .15);
+      border-color: #fff;
+      color: #fff;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      padding: 60px 80px 32px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(246, 241, 235, .08);
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 300;
+      color: var(--ivory);
+      text-decoration: none;
+    }
+
+    .footer-logo span {
+      color: var(--gold);
+    }
+
+    .footer-legal {
+      font-size: 10px;
+      color: rgba(246, 241, 235, .2);
+      letter-spacing: .12em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 9px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(246, 241, 235, .35);
+      text-decoration: none;
+      transition: color .3s;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .8s, transform .8s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-28px);
+      transition: opacity .8s, transform .8s;
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(28px);
+      transition: opacity .8s, transform .8s;
+    }
+
+    .reveal-right.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav {
+        padding: 18px 24px;
+      }
+
+      .col-hero-content {
+        padding: 0 24px 60px;
+      }
+
+      .breadcrumb {
+        padding: 20px 24px;
+      }
+
+      .col-intro,
+      .col-featured {
+        padding: 60px 24px;
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .col-intro-img-accent {
+        display: none;
+      }
+
+      .col-gallery {
+        padding: 0 24px 60px;
+      }
+
+      .col-gallery-grid,
+      .col-gallery-grid-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .col-details {
+        padding: 60px 24px;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .col-fabrics {
+        padding: 60px 24px;
+      }
+
+      .col-fabrics-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .col-cta {
+        padding: 80px 24px;
+      }
+
+      .btn-back {
+        margin-left: 0;
+        margin-top: 12px;
+        display: block;
+      }
+
+      footer {
+        padding: 40px 24px 24px;
+      }
+
+      .col-intro-stats {
+        flex-wrap: wrap;
+        gap: 24px;
+      }
+
+      .col-featured-imgs {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<nav>
-  <a href="index.html" class="nav-logo">Maison <span>Elara</span></a>
-  <a href="index.html#collections" class="nav-back">All Collections</a>
-  <a href="index.html#booking" class="nav-cta">Book Consultation</a>
-</nav>
+  <nav>
+    <a href="index.html" class="nav-logo">Maison <span>Elara</span></a>
+    <a href="index.html#collections" class="nav-back">All Collections</a>
+  </nav>
 
-<!-- HERO -->
-<div class="col-hero">
-  <div class="col-hero-bg"></div>
-  <div class="col-hero-content">
-    <span class="col-hero-tag">SS 2025 — Evening Couture</span>
-    <h1 class="col-hero-title">Evening<br><em>Couture</em></h1>
-    <p class="col-hero-desc">Gowns conceived for the most extraordinary moments. Each piece embodies the luminosity of a Parisian evening — sculpted, refined, unforgettable.</p>
-  </div>
-</div>
-
-<!-- BREADCRUMB -->
-<div class="breadcrumb">
-  <a href="index.html">Home</a> / <a href="index.html#collections">Collections</a> / <span>Evening Couture</span>
-</div>
-
-<!-- INTRO -->
-<div class="col-intro">
-  <div class="col-intro-text reveal-left">
-    <span class="eyebrow">The Collection</span>
-    <h2>Draped in <em>Darkness & Light</em></h2>
-    <p>The Evening Couture collection is an ode to the hours between dusk and dawn — when a woman steps into a room and the world pauses. Each gown is constructed with architectural precision and finished with the hand-sewn detail that only true couture can offer.</p>
-    <p>From cascading silk charmeuse to sculptural duchess satin, every silhouette is designed around the woman who will wear it: her posture, her movement, her story.</p>
-    <div class="col-intro-stats">
-      <div><span class="col-stat-num">24</span><span class="col-stat-label">Pieces This Season</span></div>
-      <div><span class="col-stat-num">6–8</span><span class="col-stat-label">Weeks Creation</span></div>
-      <div><span class="col-stat-num">4</span><span class="col-stat-label">Fittings Included</span></div>
+  <!-- HERO -->
+  <div class="col-hero">
+    <div class="col-hero-bg"></div>
+    <div class="col-hero-content">
+      <span class="col-hero-tag">SS 2025 — Evening Couture</span>
+      <h1 class="col-hero-title">Evening<br><em>Couture</em></h1>
+      <p class="col-hero-desc">Gowns conceived for the most extraordinary moments. Each piece embodies the luminosity of
+        a Parisian evening — sculpted, refined, unforgettable.</p>
     </div>
   </div>
-  <div class="col-intro-img reveal-right">
-    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=85" alt="Evening Couture">
-    <div class="col-intro-img-accent"></div>
-  </div>
-</div>
 
-<!-- GALLERY -->
-<div class="col-gallery">
-  <div class="col-gallery-header reveal">
-    <span class="eyebrow">Lookbook</span>
-    <h3>The Collection Gallery</h3>
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> / <a href="index.html#collections">Collections</a> / <span>Evening Couture</span>
   </div>
-  <div class="col-gallery-grid reveal">
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=700&q=85" alt="Gown I">
-      <div class="gallery-item-caption"><p>La Nuit Dorée</p><span>Evening Couture — SS 2025</span></div>
+
+  <!-- INTRO -->
+  <div class="col-intro">
+    <div class="col-intro-text reveal-left">
+      <span class="eyebrow">The Collection</span>
+      <h2>Draped in <em>Darkness & Light</em></h2>
+      <p>The Evening Couture collection is an ode to the hours between dusk and dawn — when a woman steps into a room
+        and the world pauses. Each gown is constructed with architectural precision and finished with the hand-sewn
+        detail that only true couture can offer.</p>
+      <p>From cascading silk charmeuse to sculptural duchess satin, every silhouette is designed around the woman who
+        will wear it: her posture, her movement, her story.</p>
+      <div class="col-intro-stats">
+        <div><span class="col-stat-num">24</span><span class="col-stat-label">Pieces This Season</span></div>
+        <div><span class="col-stat-num">6–8</span><span class="col-stat-label">Weeks Creation</span></div>
+        <div><span class="col-stat-num">4</span><span class="col-stat-label">Fittings Included</span></div>
+      </div>
     </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=700&q=85" alt="Gown II">
-      <div class="gallery-item-caption"><p>L'Éclat Noir</p><span>Evening Couture — SS 2025</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=700&q=85" alt="Gown III">
-      <div class="gallery-item-caption"><p>Velours Minuit</p><span>Evening Couture — SS 2025</span></div>
-    </div>
-  </div>
-  <div class="col-gallery-grid-2 reveal" style="transition-delay:.1s">
-    <div class="gallery-item tall">
-      <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=900&q=85" alt="Gown IV" style="aspect-ratio:2/3">
-      <div class="gallery-item-caption"><p>Soie Champagne</p><span>Evening Couture — SS 2025</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=85" alt="Gown V">
-      <div class="gallery-item-caption"><p>Lumière Rose</p><span>Evening Couture — SS 2025</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=85" alt="Gown VI">
-      <div class="gallery-item-caption"><p>Clair de Lune</p><span>Evening Couture — SS 2025</span></div>
+    <div class="col-intro-img reveal-right">
+      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=85" alt="Evening Couture">
+      <div class="col-intro-img-accent"></div>
     </div>
   </div>
-</div>
 
-<!-- COLLECTION DETAILS -->
-<div class="col-details reveal">
-  <div class="col-detail-item">
-    <h4>Silhouettes</h4>
-    <p>Column, A-line, mermaid, and sculptural ballgown forms — each tailored to your individual proportions and movement.</p>
-  </div>
-  <div class="col-detail-item">
-    <h4>Fabrics</h4>
-    <p>Silk charmeuse, duchess satin, hand-beaded organza, velvet, and Chantilly lace sourced from Maison Lesage, Lyon.</p>
-  </div>
-  <div class="col-detail-item">
-    <h4>Embellishment</h4>
-    <p>Hand-sewn crystal embroidery, feather trim, custom pleating, and couture-level beadwork — applied stitch by stitch.</p>
-  </div>
-  <div class="col-detail-item">
-    <h4>Timeline</h4>
-    <p>From first consultation to delivery: 6–8 weeks. Rush commissions available upon request with atelier availability.</p>
-  </div>
-</div>
-
-<!-- FEATURED PIECE -->
-<div class="col-featured">
-  <div class="col-featured-imgs reveal-left">
-    <img src="https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=600&q=85" alt="Featured front">
-    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=85" alt="Featured back">
-  </div>
-  <div class="col-featured-text reveal-right">
-    <span class="eyebrow">Featured Piece</span>
-    <h3>La Nuit <em>Étoilée</em></h3>
-    <blockquote>"She walked into the room and the evening began."</blockquote>
-    <p>A floor-length column gown in ivory silk charmeuse, hand-embroidered with over 2,400 individual crystals arranged in the pattern of the winter constellation. The back falls open in a deep V, secured by a single silk bow.</p>
-    <p>Exclusively available as a bespoke commission. Each piece is created once — for one woman, for one evening.</p>
-  </div>
-</div>
-
-<!-- FABRICS -->
-<div class="col-fabrics reveal">
-  <h3>Couture Fabrics & Finishes</h3>
-  <div class="col-fabrics-grid">
-    <div class="fabric-swatch"><div class="fabric-swatch-color" style="background:#F5E6D3;"></div><h5>Silk Charmeuse</h5><p>Ivory & Champagne</p></div>
-    <div class="fabric-swatch"><div class="fabric-swatch-color" style="background:#2A1A1A;"></div><h5>Duchess Satin</h5><p>Midnight & Noir</p></div>
-    <div class="fabric-swatch"><div class="fabric-swatch-color" style="background:#C8A882;"></div><h5>Beaded Organza</h5><p>Gold & Bronze</p></div>
-    <div class="fabric-swatch"><div class="fabric-swatch-color" style="background:#E8D5D0;"></div><h5>Chantilly Lace</h5><p>Blush & Rose</p></div>
-  </div>
-</div>
-
-<!-- CTA -->
-<div class="col-cta">
-  <span class="eyebrow">Begin Your Couture Journey</span>
-  <h3>Commission Your <em>Evening Gown</em></h3>
-  <p>Private consultations are available by appointment only. We invite you to begin your couture story with a personal meeting at the atelier.</p>
-  <a href="index.html#booking" class="btn-cta">Book a Consultation</a>
-  <a href="index.html#collections" class="btn-back">View All Collections</a>
-</div>
-
-<footer>
-  <div class="footer-bottom">
-    <a href="index.html" class="footer-logo">Maison <span>Elara</span></a>
-    <p class="footer-legal">© 2025 Maison Elara. Private Couture Atelier — By Appointment Only.</p>
-    <div class="footer-links">
-      <a href="index.html">Home</a>
-      <a href="index.html#collections">Collections</a>
-      <a href="index.html#booking">Book</a>
+  <!-- GALLERY -->
+  <div class="col-gallery">
+    <div class="col-gallery-header reveal">
+      <span class="eyebrow">Lookbook</span>
+      <h3>The Collection Gallery</h3>
+    </div>
+    <div class="col-gallery-grid reveal">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=700&q=85" alt="Gown I">
+        <div class="gallery-item-caption">
+          <p>La Nuit Dorée</p><span>Evening Couture — SS 2025</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=700&q=85" alt="Gown II">
+        <div class="gallery-item-caption">
+          <p>L'Éclat Noir</p><span>Evening Couture — SS 2025</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=700&q=85" alt="Gown III">
+        <div class="gallery-item-caption">
+          <p>Velours Minuit</p><span>Evening Couture — SS 2025</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-gallery-grid-2 reveal" style="transition-delay:.1s">
+      <div class="gallery-item tall">
+        <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=900&q=85" alt="Gown IV"
+          style="aspect-ratio:2/3">
+        <div class="gallery-item-caption">
+          <p>Soie Champagne</p><span>Evening Couture — SS 2025</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=85" alt="Gown V">
+        <div class="gallery-item-caption">
+          <p>Lumière Rose</p><span>Evening Couture — SS 2025</span>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=85" alt="Gown VI">
+        <div class="gallery-item-caption">
+          <p>Clair de Lune</p><span>Evening Couture — SS 2025</span>
+        </div>
+      </div>
     </div>
   </div>
-</footer>
 
-<script>
-  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.1 });
-  revealEls.forEach(el => obs.observe(el));
-</script>
+  <!-- COLLECTION DETAILS -->
+  <div class="col-details reveal">
+    <div class="col-detail-item">
+      <h4>Silhouettes</h4>
+      <p>Column, A-line, mermaid, and sculptural ballgown forms — each tailored to your individual proportions and
+        movement.</p>
+    </div>
+    <div class="col-detail-item">
+      <h4>Fabrics</h4>
+      <p>Silk charmeuse, duchess satin, hand-beaded organza, velvet, and Chantilly lace sourced from Maison Lesage,
+        Lyon.</p>
+    </div>
+    <div class="col-detail-item">
+      <h4>Embellishment</h4>
+      <p>Hand-sewn crystal embroidery, feather trim, custom pleating, and couture-level beadwork — applied stitch by
+        stitch.</p>
+    </div>
+    <div class="col-detail-item">
+      <h4>Timeline</h4>
+      <p>From first consultation to delivery: 6–8 weeks. Rush commissions available upon request with atelier
+        availability.</p>
+    </div>
+  </div>
+
+  <!-- FEATURED PIECE -->
+  <div class="col-featured">
+    <div class="col-featured-imgs reveal-left">
+      <img src="https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=600&q=85" alt="Featured front">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=85" alt="Featured back">
+    </div>
+    <div class="col-featured-text reveal-right">
+      <span class="eyebrow">Featured Piece</span>
+      <h3>La Nuit <em>Étoilée</em></h3>
+      <blockquote>"She walked into the room and the evening began."</blockquote>
+      <p>A floor-length column gown in ivory silk charmeuse, hand-embroidered with over 2,400 individual crystals
+        arranged in the pattern of the winter constellation. The back falls open in a deep V, secured by a single silk
+        bow.</p>
+      <p>Exclusively available as a bespoke commission. Each piece is created once — for one woman, for one evening.</p>
+    </div>
+  </div>
+
+  <!-- FABRICS -->
+  <div class="col-fabrics reveal">
+    <h3>Couture Fabrics & Finishes</h3>
+    <div class="col-fabrics-grid">
+      <div class="fabric-swatch">
+        <div class="fabric-swatch-color" style="background:#F5E6D3;"></div>
+        <h5>Silk Charmeuse</h5>
+        <p>Ivory & Champagne</p>
+      </div>
+      <div class="fabric-swatch">
+        <div class="fabric-swatch-color" style="background:#2A1A1A;"></div>
+        <h5>Duchess Satin</h5>
+        <p>Midnight & Noir</p>
+      </div>
+      <div class="fabric-swatch">
+        <div class="fabric-swatch-color" style="background:#C8A882;"></div>
+        <h5>Beaded Organza</h5>
+        <p>Gold & Bronze</p>
+      </div>
+      <div class="fabric-swatch">
+        <div class="fabric-swatch-color" style="background:#E8D5D0;"></div>
+        <h5>Chantilly Lace</h5>
+        <p>Blush & Rose</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="col-cta">
+    <span class="eyebrow">Begin Your Couture Journey</span>
+    <h3>Commission Your <em>Evening Gown</em></h3>
+    <p>Private consultations are available by appointment only. We invite you to begin your couture story with a
+      personal meeting at the atelier.</p>
+    <a href="index.html#booking" class="btn-cta">Book a Private Consultation</a>
+    <a href="index.html#collections" class="btn-back">View All Collections</a>
+  </div>
+
+  <footer>
+    <div class="footer-bottom">
+      <a href="index.html" class="footer-logo">Maison <span>Elara</span></a>
+      <p class="footer-legal">© 2025 Maison Elara. Private Couture Atelier — By Appointment Only.</p>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#collections">Collections</a>
+        <a href="index.html#booking">Book</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => obs.observe(el));
+  </script>
 </body>
+
 </html>
