@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Occasion — Maison Elara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #F6F1EB; --rose: #D8B7B1; --taupe: #5A4A46;
+    --gold: #C6A75E; --black: #111111; --beige: #EDE8E0;
+    --light-rose: #F0E4E1; --mid-taupe: #8A7470;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Montserrat', sans-serif; font-weight: 300; background: var(--ivory); color: var(--taupe); overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 60px; display: flex; align-items: center; justify-content: space-between; transition: background .4s, padding .4s; background: rgba(246,241,235,.97); border-bottom: 1px solid rgba(198,167,94,.15); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; letter-spacing: .12em; color: var(--black); text-decoration: none; }
+  .nav-logo span { color: var(--gold); }
+  .nav-back { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--taupe); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color .3s; }
+  .nav-back:hover { color: var(--gold); }
+  .nav-back::before { content: '←'; }
+  .nav-cta { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; padding: 10px 22px; border: 1px solid var(--taupe); color: var(--taupe); text-decoration: none; transition: all .3s; }
+  .nav-cta:hover { background: var(--taupe); color: var(--ivory); }
+
+  .col-hero { height: 85vh; min-height: 600px; display: flex; align-items: flex-end; justify-content: flex-start; position: relative; overflow: hidden; }
+  .col-hero-bg { position: absolute; inset: 0; background: linear-gradient(to right, rgba(17,17,17,.6) 0%, rgba(17,17,17,.1) 60%), url('https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&q=85') center/cover no-repeat; transform: scale(1.03); animation: heroScale 16s ease-in-out infinite alternate; }
+  @keyframes heroScale { to { transform: scale(1.0); } }
+  .col-hero-content { position: relative; padding: 0 80px 80px; max-width: 680px; color: #fff; animation: fadeUp .8s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  .col-hero-tag { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
+  .col-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 7vw, 88px); font-weight: 300; line-height: 1.0; margin-bottom: 24px; text-shadow: 0 2px 20px rgba(0,0,0,.3); }
+  .col-hero-title em { font-style: italic; color: #F5D5CF; }
+  .col-hero-desc { font-size: 13px; line-height: 2; color: rgba(255,255,255,.85); max-width: 460px; }
+
+  .breadcrumb { padding: 28px 80px; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--mid-taupe); display: flex; gap: 12px; align-items: center; border-bottom: 1px solid rgba(90,74,70,.08); }
+  .breadcrumb a { color: var(--mid-taupe); text-decoration: none; transition: color .2s; }
+  .breadcrumb a:hover { color: var(--gold); }
+  .breadcrumb span { color: var(--rose); }
+
+  .col-intro { padding: 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1300px; margin: 0 auto; }
+  .col-intro-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 3.5vw, 48px); font-weight: 300; color: var(--black); line-height: 1.2; margin-bottom: 28px; }
+  .col-intro-text h2 em { font-style: italic; color: var(--rose); }
+  .col-intro-text p { font-size: 14px; line-height: 2.1; color: var(--mid-taupe); margin-bottom: 20px; }
+  .col-intro-text .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; }
+  .col-intro-stats { display: flex; gap: 40px; margin-top: 48px; padding-top: 40px; border-top: 1px solid rgba(90,74,70,.12); }
+  .col-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: var(--gold); display: block; }
+  .col-stat-label { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--mid-taupe); }
+  .col-intro-img { position: relative; }
+  .col-intro-img img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+  .col-intro-img-accent { position: absolute; bottom: -16px; left: -16px; width: 160px; height: 160px; border: 1px solid var(--gold); z-index: -1; }
+
+  /* OCCASION TYPES */
+  .col-occasions { background: var(--beige); padding: 100px 80px; }
+  .col-occasions-header { text-align: center; margin-bottom: 60px; }
+  .col-occasions-header h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 42px); font-weight: 300; color: var(--black); }
+  .col-occasions-header .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; }
+  .occasions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+  .occasion-item { position: relative; overflow: hidden; }
+  .occasion-item img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; transition: transform .7s cubic-bezier(.25,.46,.45,.94); background: var(--beige); }
+  .occasion-item:hover img { transform: scale(1.05); }
+  .occasion-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(17,17,17,.75) 0%, transparent 55%); display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; }
+  .occasion-tag { font-size: 9px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .occasion-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; color: #fff; line-height: 1.2; margin-bottom: 10px; }
+  .occasion-desc { font-size: 11px; color: rgba(255,255,255,.7); line-height: 1.7; }
+
+  .col-gallery { padding: 80px; }
+  .col-gallery-header { text-align: center; margin-bottom: 60px; }
+  .col-gallery-header h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 42px); font-weight: 300; color: var(--black); }
+  .col-gallery-header .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; }
+  .col-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 4px; }
+  .col-gallery-grid-2 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4px; }
+  .gallery-item { position: relative; overflow: hidden; cursor: pointer; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 2/3; transition: transform .7s cubic-bezier(.25,.46,.45,.94); background: var(--beige); }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-item-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(to top, rgba(17,17,17,.7), transparent); opacity: 0; transition: opacity .35s; }
+  .gallery-item:hover .gallery-item-caption { opacity: 1; }
+  .gallery-item-caption p { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--ivory); font-weight: 300; }
+  .gallery-item-caption span { font-size: 9px; letter-spacing: .2em; color: var(--gold); }
+
+  .col-details { background: var(--light-rose); padding: 80px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+  .col-detail-item h4 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: var(--black); margin-bottom: 12px; }
+  .col-detail-item p { font-size: 12px; line-height: 1.9; color: var(--mid-taupe); }
+
+  .col-featured { padding: 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1300px; margin: 0 auto; }
+  .col-featured-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .col-featured-imgs img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; background: var(--beige); }
+  .col-featured-text .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
+  .col-featured-text h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 44px); font-weight: 300; color: var(--black); line-height: 1.2; margin-bottom: 24px; }
+  .col-featured-text h3 em { font-style: italic; color: var(--rose); }
+  .col-featured-text p { font-size: 14px; line-height: 2; color: var(--mid-taupe); margin-bottom: 20px; }
+  .col-featured-text blockquote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; color: var(--gold); line-height: 1.6; border-left: 2px solid var(--gold); padding-left: 24px; margin: 36px 0; }
+
+  .col-cta { background: var(--taupe); padding: 100px 80px; text-align: center; }
+  .col-cta .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
+  .col-cta h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 56px); font-weight: 300; color: var(--ivory); line-height: 1.2; margin-bottom: 24px; }
+  .col-cta h3 em { font-style: italic; color: #F5D5CF; }
+  .col-cta p { font-size: 13px; color: rgba(246,241,235,.7); letter-spacing: .06em; line-height: 2; margin-bottom: 48px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .btn-cta { padding: 18px 48px; background: var(--gold); color: #fff; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; text-decoration: none; border: 2px solid var(--gold); transition: all .3s; font-weight: 500; display: inline-block; box-shadow: 0 4px 24px rgba(198,167,94,.4); }
+  .btn-cta:hover { background: transparent; color: var(--gold); box-shadow: none; }
+  .btn-back { padding: 18px 48px; background: transparent; color: rgba(246,241,235,.7); font-size: 10px; letter-spacing: .25em; text-transform: uppercase; text-decoration: none; border: 1px solid rgba(246,241,235,.3); transition: all .3s; display: inline-block; margin-left: 16px; }
+  .btn-back:hover { border-color: rgba(246,241,235,.7); color: var(--ivory); }
+
+  footer { background: var(--black); padding: 60px 80px 32px; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 32px; border-top: 1px solid rgba(246,241,235,.08); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; color: var(--ivory); text-decoration: none; }
+  .footer-logo span { color: var(--gold); }
+  .footer-legal { font-size: 10px; color: rgba(246,241,235,.2); letter-spacing: .12em; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: rgba(246,241,235,.35); text-decoration: none; transition: color .3s; }
+  .footer-links a:hover { color: var(--gold); }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s, transform .8s; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-left { opacity: 0; transform: translateX(-28px); transition: opacity .8s, transform .8s; }
+  .reveal-left.visible { opacity: 1; transform: none; }
+  .reveal-right { opacity: 0; transform: translateX(28px); transition: opacity .8s, transform .8s; }
+  .reveal-right.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 18px 24px; }
+    .col-hero-content { padding: 0 24px 60px; }
+    .breadcrumb { padding: 20px 24px; }
+    .col-intro, .col-featured { padding: 60px 24px; grid-template-columns: 1fr; gap: 40px; }
+    .col-intro-img-accent { display: none; }
+    .col-gallery, .col-occasions { padding: 60px 24px; }
+    .occasions-grid { grid-template-columns: 1fr; }
+    .col-gallery-grid, .col-gallery-grid-2 { grid-template-columns: 1fr 1fr; }
+    .col-details { padding: 60px 24px; grid-template-columns: 1fr 1fr; }
+    .col-cta { padding: 80px 24px; }
+    .btn-back { margin-left: 0; margin-top: 12px; display: block; }
+    footer { padding: 40px 24px 24px; }
+    .col-intro-stats { flex-wrap: wrap; gap: 24px; }
+    .col-featured-imgs { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Maison <span>Elara</span></a>
+  <a href="index.html#collections" class="nav-back">All Collections</a>
+  <a href="index.html#booking" class="nav-cta">Book Consultation</a>
+</nav>
+
+<div class="col-hero">
+  <div class="col-hero-bg"></div>
+  <div class="col-hero-content">
+    <span class="col-hero-tag">Bespoke — Custom Occasion</span>
+    <h1 class="col-hero-title">Custom<br><em>Occasion</em></h1>
+    <p class="col-hero-desc">From galas to celebrations, milestone moments to intimate gatherings — a couture piece designed entirely for the occasion you cannot forget.</p>
+  </div>
+</div>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> / <a href="index.html#collections">Collections</a> / <span>Custom Occasion</span>
+</div>
+
+<div class="col-intro">
+  <div class="col-intro-text reveal-left">
+    <span class="eyebrow">The Collection</span>
+    <h2>Dressed for <em>Every Extraordinary Moment</em></h2>
+    <p>Life is full of moments that deserve more than ready-to-wear. A gala dinner, a milestone birthday, a charity soirée, a family portrait — each occasion has its own energy, its own audience, its own story to tell.</p>
+    <p>The Custom Occasion service gives you access to the full breadth of the Maison Elara atelier — for any moment that matters. A shorter timeline, a focused process, and the same uncompromising craft.</p>
+    <div class="col-intro-stats">
+      <div><span class="col-stat-num">3–5</span><span class="col-stat-label">Week Timeline</span></div>
+      <div><span class="col-stat-num">3</span><span class="col-stat-label">Fittings Included</span></div>
+      <div><span class="col-stat-num">Any</span><span class="col-stat-label">Occasion</span></div>
+    </div>
+  </div>
+  <div class="col-intro-img reveal-right">
+    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=85" alt="Custom Occasion">
+    <div class="col-intro-img-accent"></div>
+  </div>
+</div>
+
+<!-- OCCASION TYPES -->
+<div class="col-occasions">
+  <div class="col-occasions-header reveal">
+    <span class="eyebrow">Occasions We Dress</span>
+    <h3>What Will You Celebrate?</h3>
+  </div>
+  <div class="occasions-grid reveal">
+    <div class="occasion-item">
+      <img src="https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=600&q=85" alt="Gala">
+      <div class="occasion-overlay">
+        <span class="occasion-tag">Black Tie</span>
+        <div class="occasion-name">Galas &<br>Charity Events</div>
+        <p class="occasion-desc">Commanding presence for the room's most important evenings.</p>
+      </div>
+    </div>
+    <div class="occasion-item">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=85" alt="Milestone">
+      <div class="occasion-overlay">
+        <span class="occasion-tag">Milestone</span>
+        <div class="occasion-name">Birthdays &<br>Anniversaries</div>
+        <p class="occasion-desc">A gown that marks the moment you will remember forever.</p>
+      </div>
+    </div>
+    <div class="occasion-item">
+      <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=600&q=85" alt="Portrait">
+      <div class="occasion-overlay">
+        <span class="occasion-tag">Portraits</span>
+        <div class="occasion-name">Portraits &<br>Private Events</div>
+        <p class="occasion-desc">Family portraits, intimate celebrations, and personal milestones.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-gallery">
+  <div class="col-gallery-header reveal">
+    <span class="eyebrow">Lookbook</span>
+    <h3>Custom Occasion Gallery</h3>
+  </div>
+  <div class="col-gallery-grid reveal">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=700&q=85" alt="Occasion I">
+      <div class="gallery-item-caption"><p>Soirée Dorée</p><span>Custom Occasion — 2025</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=700&q=85" alt="Occasion II">
+      <div class="gallery-item-caption"><p>Velours Champagne</p><span>Custom Occasion — 2025</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=700&q=85" alt="Occasion III">
+      <div class="gallery-item-caption"><p>Lumière d'Or</p><span>Custom Occasion — 2025</span></div>
+    </div>
+  </div>
+  <div class="col-gallery-grid-2 reveal" style="transition-delay:.1s">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=900&q=85" alt="Occasion IV" style="aspect-ratio:2/3">
+      <div class="gallery-item-caption"><p>Satin Minuit</p><span>Custom Occasion — 2025</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=85" alt="Occasion V">
+      <div class="gallery-item-caption"><p>Rose Poudré</p><span>Custom Occasion — 2024</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=85" alt="Occasion VI">
+      <div class="gallery-item-caption"><p>Éclat Ivoire</p><span>Custom Occasion — 2024</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="col-details reveal">
+  <div class="col-detail-item">
+    <h4>Silhouettes</h4>
+    <p>Cocktail, midi, floor-length gowns, and trouser suits — each cut and constructed to your individual measurements.</p>
+  </div>
+  <div class="col-detail-item">
+    <h4>Fabrics</h4>
+    <p>Crepe de chine, silk taffeta, metallic jacquard, brocade, and embroidered tulle — selected to suit your occasion and season.</p>
+  </div>
+  <div class="col-detail-item">
+    <h4>Turnaround</h4>
+    <p>Standard timeline is 3–5 weeks. Rush service available in 10 days for select designs. Contact us to confirm availability.</p>
+  </div>
+  <div class="col-detail-item">
+    <h4>Investment</h4>
+    <p>Custom occasion pieces begin at €8,000. Pricing depends on complexity, embellishment, and fabric selection.</p>
+  </div>
+</div>
+
+<div class="col-featured">
+  <div class="col-featured-imgs reveal-left">
+    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=85" alt="Featured front">
+    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=85" alt="Featured back">
+  </div>
+  <div class="col-featured-text reveal-right">
+    <span class="eyebrow">Featured Piece</span>
+    <h3>Soirée <em>Dorée</em></h3>
+    <blockquote>"I wanted to feel like the most powerful version of myself — and that is exactly what I felt."</blockquote>
+    <p>A floor-length gown in champagne silk taffeta with a structured corseted bodice and deep golden metallic jacquard skirt panels. Fully lined in silk charmeuse for effortless movement.</p>
+    <p>Originally created for a private gala in Geneva. Available to commission in alternative colourways and silhouettes.</p>
+  </div>
+</div>
+
+<div class="col-cta">
+  <span class="eyebrow">Reserve Your Piece</span>
+  <h3>Commission Your <em>Custom Occasion</em> Gown</h3>
+  <p>Tell us about your occasion and we will design something extraordinary — together.</p>
+  <a href="index.html#booking" class="btn-cta">Book a Consultation</a>
+  <a href="index.html#collections" class="btn-back">View All Collections</a>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <a href="index.html" class="footer-logo">Maison <span>Elara</span></a>
+    <p class="footer-legal">© 2025 Maison Elara. Private Couture Atelier — By Appointment Only.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#collections">Collections</a>
+      <a href="index.html#booking">Book</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

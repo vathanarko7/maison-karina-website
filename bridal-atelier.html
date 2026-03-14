@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridal Atelier — Maison Elara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #F6F1EB; --rose: #D8B7B1; --taupe: #5A4A46;
+    --gold: #C6A75E; --black: #111111; --beige: #EDE8E0;
+    --light-rose: #F0E4E1; --mid-taupe: #8A7470;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Montserrat', sans-serif; font-weight: 300; background: var(--ivory); color: var(--taupe); overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 24px 60px; display: flex; align-items: center; justify-content: space-between; transition: background .4s, padding .4s; background: rgba(246,241,235,.97); border-bottom: 1px solid rgba(198,167,94,.15); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; letter-spacing: .12em; color: var(--black); text-decoration: none; }
+  .nav-logo span { color: var(--gold); }
+  .nav-back { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--taupe); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color .3s; }
+  .nav-back:hover { color: var(--gold); }
+  .nav-back::before { content: '←'; }
+  .nav-cta { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; padding: 10px 22px; border: 1px solid var(--taupe); color: var(--taupe); text-decoration: none; transition: all .3s; }
+  .nav-cta:hover { background: var(--taupe); color: var(--ivory); }
+
+  .col-hero { height: 85vh; min-height: 600px; display: flex; align-items: flex-end; justify-content: flex-start; position: relative; overflow: hidden; }
+  .col-hero-bg { position: absolute; inset: 0; background: linear-gradient(to right, rgba(17,17,17,.55) 0%, rgba(17,17,17,.1) 60%), url('https://images.unsplash.com/photo-1594552072238-b8a33785b6cd?w=1800&q=85') center/cover no-repeat; transform: scale(1.03); animation: heroScale 16s ease-in-out infinite alternate; }
+  @keyframes heroScale { to { transform: scale(1.0); } }
+  .col-hero-content { position: relative; padding: 0 80px 80px; max-width: 680px; color: #fff; animation: fadeUp .8s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  .col-hero-tag { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
+  .col-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 7vw, 88px); font-weight: 300; line-height: 1.0; margin-bottom: 24px; text-shadow: 0 2px 20px rgba(0,0,0,.3); }
+  .col-hero-title em { font-style: italic; color: #F5D5CF; }
+  .col-hero-desc { font-size: 13px; line-height: 2; color: rgba(255,255,255,.85); max-width: 460px; }
+
+  .breadcrumb { padding: 28px 80px; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--mid-taupe); display: flex; gap: 12px; align-items: center; border-bottom: 1px solid rgba(90,74,70,.08); }
+  .breadcrumb a { color: var(--mid-taupe); text-decoration: none; transition: color .2s; }
+  .breadcrumb a:hover { color: var(--gold); }
+  .breadcrumb span { color: var(--rose); }
+
+  .col-intro { padding: 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1300px; margin: 0 auto; }
+  .col-intro-text h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 3.5vw, 48px); font-weight: 300; color: var(--black); line-height: 1.2; margin-bottom: 28px; }
+  .col-intro-text h2 em { font-style: italic; color: var(--rose); }
+  .col-intro-text p { font-size: 14px; line-height: 2.1; color: var(--mid-taupe); margin-bottom: 20px; }
+  .col-intro-text .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; }
+  .col-intro-stats { display: flex; gap: 40px; margin-top: 48px; padding-top: 40px; border-top: 1px solid rgba(90,74,70,.12); }
+  .col-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: var(--gold); display: block; }
+  .col-stat-label { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--mid-taupe); }
+  .col-intro-img { position: relative; }
+  .col-intro-img img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+  .col-intro-img-accent { position: absolute; bottom: -16px; left: -16px; width: 160px; height: 160px; border: 1px solid var(--gold); z-index: -1; }
+
+  .col-gallery { padding: 0 80px 100px; }
+  .col-gallery-header { text-align: center; margin-bottom: 60px; }
+  .col-gallery-header h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 42px); font-weight: 300; color: var(--black); }
+  .col-gallery-header .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; }
+  .col-gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-bottom: 4px; }
+  .col-gallery-grid-2 { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4px; }
+  .gallery-item { position: relative; overflow: hidden; cursor: pointer; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 2/3; transition: transform .7s cubic-bezier(.25,.46,.45,.94); background: var(--beige); }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-item-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px; background: linear-gradient(to top, rgba(17,17,17,.7), transparent); opacity: 0; transition: opacity .35s; }
+  .gallery-item:hover .gallery-item-caption { opacity: 1; }
+  .gallery-item-caption p { font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--ivory); font-weight: 300; }
+  .gallery-item-caption span { font-size: 9px; letter-spacing: .2em; color: var(--gold); }
+
+  .col-details { background: var(--beige); padding: 80px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+  .col-detail-item h4 { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; color: var(--black); margin-bottom: 12px; }
+  .col-detail-item p { font-size: 12px; line-height: 1.9; color: var(--mid-taupe); }
+
+  /* BRIDAL PROCESS - special section */
+  .bridal-process { padding: 100px 80px; background: var(--light-rose); }
+  .bridal-process h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 42px); font-weight: 300; color: var(--black); margin-bottom: 12px; text-align: center; }
+  .bridal-process .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: block; text-align: center; }
+  .bridal-steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; margin-top: 60px; }
+  .bridal-step { text-align: center; padding: 0 12px; }
+  .bridal-step-num { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--rose); background: var(--light-rose); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--taupe); margin: 0 auto 20px; transition: all .3s; }
+  .bridal-step:hover .bridal-step-num { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .bridal-step h5 { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 500; color: var(--black); margin-bottom: 10px; }
+  .bridal-step p { font-size: 11px; line-height: 1.8; color: var(--mid-taupe); }
+
+  .col-featured { padding: 100px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1300px; margin: 0 auto; }
+  .col-featured-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .col-featured-imgs img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; background: var(--beige); }
+  .col-featured-text .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
+  .col-featured-text h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3vw, 44px); font-weight: 300; color: var(--black); line-height: 1.2; margin-bottom: 24px; }
+  .col-featured-text h3 em { font-style: italic; color: var(--rose); }
+  .col-featured-text p { font-size: 14px; line-height: 2; color: var(--mid-taupe); margin-bottom: 20px; }
+  .col-featured-text blockquote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; color: var(--gold); line-height: 1.6; border-left: 2px solid var(--gold); padding-left: 24px; margin: 36px 0; }
+
+  .col-cta { background: var(--taupe); padding: 100px 80px; text-align: center; }
+  .col-cta .eyebrow { font-size: 10px; letter-spacing: .35em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
+  .col-cta h3 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 56px); font-weight: 300; color: var(--ivory); line-height: 1.2; margin-bottom: 24px; }
+  .col-cta h3 em { font-style: italic; color: #F5D5CF; }
+  .col-cta p { font-size: 13px; color: rgba(246,241,235,.7); letter-spacing: .06em; line-height: 2; margin-bottom: 48px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .btn-cta { padding: 18px 48px; background: var(--gold); color: #fff; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; text-decoration: none; border: 2px solid var(--gold); transition: all .3s; font-weight: 500; display: inline-block; box-shadow: 0 4px 24px rgba(198,167,94,.4); }
+  .btn-cta:hover { background: transparent; color: var(--gold); box-shadow: none; }
+  .btn-back { padding: 18px 48px; background: transparent; color: rgba(246,241,235,.7); font-size: 10px; letter-spacing: .25em; text-transform: uppercase; text-decoration: none; border: 1px solid rgba(246,241,235,.3); transition: all .3s; display: inline-block; margin-left: 16px; }
+  .btn-back:hover { border-color: rgba(246,241,235,.7); color: var(--ivory); }
+
+  footer { background: var(--black); padding: 60px 80px 32px; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding-top: 32px; border-top: 1px solid rgba(246,241,235,.08); }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 300; color: var(--ivory); text-decoration: none; }
+  .footer-logo span { color: var(--gold); }
+  .footer-legal { font-size: 10px; color: rgba(246,241,235,.2); letter-spacing: .12em; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: rgba(246,241,235,.35); text-decoration: none; transition: color .3s; }
+  .footer-links a:hover { color: var(--gold); }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s, transform .8s; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-left { opacity: 0; transform: translateX(-28px); transition: opacity .8s, transform .8s; }
+  .reveal-left.visible { opacity: 1; transform: none; }
+  .reveal-right { opacity: 0; transform: translateX(28px); transition: opacity .8s, transform .8s; }
+  .reveal-right.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 18px 24px; }
+    .col-hero-content { padding: 0 24px 60px; }
+    .breadcrumb { padding: 20px 24px; }
+    .col-intro, .col-featured { padding: 60px 24px; grid-template-columns: 1fr; gap: 40px; }
+    .col-intro-img-accent { display: none; }
+    .col-gallery { padding: 0 24px 60px; }
+    .col-gallery-grid, .col-gallery-grid-2 { grid-template-columns: 1fr 1fr; }
+    .col-details { padding: 60px 24px; grid-template-columns: 1fr 1fr; }
+    .bridal-process { padding: 60px 24px; }
+    .bridal-steps { grid-template-columns: 1fr 1fr; }
+    .col-cta { padding: 80px 24px; }
+    .btn-back { margin-left: 0; margin-top: 12px; display: block; }
+    footer { padding: 40px 24px 24px; }
+    .col-intro-stats { flex-wrap: wrap; gap: 24px; }
+    .col-featured-imgs { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Maison <span>Elara</span></a>
+  <a href="index.html#collections" class="nav-back">All Collections</a>
+  <a href="index.html#booking" class="nav-cta">Book Consultation</a>
+</nav>
+
+<div class="col-hero">
+  <div class="col-hero-bg"></div>
+  <div class="col-hero-content">
+    <span class="col-hero-tag">Bridal 2025 — Bespoke Bridal</span>
+    <h1 class="col-hero-title">Bridal<br><em>Atelier</em></h1>
+    <p class="col-hero-desc">Your gown is not simply chosen — it is created. A singular expression of love, crafted for the most profound day of your life.</p>
+  </div>
+</div>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> / <a href="index.html#collections">Collections</a> / <span>Bridal Atelier</span>
+</div>
+
+<div class="col-intro">
+  <div class="col-intro-text reveal-left">
+    <span class="eyebrow">The Bridal Collection</span>
+    <h2>A Gown Born <em>From Your Story</em></h2>
+    <p>At Maison Elara, a bridal gown is never taken from a rack. It begins with a conversation — about who you are, who you are becoming, and how you wish to feel as you walk toward the person you love.</p>
+    <p>From that first meeting, every decision — silhouette, fabric, embellishment, train length — is made entirely for you. The result is a gown that could not exist for anyone else.</p>
+    <div class="col-intro-stats">
+      <div><span class="col-stat-num">6–9</span><span class="col-stat-label">Month Timeline</span></div>
+      <div><span class="col-stat-num">5</span><span class="col-stat-label">Fittings Included</span></div>
+      <div><span class="col-stat-num">1</span><span class="col-stat-label">Piece Created</span></div>
+    </div>
+  </div>
+  <div class="col-intro-img reveal-right">
+    <img src="https://images.unsplash.com/photo-1594552072238-b8a33785b6cd?w=800&q=85" alt="Bridal Atelier">
+    <div class="col-intro-img-accent"></div>
+  </div>
+</div>
+
+<div class="col-gallery">
+  <div class="col-gallery-header reveal">
+    <span class="eyebrow">Bridal Lookbook</span>
+    <h3>The Bridal Gallery</h3>
+  </div>
+  <div class="col-gallery-grid reveal">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700&q=85" alt="Bridal I">
+      <div class="gallery-item-caption"><p>Voile d'Ivoire</p><span>Bridal Atelier — 2025</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1594552072238-b8a33785b6cd?w=700&q=85" alt="Bridal II">
+      <div class="gallery-item-caption"><p>La Mariée Dorée</p><span>Bridal Atelier — 2025</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=700&q=85" alt="Bridal III">
+      <div class="gallery-item-caption"><p>Fleur de Coton</p><span>Bridal Atelier — 2025</span></div>
+    </div>
+  </div>
+  <div class="col-gallery-grid-2 reveal" style="transition-delay:.1s">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=85" alt="Bridal IV" style="aspect-ratio:2/3">
+      <div class="gallery-item-caption"><p>Pureté Absolue</p><span>Bridal Atelier — 2025</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=85" alt="Bridal V">
+      <div class="gallery-item-caption"><p>Dentelle Éternelle</p><span>Bridal Atelier — 2025</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=85" alt="Bridal VI">
+      <div class="gallery-item-caption"><p>Aube Blanche</p><span>Bridal Atelier — 2025</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="col-details reveal">
+  <div class="col-detail-item">
+    <h4>Silhouettes</h4>
+    <p>Ball gown, A-line, sheath, mermaid, and minimalist column cuts. Every silhouette is custom-drafted to your measurements.</p>
+  </div>
+  <div class="col-detail-item">
+    <h4>Fabrics</h4>
+    <p>Mikado silk, silk organza, tulle, point d'esprit, French lace, and beaded chiffon — all sourced from the finest European mills.</p>
+  </div>
+  <div class="col-detail-item">
+    <h4>Veils & Accessories</html4>
+    <p>Custom cathedral and chapel veils, bridal headpieces, and silk sashes crafted in-house to complement your gown.</p>
+  </div>
+  <div class="col-detail-item">
+    <h4>Preservation</h4>
+    <p>Every Maison Elara bridal gown includes professional preservation packaging and a care certificate for heirloom keeping.</p>
+  </div>
+</div>
+
+<!-- BRIDAL JOURNEY -->
+<div class="bridal-process reveal">
+  <span class="eyebrow">The Bridal Journey</span>
+  <h3>From Vision to Vow</h3>
+  <div class="bridal-steps">
+    <div class="bridal-step">
+      <div class="bridal-step-num">I</div>
+      <h5>The Dream Consultation</h5>
+      <p>A private meeting to understand your vision, venue, and bridal aesthetic.</p>
+    </div>
+    <div class="bridal-step">
+      <div class="bridal-step-num">II</div>
+      <h5>Design & Sketches</h5>
+      <p>Hand-drawn sketches presented for your review, refined until perfect.</p>
+    </div>
+    <div class="bridal-step">
+      <div class="bridal-step-num">III</div>
+      <h5>Fabric Selection</h5>
+      <p>Touch and choose your fabrics from our curated selection of bridal materials.</p>
+    </div>
+    <div class="bridal-step">
+      <div class="bridal-step-num">IV</div>
+      <h5>Fittings</h5>
+      <p>Five intimate fittings to perfect every seam, hem, and silhouette.</p>
+    </div>
+    <div class="bridal-step">
+      <div class="bridal-step-num">V</div>
+      <h5>Your Day</h5>
+      <p>Delivered pressed and ready. Optional on-site assistance available.</p>
+    </div>
+  </div>
+</div>
+
+<div class="col-featured">
+  <div class="col-featured-imgs reveal-left">
+    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=85" alt="Featured front">
+    <img src="https://images.unsplash.com/photo-1594552072238-b8a33785b6cd?w=600&q=85" alt="Featured back">
+  </div>
+  <div class="col-featured-text reveal-right">
+    <span class="eyebrow">Featured Gown</span>
+    <h3>Voile <em>d'Ivoire</em></h3>
+    <blockquote>"She was wearing the most beautiful thing I had ever seen — and it was made for her alone."</blockquote>
+    <p>A sweetheart-neckline ballgown in ivory mikado silk with hand-appliquéd French lace overlay on the bodice. The skirt opens in four metres of duchess satin, finished with a four-metre cathedral train embroidered with 3,000 seed pearls.</p>
+    <p>Available exclusively as a bespoke commission. Minimum 6 months lead time required.</p>
+  </div>
+</div>
+
+<div class="col-cta">
+  <span class="eyebrow">Begin Your Bridal Journey</span>
+  <h3>Commission Your <em>Wedding Gown</em></h3>
+  <p>Bridal consultations are available by appointment only. We recommend booking 9–12 months before your wedding date.</p>
+  <a href="index.html#booking" class="btn-cta">Book a Bridal Consultation</a>
+  <a href="index.html#collections" class="btn-back">View All Collections</a>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <a href="index.html" class="footer-logo">Maison <span>Elara</span></a>
+    <p class="footer-legal">© 2025 Maison Elara. Private Couture Atelier — By Appointment Only.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#collections">Collections</a>
+      <a href="index.html#booking">Book</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

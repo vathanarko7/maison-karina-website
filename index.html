@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maison Karina — Private Couture Atelier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ivory: #F6F1EB;
+      --rose: #D8B7B1;
+      --taupe: #5A4A46;
+      --gold: #C6A75E;
+      --black: #111111;
+      --beige: #EDE8E0;
+      --light-rose: #F0E4E1;
+      --mid-taupe: #8A7470;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      background: var(--ivory);
+      color: var(--taupe);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 24px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background .4s, padding .4s;
+    }
+
+    nav.scrolled {
+      background: rgba(246, 241, 235, .95);
+      backdrop-filter: blur(12px);
+      padding: 16px 60px;
+      border-bottom: 1px solid rgba(198, 167, 94, .2);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: .12em;
+      color: #fff;
+      text-decoration: none;
+      transition: color .4s;
+    }
+
+    nav.scrolled .nav-logo {
+      color: var(--black);
+    }
+
+    .nav-logo span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .9);
+      text-decoration: none;
+      transition: color .3s;
+    }
+
+    nav.scrolled .nav-links a {
+      color: var(--taupe);
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-cta {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border: 1px solid rgba(255, 255, 255, .65);
+      color: #fff;
+      text-decoration: none;
+      transition: all .4s;
+    }
+
+    nav.scrolled .nav-cta {
+      border-color: var(--taupe);
+      color: var(--taupe);
+    }
+
+    .nav-cta:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #fff;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      transition: all .35s cubic-bezier(.4, 0, .2, 1);
+      transform-origin: center;
+    }
+
+    nav.scrolled .hamburger span {
+      background: var(--taupe);
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* HERO */
+    #hero {
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--black);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(40, 28, 26, .30) 0%, rgba(40, 28, 26, .55) 100%),
+        url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=85') center 20%/cover no-repeat;
+      transform: scale(1.04);
+      animation: heroScale 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroScale {
+      to {
+        transform: scale(1.0);
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      color: var(--ivory);
+      padding: 0 24px;
+      max-width: 780px;
+      animation: fadeUp .9s ease both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      animation: fadeUp .9s .15s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(44px, 7vw, 84px);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 28px;
+      letter-spacing: .01em;
+      text-shadow: 0 2px 20px rgba(17, 17, 17, .35);
+      animation: fadeUp .9s .25s ease both;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: #F5D5CF;
+    }
+
+    .hero-sub {
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: .08em;
+      line-height: 2;
+      color: rgba(255, 255, 255, .95);
+      margin-bottom: 52px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeUp .9s .35s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp .9s .45s ease both;
+    }
+
+    .btn-primary {
+      padding: 16px 40px;
+      background: var(--gold);
+      color: #fff;
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-weight: 500;
+      text-decoration: none;
+      border: 2px solid var(--gold);
+      transition: all .3s;
+      box-shadow: 0 4px 24px rgba(198, 167, 94, .5);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--gold);
+      box-shadow: none;
+    }
+
+    .btn-ghost {
+      padding: 16px 40px;
+      background: rgba(255, 255, 255, .12);
+      color: #fff;
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid rgba(255, 255, 255, .8);
+      transition: all .3s;
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, .22);
+      border-color: #fff;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(246, 241, 235, .5);
+      font-size: 9px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: rgba(246, 241, 235, .3);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+
+      0%,
+      100% {
+        opacity: .3;
+        transform: scaleY(1);
+      }
+
+      50% {
+        opacity: .8;
+        transform: scaleY(.6);
+      }
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 120px 60px;
+    }
+
+    .section-eyebrow {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--black);
+      margin-bottom: 28px;
+    }
+
+    /* INTRO */
+    #intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 120px 24px;
+    }
+
+    .intro-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 48px;
+    }
+
+    .intro-text {
+      font-size: 17px;
+      line-height: 2;
+      color: var(--mid-taupe);
+      font-weight: 300;
+    }
+
+    .intro-signature {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--gold);
+      margin-top: 48px;
+    }
+
+    /* COLLECTIONS */
+    #collections {
+      background: var(--ivory);
+      padding: 120px 60px;
+    }
+
+    .collections-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .collection-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .collection-card-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      transition: transform .8s cubic-bezier(.25, .46, .45, .94);
+      background: var(--beige);
+    }
+
+    .collection-card:hover .collection-card-img {
+      transform: scale(1.06);
+    }
+
+    .collection-card-inner {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 32px;
+      background: linear-gradient(to top, rgba(17, 17, 17, .7) 0%, transparent 100%);
+      transform: translateY(8px);
+      transition: transform .4s;
+    }
+
+    .collection-card:hover .collection-card-inner {
+      transform: translateY(0);
+    }
+
+    .collection-tag {
+      font-size: 9px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .collection-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--ivory);
+      line-height: 1.2;
+    }
+
+    .collection-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(246, 241, 235, .7);
+      text-decoration: none;
+      transition: color .3s;
+    }
+
+    .collection-link::after {
+      content: '→';
+      transition: transform .3s;
+    }
+
+    .collection-card:hover .collection-link {
+      color: var(--gold);
+    }
+
+    .collection-card:hover .collection-link::after {
+      transform: translateX(4px);
+    }
+
+    /* PROCESS */
+    #process {
+      background: var(--beige);
+      padding: 120px 60px;
+    }
+
+    .process-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .process-timeline {
+      display: flex;
+      gap: 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .process-timeline::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--rose);
+    }
+
+    .process-step {
+      flex: 1;
+      padding: 0 24px;
+      position: relative;
+    }
+
+    .process-number {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1px solid var(--rose);
+      background: var(--beige);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--taupe);
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+      transition: all .3s;
+    }
+
+    .process-step:hover .process-number {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ivory);
+    }
+
+    .process-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--black);
+      margin-bottom: 12px;
+    }
+
+    .process-desc {
+      font-size: 12px;
+      line-height: 1.9;
+      color: var(--mid-taupe);
+    }
+
+    /* PORTFOLIO */
+    #portfolio {
+      padding: 120px 60px;
+    }
+
+    .portfolio-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 3px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .port-item {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .port-item-1 {
+      grid-column: 1/6;
+      grid-row: 1/3;
+    }
+
+    .port-item-2 {
+      grid-column: 6/9;
+      grid-row: 1/2;
+    }
+
+    .port-item-3 {
+      grid-column: 9/13;
+      grid-row: 1/2;
+    }
+
+    .port-item-4 {
+      grid-column: 6/9;
+      grid-row: 2/3;
+    }
+
+    .port-item-5 {
+      grid-column: 9/13;
+      grid-row: 2/3;
+    }
+
+    .port-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      min-height: 260px;
+      background: var(--beige);
+      transition: transform .8s cubic-bezier(.25, .46, .45, .94);
+    }
+
+    .port-item:hover .port-img {
+      transform: scale(1.05);
+    }
+
+    .port-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px;
+      background: linear-gradient(to top, rgba(17, 17, 17, .65), transparent);
+      opacity: 0;
+      transition: opacity .4s;
+    }
+
+    .port-item:hover .port-caption {
+      opacity: 1;
+    }
+
+    .port-caption-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      color: var(--ivory);
+      font-weight: 300;
+    }
+
+    .port-caption-year {
+      font-size: 10px;
+      letter-spacing: .2em;
+      color: var(--gold);
+    }
+
+    /* TESTIMONIALS */
+    #testimonials {
+      background: var(--light-rose);
+      padding: 120px 60px;
+      text-align: center;
+    }
+
+    .testimonials-header {
+      margin-bottom: 80px;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 60px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .testimonial {
+      padding: 48px 40px;
+      background: var(--ivory);
+      position: relative;
+    }
+
+    .testimonial::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px;
+      line-height: 1;
+      color: var(--rose);
+      opacity: .4;
+      position: absolute;
+      top: -10px;
+      left: 24px;
+    }
+
+    .testimonial-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 20px;
+      line-height: 1.7;
+      color: var(--taupe);
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      margin-top: 24px;
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .testimonial-stars {
+      color: var(--gold);
+      font-size: 12px;
+      margin-bottom: 16px;
+      letter-spacing: 4px;
+    }
+
+    /* BOOKING */
+    #booking {
+      padding: 140px 60px;
+      background: var(--taupe);
+      text-align: center;
+    }
+
+    .booking-eyebrow {
+      color: var(--gold);
+    }
+
+    .booking-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--ivory);
+      margin-bottom: 24px;
+    }
+
+    .booking-desc {
+      font-size: 13px;
+      color: rgba(246, 241, 235, .7);
+      letter-spacing: .06em;
+      line-height: 2;
+      margin-bottom: 52px;
+    }
+
+    .booking-form-wrapper {
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .booking-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 16px 20px;
+      background: transparent;
+      border: 1px solid rgba(246, 241, 235, .2);
+      color: var(--ivory);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: .06em;
+      transition: border-color .3s;
+      outline: none;
+    }
+
+    .form-input::placeholder {
+      color: rgba(246, 241, 235, .35);
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 16px 20px;
+      background: transparent;
+      border: 1px solid rgba(246, 241, 235, .2);
+      color: rgba(246, 241, 235, .7);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: .06em;
+      outline: none;
+      appearance: none;
+      cursor: pointer;
+      transition: border-color .3s;
+    }
+
+    .form-select option {
+      background: var(--taupe);
+    }
+
+    .form-select:focus {
+      border-color: var(--gold);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 18px;
+      background: var(--gold);
+      color: var(--ivory);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: all .3s;
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover {
+      background: var(--rose);
+    }
+
+    .booking-note {
+      margin-top: 24px;
+      font-size: 10px;
+      letter-spacing: .15em;
+      color: rgba(246, 241, 235, .35);
+      text-transform: uppercase;
+    }
+
+    /* ABOUT */
+    #about {
+      padding: 120px 60px;
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .about-img-wrapper {
+      position: relative;
+    }
+
+    .about-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      background: var(--beige);
+    }
+
+    .about-img-accent {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 200px;
+      height: 200px;
+      border: 1px solid var(--gold);
+      z-index: -1;
+    }
+
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--gold);
+      line-height: 1.6;
+      border-left: 2px solid var(--gold);
+      padding-left: 24px;
+      margin: 40px 0;
+    }
+
+    .about-text {
+      font-size: 14px;
+      line-height: 2;
+      color: var(--mid-taupe);
+    }
+
+    .about-detail {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .about-detail-item {
+      text-align: center;
+      padding: 24px 12px;
+      background: var(--beige);
+    }
+
+    .about-detail-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--gold);
+      display: block;
+    }
+
+    .about-detail-label {
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--mid-taupe);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--black);
+      padding: 80px 60px 40px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--ivory);
+      margin-bottom: 16px;
+    }
+
+    .footer-brand-name span {
+      color: var(--gold);
+    }
+
+    .footer-tagline {
+      font-size: 11px;
+      color: rgba(246, 241, 235, .35);
+      letter-spacing: .1em;
+      line-height: 1.8;
+    }
+
+    .footer-col h4 {
+      font-size: 9px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-col ul a {
+      font-size: 12px;
+      color: rgba(246, 241, 235, .45);
+      text-decoration: none;
+      transition: color .3s;
+    }
+
+    .footer-col ul a:hover {
+      color: var(--rose);
+    }
+
+    .footer-divider {
+      height: 1px;
+      background: rgba(246, 241, 235, .08);
+      margin-bottom: 40px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-legal {
+      font-size: 10px;
+      color: rgba(246, 241, 235, .2);
+      letter-spacing: .12em;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-social a {
+      font-size: 9px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(246, 241, 235, .35);
+      text-decoration: none;
+      transition: color .3s;
+    }
+
+    .footer-social a:hover {
+      color: var(--gold);
+    }
+
+    /* CHAT */
+    #chat-widget {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    #chat-box {
+      width: 340px;
+      background: var(--ivory);
+      border: 1px solid rgba(90, 74, 70, .15);
+      box-shadow: 0 24px 64px rgba(17, 17, 17, .18);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #chat-box.open {
+      display: flex;
+      animation: slideUp .3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .chat-header {
+      background: var(--taupe);
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      color: var(--ivory);
+    }
+
+    .chat-header-sub {
+      font-size: 10px;
+      color: rgba(246, 241, 235, .5);
+      letter-spacing: .08em;
+    }
+
+    .chat-close {
+      background: none;
+      border: none;
+      color: rgba(246, 241, 235, .5);
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .chat-messages {
+      height: 320px;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: var(--rose);
+      border-radius: 2px;
+    }
+
+    .chat-msg {
+      max-width: 85%;
+      padding: 12px 16px;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .chat-msg.bot {
+      background: var(--beige);
+      color: var(--taupe);
+      align-self: flex-start;
+      border-left: 2px solid var(--rose);
+    }
+
+    .chat-msg.user {
+      background: var(--taupe);
+      color: var(--ivory);
+      align-self: flex-end;
+    }
+
+    .chat-suggestions {
+      padding: 12px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      border-top: 1px solid rgba(90, 74, 70, .08);
+    }
+
+    .chat-chip {
+      font-size: 10px;
+      padding: 6px 12px;
+      border: 1px solid var(--rose);
+      color: var(--taupe);
+      background: none;
+      cursor: pointer;
+      letter-spacing: .06em;
+      transition: all .2s;
+    }
+
+    .chat-chip:hover {
+      background: var(--rose);
+      color: var(--ivory);
+      border-color: var(--rose);
+    }
+
+    .chat-input-area {
+      display: flex;
+      border-top: 1px solid rgba(90, 74, 70, .1);
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 14px 16px;
+      border: none;
+      outline: none;
+      background: var(--ivory);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--taupe);
+    }
+
+    .chat-send {
+      padding: 0 20px;
+      background: var(--gold);
+      border: none;
+      cursor: pointer;
+      color: var(--ivory);
+      font-size: 14px;
+      transition: background .2s;
+    }
+
+    .chat-send:hover {
+      background: var(--taupe);
+    }
+
+    .chat-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--taupe);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(17, 17, 17, .2);
+      transition: all .3s;
+      position: relative;
+    }
+
+    .chat-toggle:hover {
+      background: var(--gold);
+      transform: scale(1.06);
+    }
+
+    .chat-toggle svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: var(--ivory);
+      stroke-width: 1.6;
+    }
+
+    .chat-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--taupe);
+    }
+
+    .chat-label {
+      font-size: 9px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--mid-taupe);
+      text-align: center;
+    }
+
+    /* Typing indicator */
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 14px 16px !important;
+    }
+
+    .typing-indicator span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--rose);
+      display: inline-block;
+      animation: typingBounce 1.2s infinite ease-in-out;
+    }
+
+    .typing-indicator span:nth-child(2) {
+      animation-delay: .2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+      animation-delay: .4s;
+    }
+
+    @keyframes typingBounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+        opacity: .4;
+      }
+
+      30% {
+        transform: translateY(-6px);
+        opacity: 1;
+      }
+    }
+
+    /* MOBILE CTA */
+    #mobile-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 98;
+      padding: 16px 24px;
+      background: var(--taupe);
+      text-align: center;
+    }
+
+    #mobile-cta a {
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--ivory);
+      text-decoration: none;
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .8s, transform .8s;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-32px);
+      transition: opacity .8s, transform .8s;
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(32px);
+      transition: opacity .8s, transform .8s;
+    }
+
+    .reveal-right.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .process-timeline {
+        flex-wrap: wrap;
+      }
+
+      .process-step {
+        flex: 1 1 40%;
+        margin-bottom: 40px;
+      }
+
+      .process-timeline::before {
+        display: none;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 20px 24px;
+      }
+
+      nav.scrolled {
+        padding: 14px 24px;
+      }
+
+      .nav-links,
+      .nav-cta {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      section {
+        padding: 80px 24px;
+      }
+
+      #booking {
+        padding: 100px 24px;
+      }
+
+      .collections-grid {
+        grid-template-columns: 1fr;
+        gap: 3px;
+      }
+
+      .process-step {
+        flex: 1 1 100%;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .port-item-1,
+      .port-item-2,
+      .port-item-3,
+      .port-item-4,
+      .port-item-5 {
+        grid-column: auto;
+        grid-row: auto;
+      }
+
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .about-img-accent {
+        display: none;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      #mobile-cta {
+        display: block;
+      }
+
+      #chat-widget {
+        bottom: 80px;
+        right: 16px;
+      }
+
+      #chat-box {
+        width: calc(100vw - 32px);
+      }
+    }
+
+    /* MOBILE NAV */
+    #mobile-nav {
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: var(--ivory);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+    }
+
+    #mobile-nav.open {
+      display: flex;
+      animation: fadeIn .3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    #mobile-nav a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--taupe);
+      text-decoration: none;
+    }
+
+    #mobile-nav a:hover {
+      color: var(--gold);
+    }
+
+    body.menu-open .nav-logo {
+      color: var(--black) !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Maison <span>Elara</span></a>
+    <ul class="nav-links">
+      <li><a href="#collections">Collections</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#about">Atelier</a></li>
+    </ul>
+    <a href="#booking" class="nav-cta">Book Consultation</a>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <div id="mobile-nav">
+    <a href="#collections" onclick="toggleMenu()">Collections</a>
+    <a href="#process" onclick="toggleMenu()">Process</a>
+    <a href="#portfolio" onclick="toggleMenu()">Portfolio</a>
+    <a href="#about" onclick="toggleMenu()">Atelier</a>
+    <a href="#booking" onclick="toggleMenu()">Book Consultation</a>
+  </div>
+
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Maison Elara — Private Couture Atelier</p>
+      <h1 class="hero-title">Where Elegance<br><em>Becomes Personal</em></h1>
+      <p class="hero-sub">Bespoke couture crafted with intention, intimacy, and timeless artistry.</p>
+      <div class="hero-actions">
+        <a href="#booking" class="btn-primary">Book a Private Consultation</a>
+        <a href="#collections" class="btn-ghost">Explore the Collections</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <section id="intro">
+    <div class="intro-divider"></div>
+    <span class="section-eyebrow reveal">Est. 2014 — Paris</span>
+    <h2 class="section-title reveal">A Private Atelier<br><em
+        style="font-style:italic;color:var(--rose)">Experience</em></h2>
+    <p class="intro-text reveal">In a world of mass production, true couture remains rare. Each creation is thoughtfully
+      designed and meticulously crafted to reflect your individuality — a wearable story, a second skin, a lasting
+      expression of who you are.</p>
+    <p class="intro-signature reveal">— Elara Fontaine</p>
+  </section>
+
+  <section id="collections">
+    <div class="collections-header reveal">
+      <span class="section-eyebrow">Signature Collections</span>
+      <h2 class="section-title">The Art of <em style="font-style:italic;color:var(--rose)">Couture</em></h2>
+    </div>
+    <div class="collections-grid">
+      <div class="collection-card reveal">
+        <img class="collection-card-img" src="https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=800&q=85"
+          alt="Evening Couture" loading="lazy">
+        <div class="collection-card-inner">
+          <span class="collection-tag">SS 2025</span>
+          <div class="collection-name">Evening<br>Couture</div>
+          <a href="evening-couture.html" class="collection-link">View Collection</a>
+        </div>
+      </div>
+      <div class="collection-card reveal" style="transition-delay:.12s">
+        <img class="collection-card-img" src="https://images.unsplash.com/photo-1594552072238-b8a33785b6cd?w=800&q=85"
+          alt="Bridal Atelier" loading="lazy">
+        <div class="collection-card-inner">
+          <span class="collection-tag">Bridal 2025</span>
+          <div class="collection-name">Bridal<br>Atelier</div>
+          <a href="bridal-atelier.html" class="collection-link">View Collection</a>
+        </div>
+      </div>
+      <div class="collection-card reveal" style="transition-delay:.24s">
+        <img class="collection-card-img" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=85"
+          alt="Custom Occasion" loading="lazy">
+        <div class="collection-card-inner">
+          <span class="collection-tag">Bespoke</span>
+          <div class="collection-name">Custom<br>Occasion</div>
+          <a href="custom-occasion.html" class="collection-link">View Collection</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="process-header reveal">
+      <span class="section-eyebrow">The Couture Journey</span>
+      <h2 class="section-title">Crafted With<br><em style="font-style:italic;color:var(--rose)">Intention</em></h2>
+    </div>
+    <div class="process-timeline">
+      <div class="process-step reveal" style="transition-delay:.05s">
+        <div class="process-number">I</div>
+        <div class="process-title">Consultation</div>
+        <p class="process-desc">A private discussion to understand your vision, lifestyle, and the story your garment
+          will tell.</p>
+      </div>
+      <div class="process-step reveal" style="transition-delay:.15s">
+        <div class="process-number">II</div>
+        <div class="process-title">Sketch & Concept</div>
+        <p class="process-desc">Custom design development — hand-rendered concept sketches presented exclusively for
+          you.</p>
+      </div>
+      <div class="process-step reveal" style="transition-delay:.25s">
+        <div class="process-number">III</div>
+        <div class="process-title">Fabric Selection</div>
+        <p class="process-desc">Luxury fabrics sourced from the finest mills in France, Italy, and Japan — chosen for
+          texture and movement.</p>
+      </div>
+      <div class="process-step reveal" style="transition-delay:.35s">
+        <div class="process-number">IV</div>
+        <div class="process-title">Fittings</div>
+        <p class="process-desc">Precise, intimate tailoring sessions with careful adjustments to achieve perfect form.
+        </p>
+      </div>
+      <div class="process-step reveal" style="transition-delay:.45s">
+        <div class="process-number">V</div>
+        <div class="process-title">Final Creation</div>
+        <p class="process-desc">A singular couture piece — crafted exclusively for you, and no one else.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <div class="portfolio-header reveal">
+      <span class="section-eyebrow">Lookbook</span>
+      <h2 class="section-title">Editorial<br><em style="font-style:italic;color:var(--rose)">Portfolio</em></h2>
+    </div>
+    <div class="portfolio-grid reveal">
+      <div class="port-item port-item-1">
+        <img class="port-img" src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=900&q=85"
+          alt="Couture 2025" loading="lazy">
+        <div class="port-caption">
+          <div class="port-caption-year">2025</div>
+          <div class="port-caption-title">La Nuit Étoilée</div>
+        </div>
+      </div>
+      <div class="port-item port-item-2">
+        <img class="port-img" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700&q=85"
+          alt="Couture 2025" loading="lazy">
+        <div class="port-caption">
+          <div class="port-caption-year">2025</div>
+          <div class="port-caption-title">Bridal Dreams</div>
+        </div>
+      </div>
+      <div class="port-item port-item-3">
+        <img class="port-img" src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=700&q=85"
+          alt="Couture 2024" loading="lazy">
+        <div class="port-caption">
+          <div class="port-caption-year">2024</div>
+          <div class="port-caption-title">Femme Soleil</div>
+        </div>
+      </div>
+      <div class="port-item port-item-4">
+        <img class="port-img" src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=700&q=85"
+          alt="Couture 2024" loading="lazy">
+        <div class="port-caption">
+          <div class="port-caption-year">2024</div>
+          <div class="port-caption-title">L'Aube Dorée</div>
+        </div>
+      </div>
+      <div class="port-item port-item-5">
+        <img class="port-img" src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=700&q=85"
+          alt="Couture 2023" loading="lazy">
+        <div class="port-caption">
+          <div class="port-caption-year">2023</div>
+          <div class="port-caption-title">Silence & Silk</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <div class="testimonials-header reveal">
+      <span class="section-eyebrow">Client Love Letters</span>
+      <h2 class="section-title">Words from<br><em style="font-style:italic;color:var(--rose)">Our Clients</em></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">Wearing my gown felt like stepping into the most confident version of myself. The
+          experience was as beautiful as the dress.</p>
+        <p class="testimonial-author">— Isabelle M., Paris</p>
+      </div>
+      <div class="testimonial reveal" style="transition-delay:.15s">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">It was more than a dress — it was an unforgettable couture experience. Elara
+          understood my vision better than I did.</p>
+        <p class="testimonial-author">— Camille R., Monaco</p>
+      </div>
+      <div class="testimonial reveal" style="transition-delay:.05s">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">From the first consultation to the final fitting, I felt completely seen and cared
+          for. This is what true luxury feels like.</p>
+        <p class="testimonial-author">— Sophia L., London</p>
+      </div>
+      <div class="testimonial reveal" style="transition-delay:.2s">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">My wedding gown exceeded every dream I had. The craftsmanship, the fabric, the
+          attention to detail — absolutely extraordinary.</p>
+        <p class="testimonial-author">— Marie-Claire D., Geneva</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="booking">
+    <span class="section-eyebrow booking-eyebrow reveal">Private Appointments Only</span>
+    <h2 class="booking-title reveal">Begin Your<br><em style="font-style:italic">Couture Journey</em></h2>
+    <p class="booking-desc reveal">Private consultations are available by appointment only.<br>We welcome a limited
+      number of clients each season.</p>
+    <div class="booking-form-wrapper reveal">
+      <form class="booking-form" id="consultationForm" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <input class="form-input" id="firstName" name="firstName" type="text" placeholder="First Name" required>
+          <input class="form-input" id="lastName" name="lastName" type="text" placeholder="Last Name" required>
+        </div>
+        <input class="form-input" id="email" name="email" type="email" placeholder="Email Address" required>
+        <input class="form-input" id="phone" name="phone" type="tel" placeholder="Phone Number">
+        <select class="form-select" id="creationType" name="creationType">
+          <option value="" disabled selected>Type of Creation</option>
+          <option>Evening Couture</option>
+          <option>Bridal Gown</option>
+          <option>Custom Occasion</option>
+          <option>Other</option>
+        </select>
+        <input class="form-input" id="preferredDate" name="preferredDate" type="date"
+          placeholder="Preferred Appointment Date">
+        <textarea class="form-input" id="vision" name="vision" rows="3"
+          placeholder="Tell us about your vision..."></textarea>
+        <button type="submit" class="btn-submit" id="submitBtn">Request Consultation</button>
+      </form>
+      <div id="form-status"
+        style="display:none;margin-top:20px;padding:16px 20px;font-size:12px;letter-spacing:.08em;text-align:center;">
+      </div>
+      <p class="booking-note">Limited couture pieces created each season</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-img-wrapper reveal-left">
+        <img class="about-img" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=85"
+          alt="Designer Portrait" loading="lazy">
+        <div class="about-img-accent"></div>
+      </div>
+      <div class="reveal-right">
+        <span class="section-eyebrow">The Designer</span>
+        <h2 class="section-title">Elara Fontaine</h2>
+        <blockquote class="about-quote">"Couture is not clothing — it is confidence given form, dreams made tangible."
+        </blockquote>
+        <p class="about-text">Trained in Paris and refined through years working alongside the great houses, Elara
+          Fontaine founded her private atelier with a singular conviction: every woman deserves a garment that was made
+          for her alone.<br><br>Drawing from a philosophy of feminine strength and quiet elegance, each piece is a
+          collaboration between designer and client — a shared journey of discovery that results in something truly
+          irreplaceable.</p>
+        <div class="about-detail">
+          <div class="about-detail-item"><span class="about-detail-num">11</span><span class="about-detail-label">Years
+              of Couture</span></div>
+          <div class="about-detail-item"><span class="about-detail-num">340+</span><span
+              class="about-detail-label">Bespoke Pieces</span></div>
+          <div class="about-detail-item"><span class="about-detail-num">38</span><span
+              class="about-detail-label">Countries Dressed</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Maison <span>Elara</span></div>
+        <p class="footer-tagline">Private Couture Atelier<br>By Appointment Only<br><br>12 Rue du Faubourg
+          Saint-Honoré<br>75008 Paris, France</p>
+      </div>
+      <div class="footer-col">
+        <h4>Atelier</h4>
+        <ul>
+          <li><a href="#collections">Collections</a></li>
+          <li><a href="#process">Our Process</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#about">About Elara</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">Evening Couture</a></li>
+          <li><a href="#">Bridal Atelier</a></li>
+          <li><a href="#">Custom Occasion</a></li>
+          <li><a href="#booking">Book Appointment</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">@maisonelara</a></li>
+          <li><a href="#"><span class="__cf_email__"
+                data-cfemail="5f3e2b3a33363a2d1f323e362c30313a333e2d3e713c3032">[email&#160;protected]</span></a></li>
+          <li><a href="#">+33 1 42 68 19 00</a></li>
+          <li><a href="#">Press Inquiries</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p class="footer-legal">© 2025 Maison Elara. All rights reserved. Private Couture Atelier — By Appointment Only.
+      </p>
+      <div class="footer-social">
+        <a href="#">Instagram</a>
+        <a href="#">Pinterest</a>
+        <a href="#">Press</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="mobile-cta">
+    <a href="#booking">Book a Private Consultation →</a>
+  </div>
+
+  <div id="chat-widget">
+    <div id="chat-box">
+      <div class="chat-header">
+        <div>
+          <div class="chat-header-title">Atelier Assistant</div>
+          <div class="chat-header-sub">Here to guide you</div>
+        </div>
+        <button class="chat-close" onclick="toggleChat()">×</button>
+      </div>
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-msg bot">Welcome to Maison Elara. I'm here to answer any questions about our couture process,
+          consultations, or collections. How may I assist you?</div>
+      </div>
+      <div class="chat-suggestions" id="chat-chips">
+        <button class="chat-chip" onclick="sendChip(this)">Booking process</button>
+        <button class="chat-chip" onclick="sendChip(this)">Pricing</button>
+        <button class="chat-chip" onclick="sendChip(this)">Timeline</button>
+        <button class="chat-chip" onclick="sendChip(this)">Fabrics</button>
+      </div>
+      <div class="chat-input-area">
+        <input class="chat-input" id="chat-input" type="text" placeholder="Ask a question..."
+          onkeydown="if(event.key==='Enter') sendMessage()">
+        <button class="chat-send" onclick="sendMessage()">→</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+      <button class="chat-toggle" onclick="toggleChat()">
+        <div class="chat-badge" id="chat-badge"></div>
+        <svg viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+      </button>
+      <span class="chat-label">Atelier<br>Assistant</span>
+    </div>
+  </div>
+
+  <script>
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); });
+
+    function toggleMenu() {
+      const mn = document.getElementById('mobile-nav');
+      const hb = document.getElementById('hamburger');
+      mn.classList.toggle('open');
+      hb.classList.toggle('open');
+      const isOpen = mn.classList.contains('open');
+      document.body.classList.toggle('menu-open', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── GOOGLE CALENDAR BOOKING ──────────────────────────────────────────────
+    // STEP 1: Paste your Google Apps Script Web App URL below
+    const APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const status = document.getElementById('form-status');
+      const form = e.target;
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      const data = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        creationType: document.getElementById('creationType').value,
+        preferredDate: document.getElementById('preferredDate').value,
+        vision: document.getElementById('vision').value,
+      };
+
+      // If no Apps Script URL set yet, show success anyway (demo mode)
+      if (APPS_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+        btn.textContent = "Request Received — We'll Be in Touch";
+        btn.style.background = 'var(--rose)';
+        status.style.display = 'block';
+        status.style.color = 'rgba(246,241,235,.6)';
+        status.textContent = '✓ Your consultation request has been received. (Demo mode — connect Google Calendar to enable live booking)';
+        form.reset();
+        return;
+      }
+
+      try {
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if (result.status === 'success') {
+          btn.textContent = "Request Received — We'll Be in Touch";
+          btn.style.background = 'var(--rose)';
+          status.style.display = 'block';
+          status.style.color = 'rgba(246,241,235,.7)';
+          status.textContent = '✓ Consultation request confirmed! Check your email for details. A calendar invite will follow within 24 hours.';
+          form.reset();
+        } else {
+          throw new Error(result.message);
+        }
+      } catch (err) {
+        btn.textContent = 'Request Consultation';
+        btn.disabled = false;
+        status.style.display = 'block';
+        status.style.color = '#F5D5CF';
+        status.textContent = 'Something went wrong. Please email us directly at atelier@maisonelara.com';
+      }
+    }
+
+    // ── AI CHATBOT ────────────────────────────────────────────────────────────
+    // STEP 2: Paste your Anthropic API key below
+    const ANTHROPIC_API_KEY = 'YOUR_ANTHROPIC_API_KEY_HERE';
+
+    const ATELIER_SYSTEM_PROMPT = `You are the Atelier Assistant for Maison Elara, a private luxury couture atelier in Paris founded by designer Elara Fontaine.
+
+Your role is to warmly and elegantly assist clients with questions about the atelier. You speak with refined, feminine grace — never overly casual, always helpful.
+
+KEY FACTS ABOUT MAISON ELARA:
+- Founded 2014 in Paris by Elara Fontaine
+- Three collections: Evening Couture (SS 2025), Bridal Atelier, Custom Occasion (Bespoke)
+- All pieces are bespoke — no ready-to-wear
+- Private consultations by appointment only
+- Limited pieces per season
+
+PRICING:
+- Custom Occasion: from €8,000
+- Evening Couture: from €15,000
+- Bridal Gowns: from €22,000
+
+TIMELINES:
+- Custom Occasion: 3–5 weeks, 3 fittings
+- Evening Couture: 6–8 weeks, 4 fittings
+- Bridal: 6–9 months, 5 fittings
+
+FABRICS: Silk charmeuse, duchess satin, Chantilly lace, silk organza, mikado silk, hand-beaded organza. Sourced from Lyon, Milan, Tokyo.
+
+PROCESS: Consultation → Sketch & Concept → Fabric Selection → Fittings → Final Creation
+
+CONTACT: atelier@maisonelara.com | +33 1 42 68 19 00
+ADDRESS: 12 Rue du Faubourg Saint-Honoré, 75008 Paris
+
+Always guide clients toward booking a consultation for specific requests. Keep responses concise and elegant — 2–4 sentences unless more detail is needed. Never mention competitor brands.`;
+
+    let chatHistory = [];
+    let chatOpen = false;
+
+    function toggleChat() {
+      chatOpen = !chatOpen;
+      document.getElementById('chat-box').classList.toggle('open', chatOpen);
+      document.getElementById('chat-badge').style.display = chatOpen ? 'none' : 'block';
+    }
+
+    function addMsg(text, type) {
+      const el = document.createElement('div');
+      el.className = `chat-msg ${type}`;
+      el.textContent = text;
+      const msgs = document.getElementById('chat-messages');
+      msgs.appendChild(el);
+      msgs.scrollTop = msgs.scrollHeight;
+      return el;
+    }
+
+    function addTypingIndicator() {
+      const el = document.createElement('div');
+      el.className = 'chat-msg bot typing-indicator';
+      el.id = 'typing';
+      el.innerHTML = '<span></span><span></span><span></span>';
+      document.getElementById('chat-messages').appendChild(el);
+      document.getElementById('chat-messages').scrollTop = 99999;
+      return el;
+    }
+
+    async function sendChip(btn) {
+      const text = btn.textContent;
+      btn.parentElement.style.display = 'none';
+      addMsg(text, 'user');
+      chatHistory.push({ role: 'user', content: text });
+      await getBotReply();
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+      addMsg(text, 'user');
+      chatHistory.push({ role: 'user', content: text });
+      await getBotReply();
+    }
+
+    async function getBotReply() {
+      const typing = addTypingIndicator();
+
+      // Demo mode — no API key
+      if (ANTHROPIC_API_KEY === 'YOUR_ANTHROPIC_API_KEY_HERE') {
+        await new Promise(r => setTimeout(r, 900));
+        typing.remove();
+        const demos = {
+          'pricing': 'Our creations begin at €8,000 for Custom Occasion, €15,000 for Evening Couture, and €22,000 for Bridal gowns. Each piece is entirely bespoke and priced according to complexity and fabric.',
+          'booking': 'We invite you to submit a consultation request through our booking form below. We respond within 48 hours to arrange your private appointment at the atelier.',
+          'timeline': 'Timelines range from 3–5 weeks for Custom Occasion to 6–9 months for Bridal. Each creation includes multiple fittings to ensure a flawless result.',
+          'fabric': 'We source exclusively from premier mills in Lyon, Milan, and Tokyo — including silk charmeuse, Chantilly lace, duchess satin, and hand-embroidered tulles.',
+          'bridal': 'Our Bridal Atelier creates one-of-a-kind wedding gowns with a minimum lead time of 6 months. We recommend booking 9–12 months before your wedding date.',
+          'process': 'Our couture journey moves through five stages: Consultation, Sketch & Concept, Fabric Selection, Fittings, and Final Creation — each step dedicated entirely to you.',
+        };
+        const lower = chatHistory[chatHistory.length - 1].content.toLowerCase();
+        const match = Object.keys(demos).find(k => lower.includes(k));
+        const reply = match ? demos[match] : 'Thank you for your question. I would be delighted to assist — for the most personalised guidance, I invite you to book a private consultation with Elara directly. Shall I help you with that?';
+        chatHistory.push({ role: 'assistant', content: reply });
+        addMsg(reply, 'bot');
+        return;
+      }
+
+      try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01',
+            'anthropic-dangerous-direct-browser-access': 'true'
+          },
+          body: JSON.stringify({
+            model: 'claude-haiku-4-5-20251001',
+            max_tokens: 300,
+            system: ATELIER_SYSTEM_PROMPT,
+            messages: chatHistory
+          })
+        });
+        const data = await res.json();
+        typing.remove();
+        const reply = data.content?.[0]?.text || "I'm sorry, I couldn't process that. Please try again or contact us directly.";
+        chatHistory.push({ role: 'assistant', content: reply });
+        addMsg(reply, 'bot');
+      } catch (err) {
+        typing.remove();
+        addMsg("I'm temporarily unavailable. Please contact us at atelier@maisonelara.com", 'bot');
+      }
+    }
+  </script>
+</body>
+
+</html>
