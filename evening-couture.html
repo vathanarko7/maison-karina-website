@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Evening Couture — Maison Elara</title>
+  <title>Evening Couture — Maison Karina</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -105,7 +105,7 @@
     .col-hero-bg {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(20, 15, 14, .52) 0%, rgba(20, 15, 14, .74) 100%), url('https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=1800&q=85') center/cover no-repeat;
+      background: linear-gradient(to bottom, rgba(20, 15, 14, .52) 0%, rgba(20, 15, 14, .74) 100%), url('images/Evening-Couture.jpg') center/cover no-repeat;
       transform: scale(1.03);
       animation: heroScale 16s ease-in-out infinite alternate;
     }
@@ -757,7 +757,7 @@
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo">Maison <span>Elara</span></a>
+    <a href="index.html" class="nav-logo">Maison <span>Karina</span></a>
     <a href="index.html#collections" class="nav-back">All Collections</a>
   </nav>
 
@@ -794,7 +794,7 @@
       </div>
     </div>
     <div class="col-intro-img reveal-right">
-      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=85" alt="Evening Couture">
+      <img src="images/Evening-Couture.jpg" alt="Evening Couture">
       <div class="col-intro-img-accent"></div>
     </div>
   </div>
@@ -807,19 +807,19 @@
     </div>
     <div class="col-gallery-grid reveal">
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=700&q=85" alt="Gown I">
+        <img src="images/Nuit-Doree.jpg" alt="Gown I">
         <div class="gallery-item-caption">
           <p>La Nuit Dorée</p><span>Evening Couture — SS 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=700&q=85" alt="Gown II">
+        <img src="images/Eclat-Noir.jpg" alt="Gown II">
         <div class="gallery-item-caption">
           <p>L'Éclat Noir</p><span>Evening Couture — SS 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=700&q=85" alt="Gown III">
+        <img src="images/Velours-Minuit.jpg" alt="Gown III">
         <div class="gallery-item-caption">
           <p>Velours Minuit</p><span>Evening Couture — SS 2025</span>
         </div>
@@ -827,20 +827,19 @@
     </div>
     <div class="col-gallery-grid-2 reveal" style="transition-delay:.1s">
       <div class="gallery-item tall">
-        <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=900&q=85" alt="Gown IV"
-          style="aspect-ratio:2/3">
+        <img src="images/Darkness-Light.jpg" alt="Gown IV" style="aspect-ratio:2/3">
         <div class="gallery-item-caption">
           <p>Soie Champagne</p><span>Evening Couture — SS 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=85" alt="Gown V">
+        <img src="images/Lumiere-Rose.jpg" alt="Gown V">
         <div class="gallery-item-caption">
           <p>Lumière Rose</p><span>Evening Couture — SS 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=85" alt="Gown VI">
+        <img src="images/Clair-de-Lune.jpg" alt="Gown VI">
         <div class="gallery-item-caption">
           <p>Clair de Lune</p><span>Evening Couture — SS 2025</span>
         </div>
@@ -875,8 +874,8 @@
   <!-- FEATURED PIECE -->
   <div class="col-featured">
     <div class="col-featured-imgs reveal-left">
-      <img src="https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=600&q=85" alt="Featured front">
-      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=85" alt="Featured back">
+      <img src="images/Nuit-Doree.jpg" alt="Featured front">
+      <img src="images/Darkness-Light.jpg" alt="Featured back">
     </div>
     <div class="col-featured-text reveal-right">
       <span class="eyebrow">Featured Piece</span>
@@ -928,17 +927,22 @@
 
   <footer>
     <div class="footer-bottom">
-      <a href="index.html" class="footer-logo">Maison <span>Elara</span></a>
-      <p class="footer-legal">© 2025 Maison Elara. Private Couture Atelier — By Appointment Only.</p>
+      <a href="index.html" class="footer-logo">Maison <span>Karina</span></a>
+      <p class="footer-legal">&copy; <span id="dynamicYear"></span> Maison Karina. Private Couture Atelier &mdash; By
+        Appointment Only.</p>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="index.html#collections">Collections</a>
-        <a href="index.html#booking">Book</a>
+        <a href="index.html#portfolio">Portfolio</a>
       </div>
     </div>
   </footer>
 
   <script>
+    const dynamicYearEl = document.getElementById('dynamicYear');
+    if (dynamicYearEl) {
+      dynamicYearEl.textContent = String(new Date().getFullYear());
+    }
     const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });

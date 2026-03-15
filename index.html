@@ -1556,8 +1556,7 @@
     </div>
     <div class="collections-grid">
       <div class="collection-card reveal">
-        <img class="collection-card-img" src="https://images.unsplash.com/photo-1590548784585-643d2b9f2925?w=800&q=85"
-          alt="Evening Couture" loading="lazy">
+        <img class="collection-card-img" src="images/Evening-Couture.jpg" alt="Evening Couture" loading="lazy">
         <div class="collection-card-inner">
           <span class="collection-tag">SS 2025</span>
           <div class="collection-name">Evening<br>Couture</div>
@@ -1575,8 +1574,7 @@
         </div>
       </div>
       <div class="collection-card reveal" style="transition-delay:.24s">
-        <img class="collection-card-img" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=85"
-          alt="Custom Occasion" loading="lazy">
+        <img class="collection-card-img" src="images/Custom-Occasion.jpg" alt="Custom Occasion" loading="lazy">
         <div class="collection-card-inner">
           <span class="collection-tag">Bespoke</span>
           <div class="collection-name">Custom<br>Occasion</div>
@@ -1631,40 +1629,35 @@
     </div>
     <div class="portfolio-grid reveal">
       <div class="port-item port-item-1">
-        <img class="port-img" src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=900&q=85"
-          alt="Couture 2025" loading="lazy">
+        <img class="port-img" src="images/Nuit-Etoilee.jpg" alt="Couture 2025" loading="lazy">
         <div class="port-caption">
           <div class="port-caption-year">2025</div>
           <div class="port-caption-title">La Nuit Étoilée</div>
         </div>
       </div>
       <div class="port-item port-item-2">
-        <img class="port-img" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700&q=85"
-          alt="Couture 2025" loading="lazy">
+        <img class="port-img" src="images/Bridal-Dreams.jpg" alt="Couture 2025" loading="lazy">
         <div class="port-caption">
           <div class="port-caption-year">2025</div>
           <div class="port-caption-title">Bridal Dreams</div>
         </div>
       </div>
       <div class="port-item port-item-3">
-        <img class="port-img" src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=700&q=85"
-          alt="Couture 2024" loading="lazy">
+        <img class="port-img" src="images/Femme-Soleil.jpg" alt="Couture 2024" loading="lazy">
         <div class="port-caption">
           <div class="port-caption-year">2024</div>
           <div class="port-caption-title">Femme Soleil</div>
         </div>
       </div>
       <div class="port-item port-item-4">
-        <img class="port-img" src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=700&q=85"
-          alt="Couture 2024" loading="lazy">
+        <img class="port-img" src="images/Nuit-Doree.jpg" alt="Couture 2024" loading="lazy">
         <div class="port-caption">
           <div class="port-caption-year">2024</div>
           <div class="port-caption-title">L'Aube Dorée</div>
         </div>
       </div>
       <div class="port-item port-item-5">
-        <img class="port-img" src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=700&q=85"
-          alt="Couture 2023" loading="lazy">
+        <img class="port-img" src="images/Silence-Silk.jpg" alt="Couture 2023" loading="lazy">
         <div class="port-caption">
           <div class="port-caption-year">2023</div>
           <div class="port-caption-title">Silence & Silk</div>
@@ -1788,27 +1781,27 @@
       <div class="footer-col">
         <h4>Services</h4>
         <ul>
-          <li><a href="#">Evening Couture</a></li>
-          <li><a href="#">Bridal Atelier</a></li>
-          <li><a href="#">Custom Occasion</a></li>
+          <li><a href="evening-couture.html">Evening Couture</a></li>
+          <li><a href="bridal-atelier.html">Bridal Atelier</a></li>
+          <li><a href="custom-occasion.html">Custom Occasion</a></li>
           <li><a href="#booking">Book Appointment</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Connect</h4>
         <ul>
-          <li><a href="#">@maisonkarina</a></li>
+          <li><a href="https://www.instagram.com/design_by_kanha/">@design_by_kanha</a></li>
           <li><a href="#"><span class="__cf_email__"
                 data-cfemail="5f3e2b3a33363a2d1f323e362c30313a333e2d3e713c3032">[email&#160;protected]</span></a></li>
-          <li><a href="#">+33 1 42 68 19 00</a></li>
+          <li><a href="tel:+33142681900">+33 1 42 68 19 00</a></li>
           <li><a href="#">Press Inquiries</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <p class="footer-legal">© 2026 Maison Karina. All rights reserved. Private Couture Atelier — By Appointment Only.
-      </p>
+      <p class="footer-legal">&copy; <span id="dynamicYear"></span> Maison Karina. All rights reserved. Private Couture
+        Atelier &mdash; By Appointment Only.</p>
       <div class="footer-social">
         <a href="#">Instagram</a>
         <a href="#">Pinterest</a>
@@ -1859,6 +1852,10 @@
 
   <script>
     const nav = document.getElementById('navbar');
+    const dynamicYearEl = document.getElementById('dynamicYear');
+    if (dynamicYearEl) {
+      dynamicYearEl.textContent = String(new Date().getFullYear());
+    }
     window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 60); });
 
     function toggleMenu() {

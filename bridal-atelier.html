@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bridal Atelier — Maison Elara</title>
+  <title>Bridal Atelier — Maison Karina</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -764,7 +764,7 @@
 <body>
 
   <nav>
-    <a href="index.html" class="nav-logo">Maison <span>Elara</span></a>
+    <a href="index.html" class="nav-logo">Maison <span>Karina</span></a>
     <a href="index.html#collections" class="nav-back">All Collections</a>
   </nav>
 
@@ -786,7 +786,7 @@
     <div class="col-intro-text reveal-left">
       <span class="eyebrow">The Bridal Collection</span>
       <h2>A Gown Born <em>From Your Story</em></h2>
-      <p>At Maison Elara, a bridal gown is never taken from a rack. It begins with a conversation — about who you are,
+      <p>At Maison Karina, a bridal gown is never taken from a rack. It begins with a conversation — about who you are,
         who you are becoming, and how you wish to feel as you walk toward the person you love.</p>
       <p>From that first meeting, every decision — silhouette, fabric, embellishment, train length — is made entirely
         for you. The result is a gown that could not exist for anyone else.</p>
@@ -809,7 +809,7 @@
     </div>
     <div class="col-gallery-grid reveal">
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=700&q=85" alt="Bridal I">
+        <img src="images/Voile-Ivoire.jpg" alt="Bridal I">
         <div class="gallery-item-caption">
           <p>Voile d'Ivoire</p><span>Bridal Atelier — 2025</span>
         </div>
@@ -821,7 +821,7 @@
         </div>
       </div>
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=700&q=85" alt="Bridal III">
+        <img src="images/Fleur-de-Coton.jpg" alt="Bridal III">
         <div class="gallery-item-caption">
           <p>Fleur de Coton</p><span>Bridal Atelier — 2025</span>
         </div>
@@ -829,20 +829,19 @@
     </div>
     <div class="col-gallery-grid-2 reveal" style="transition-delay:.1s">
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=85" alt="Bridal IV"
-          style="aspect-ratio:2/3">
+        <img src="images/Purete-Absolue.jpg" alt="Bridal IV" style="aspect-ratio:2/3">
         <div class="gallery-item-caption">
           <p>Pureté Absolue</p><span>Bridal Atelier — 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=85" alt="Bridal V">
+        <img src="images/Dentelle-Eternelle.jpg" alt="Bridal V">
         <div class="gallery-item-caption">
           <p>Dentelle Éternelle</p><span>Bridal Atelier — 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=85" alt="Bridal VI">
+        <img src="images/Aube-Blanche.jpg" alt="Bridal VI">
         <div class="gallery-item-caption">
           <p>Aube Blanche</p><span>Bridal Atelier — 2025</span>
         </div>
@@ -868,7 +867,8 @@
     </div>
     <div class="col-detail-item">
       <h4>Preservation</h4>
-      <p>Every Maison Elara bridal gown includes professional preservation packaging and a care certificate for heirloom
+      <p>Every Maison Karina bridal gown includes professional preservation packaging and a care certificate for
+        heirloom
         keeping.</p>
     </div>
   </div>
@@ -908,8 +908,8 @@
 
   <div class="col-featured">
     <div class="col-featured-imgs reveal-left">
-      <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=85" alt="Featured front">
-      <img src="/images/Featured-Back.jpg" alt="Featured back">
+      <img src="images/Aube-Blanche.jpg" alt="Featured front">
+      <img src="images/Purete-Absolue.jpg" alt="Featured back">
     </div>
     <div class="col-featured-text reveal-right">
       <span class="eyebrow">Featured Gown</span>
@@ -934,17 +934,22 @@
 
   <footer>
     <div class="footer-bottom">
-      <a href="index.html" class="footer-logo">Maison <span>Elara</span></a>
-      <p class="footer-legal">© 2025 Maison Elara. Private Couture Atelier — By Appointment Only.</p>
+      <a href="index.html" class="footer-logo">Maison <span>Karina</span></a>
+      <p class="footer-legal">&copy; <span id="dynamicYear"></span> Maison Karina. Private Couture Atelier &mdash; By
+        Appointment Only.</p>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <a href="index.html#collections">Collections</a>
-        <a href="index.html#booking">Book</a>
+        <a href="index.html#portfolio">Portfolio</a>
       </div>
     </div>
   </footer>
 
   <script>
+    const dynamicYearEl = document.getElementById('dynamicYear');
+    if (dynamicYearEl) {
+      dynamicYearEl.textContent = String(new Date().getFullYear());
+    }
     const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
