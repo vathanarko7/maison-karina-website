@@ -5,8 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bridal Atelier — Maison Karina</title>
+  <meta name="description"
+    content="Bespoke bridal gowns crafted exclusively for you. Maison Karina's Bridal Atelier in Phnom Penh creates one-of-a-kind wedding gowns with 5 fittings and 6–9 month timelines.">
+  <meta property="og:title" content="Bridal Atelier — Maison Karina">
+  <meta property="og:description"
+    content="Bespoke bridal gowns crafted exclusively for you. Maison Karina's Bridal Atelier in Phnom Penh creates one-of-a-kind wedding gowns with 5 fittings and 6–9 month timelines.">
+  <meta property="og:image" content="images/Bridal-Atelier.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bridal Atelier — Maison Karina">
+  <meta name="twitter:description"
+    content="Bespoke bridal gowns crafted exclusively for you. Maison Karina's Bridal Atelier in Phnom Penh creates one-of-a-kind wedding gowns with 5 fittings and 6–9 month timelines.">
+  <link rel="icon" href="images/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#1A1410">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap"
     rel="stylesheet">
@@ -103,7 +122,7 @@
     .col-hero-bg {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(20, 15, 14, .52) 0%, rgba(20, 15, 14, .74) 100%), url('/images/Bridal-Atelier.jpg') center/cover no-repeat;
+      background: linear-gradient(to bottom, rgba(20, 15, 14, .52) 0%, rgba(20, 15, 14, .74) 100%), url('images/Bridal-Atelier.jpg') center/cover no-repeat;
       transform: scale(1.03);
       animation: heroScale 16s ease-in-out infinite alternate;
     }
@@ -857,7 +876,7 @@
       </div>
     </div>
     <div class="col-intro-img reveal-right">
-      <img src="/images/Bridal-Atelier.jpg" alt="Bridal Atelier" data-cloudinary-tag="bridal-hero">
+      <img src="images/Bridal-Atelier.jpg" alt="Bridal Atelier" data-cloudinary-tag="bridal-hero">
       <div class="col-intro-img-accent"></div>
     </div>
   </div>
@@ -870,19 +889,19 @@
     <div class="cloud-gallery-status" id="collectionGalleryStatus" aria-live="polite" hidden></div>
     <div class="col-gallery-grid reveal" id="galleryGridPrimary">
       <div class="gallery-item">
-        <img src="images/Bridal-Atelier.jpg" alt="Bridal I">
+        <img src="images/Bridal-Atelier.jpg" alt="Bridal I" loading="lazy">
         <div class="gallery-item-caption">
           <p>Voile d'Ivoire</p><span>Bridal Atelier — 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="/images/Bridal-Atelier.jpg" alt="Bridal II">
+        <img src="images/Bridal-Atelier.jpg" alt="Bridal II" loading="lazy">
         <div class="gallery-item-caption">
           <p>La Mariée Dorée</p><span>Bridal Atelier — 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="images/Bridal-Atelier.jpg" alt="Bridal III">
+        <img src="images/Bridal-Atelier.jpg" alt="Bridal III" loading="lazy">
         <div class="gallery-item-caption">
           <p>Fleur de Coton</p><span>Bridal Atelier — 2025</span>
         </div>
@@ -890,26 +909,27 @@
     </div>
     <div class="col-gallery-grid-2 reveal" id="galleryGridSecondary" style="transition-delay:.1s">
       <div class="gallery-item">
-        <img src="images/Bridal-Atelier.jpg" alt="Bridal IV" style="aspect-ratio:2/3">
+        <img src="images/Bridal-Atelier.jpg" alt="Bridal IV" style="aspect-ratio:2/3" loading="lazy">
         <div class="gallery-item-caption">
           <p>Pureté Absolue</p><span>Bridal Atelier — 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="images/Bridal-Atelier.jpg" alt="Bridal V">
+        <img src="images/Bridal-Atelier.jpg" alt="Bridal V" loading="lazy">
         <div class="gallery-item-caption">
           <p>Dentelle Éternelle</p><span>Bridal Atelier — 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="images/Bridal-Atelier.jpg" alt="Bridal VI">
+        <img src="images/Bridal-Atelier.jpg" alt="Bridal VI" loading="lazy">
         <div class="gallery-item-caption">
           <p>Aube Blanche</p><span>Bridal Atelier — 2025</span>
         </div>
       </div>
     </div>
     <div class="gallery-load-more">
-      <button class="gallery-load-btn" id="collectionLoadMoreBtn" onclick="loadMoreCollection()">Load More</button>
+      <button type="button" class="gallery-load-btn" id="collectionLoadMoreBtn" onclick="loadMoreCollection()">Load
+        More</button>
     </div>
   </div>
 
@@ -926,8 +946,8 @@
     </div>
     <div class="col-detail-item">
       <h4>Veils & Accessories</h4>
-        <p>Custom cathedral and chapel veils, bridal headpieces, and silk sashes crafted in-house to complement your
-          gown.</p>
+      <p>Custom cathedral and chapel veils, bridal headpieces, and silk sashes crafted in-house to complement your
+        gown.</p>
     </div>
     <div class="col-detail-item">
       <h4>Preservation</h4>
@@ -1021,13 +1041,21 @@
     revealEls.forEach(el => obs.observe(el));
 
     const CLOUDINARY_CLOUD_NAME = 'deqtmhh7l';
-    const CLOUDINARY_LIST_TAGS = ['portfolio', 'evening', 'bridal', 'occasion']; // Add more tags here if needed so those assets can appear in "All".
+    const CLOUDINARY_LIST_TAGS = ['bridal']; // Keep only category tags needed for this page to reduce list payload.
     const CLOUDINARY_RESOURCE_TYPE = 'image';
+    const ENABLE_CLOUDINARY_DEBUG_LOGS = false;
     const PAGE_CATEGORY = 'bridal';
     const PAGE_LABEL = 'Bridal Atelier';
     const COLLECTION_ITEMS_PER_PAGE = 6;
     let collectionVisibleCount = COLLECTION_ITEMS_PER_PAGE;
     let COLLECTION_PHOTOS = [];
+    let collectionGalleryLoaded = false;
+    let collectionGalleryLoadPromise = null;
+
+    function cloudinaryWarn() {
+      if (!ENABLE_CLOUDINARY_DEBUG_LOGS || !window.console || typeof console.warn !== 'function') return;
+      console.warn.apply(console, arguments);
+    }
 
     function setGalleryStatus(message, tone) {
       const el = document.getElementById('collectionGalleryStatus');
@@ -1146,39 +1174,42 @@
       var uniqueTags = Array.from(new Set((tags || []).map(function (t) { return String(t || '').trim(); }).filter(Boolean)));
       var allResources = [];
       var byPublicId = {};
-      var hadSuccess = false;
       var lastError = '';
-      for (var i = 0; i < uniqueTags.length; i++) {
-        var tag = uniqueTags[i];
+      var results = await Promise.all(uniqueTags.map(async function (tag) {
         var url = 'https://res.cloudinary.com/' + CLOUDINARY_CLOUD_NAME + '/' + CLOUDINARY_RESOURCE_TYPE + '/list/' + encodeURIComponent(tag) + '.json';
         try {
           var res = await fetch(url);
-          if (res.status === 404) continue;
+          if (res.status === 404) return { tag: tag, resources: [] };
           if (!res.ok) throw new Error('[' + tag + '] HTTP ' + res.status);
           var data = await res.json();
-          hadSuccess = true;
-          (data.resources || []).forEach(function (r) {
-            if (!r || !r.public_id) return;
-            var existing = byPublicId[r.public_id];
-            if (existing) {
-              existing.__listTags = Array.isArray(existing.__listTags) ? existing.__listTags : [];
-              if (existing.__listTags.indexOf(tag) === -1) existing.__listTags.push(tag);
-              if (Array.isArray(r.tags)) {
-                existing.tags = Array.isArray(existing.tags) ? existing.tags : [];
-                r.tags.forEach(function (t) { if (existing.tags.indexOf(t) === -1) existing.tags.push(t); });
-              }
-              return;
-            }
-            var copy = Object.assign({}, r);
-            copy.__listTags = [tag];
-            byPublicId[r.public_id] = copy;
-            allResources.push(copy);
-          });
+          return { tag: tag, resources: data.resources || [] };
         } catch (err) {
           lastError = err.message || String(err);
-          console.warn('Cloudinary list error for tag "' + tag + '":', lastError);
+          cloudinaryWarn('Cloudinary list error for tag "' + tag + '":', lastError);
+          return { tag: tag, resources: [], error: true };
         }
-      }
+      }));
+      var hadSuccess = results.some(function (r) { return !r.error; });
+      results.forEach(function (item) {
+        var tag = item.tag;
+        (item.resources || []).forEach(function (r) {
+          if (!r || !r.public_id) return;
+          var existing = byPublicId[r.public_id];
+          if (existing) {
+            existing.__listTags = Array.isArray(existing.__listTags) ? existing.__listTags : [];
+            if (existing.__listTags.indexOf(tag) === -1) existing.__listTags.push(tag);
+            if (Array.isArray(r.tags)) {
+              existing.tags = Array.isArray(existing.tags) ? existing.tags : [];
+              r.tags.forEach(function (t) { if (existing.tags.indexOf(t) === -1) existing.tags.push(t); });
+            }
+            return;
+          }
+          var copy = Object.assign({}, r);
+          copy.__listTags = [tag];
+          byPublicId[r.public_id] = copy;
+          allResources.push(copy);
+        });
+      });
       if (!allResources.length && lastError && !hadSuccess) throw new Error(lastError);
       return allResources;
     }
@@ -1281,7 +1312,7 @@
           cacheSlotUrl(bgTag, bgUrl);
         }
       } catch (err) {
-        console.warn('Cloudinary slot image error:', err.message || String(err));
+        cloudinaryWarn('Cloudinary slot image error:', err.message || String(err));
       }
     }
 
@@ -1317,6 +1348,10 @@
     }
 
     function loadMoreCollection() {
+      if (!collectionGalleryLoaded) {
+        ensureCollectionGalleryLoaded();
+        return;
+      }
       collectionVisibleCount += COLLECTION_ITEMS_PER_PAGE;
       renderCollectionGallery();
     }
@@ -1357,14 +1392,43 @@
         renderCollectionGallery();
         setGalleryStatus('', '');
       } catch (err) {
-        console.warn('Cloudinary gallery error:', err.message);
+        cloudinaryWarn('Cloudinary gallery error:', err.message);
         setGalleryStatus('Cloudinary gallery failed. Showing default gallery.', 'error');
         btn.style.display = 'none';
       }
     }
 
+    function ensureCollectionGalleryLoaded() {
+      if (collectionGalleryLoadPromise) return collectionGalleryLoadPromise;
+      collectionGalleryLoadPromise = loadCollectionGallery().then(function () {
+        collectionGalleryLoaded = true;
+      }).catch(function (err) {
+        collectionGalleryLoaded = true;
+        throw err;
+      });
+      return collectionGalleryLoadPromise;
+    }
+
+    function observeCollectionGalleryLoad() {
+      var gallerySection = document.querySelector('.col-gallery');
+      if (!gallerySection || !('IntersectionObserver' in window)) {
+        ensureCollectionGalleryLoaded();
+        return;
+      }
+      var started = false;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (started || !entry.isIntersecting) return;
+          started = true;
+          io.disconnect();
+          ensureCollectionGalleryLoaded();
+        });
+      }, { rootMargin: '300px 0px' });
+      io.observe(gallerySection);
+    }
+
     loadCloudinarySlotImages();
-    loadCollectionGallery();
+    observeCollectionGalleryLoad();
   </script>
 </body>
 

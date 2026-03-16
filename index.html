@@ -1,12 +1,32 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maison Karina — Private Couture Atelier</title>
+  <meta name="description"
+    content="Maison Karina is a private couture atelier in Phnom Penh. Bespoke evening gowns, bridal, and custom occasion wear crafted with timeless artistry. By appointment only.">
+  <meta property="og:title" content="Maison Karina — Private Couture Atelier">
+  <meta property="og:description"
+    content="Maison Karina is a private couture atelier in Phnom Penh. Bespoke evening gowns, bridal, and custom occasion wear crafted with timeless artistry. By appointment only.">
+  <meta property="og:image" content="images/Hero-Image.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Maison Karina — Private Couture Atelier">
+  <meta name="twitter:description"
+    content="Maison Karina is a private couture atelier in Phnom Penh. Bespoke evening gowns, bridal, and custom occasion wear crafted with timeless artistry. By appointment only.">
+  <link rel="icon" href="images/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#1A1410">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+  <link rel="preload" as="image" href="images/Hero-Image.jpg">
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap"
     rel="stylesheet">
@@ -183,12 +203,9 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      /* background:
-        linear-gradient(to bottom, rgba(20, 15, 14, .56) 0%, rgba(20, 15, 14, .74) 100%),
-        url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1800&q=85') center 20%/cover no-repeat; */
       background:
         linear-gradient(to bottom, rgba(20, 15, 14, .56) 0%, rgba(20, 15, 14, .74) 100%),
-        url('/images/Hero-Image.jpg') center 20%/cover no-repeat;
+        url('images/Hero-Image.jpg') center 20%/cover no-repeat;
       transform: scale(1.04);
       animation: heroScale 18s ease-in-out infinite alternate;
     }
@@ -1759,7 +1776,7 @@
         </div>
       </div>
       <div class="collection-card reveal" style="transition-delay:.12s">
-        <img class="collection-card-img" src="/images/Bridal-Atelier.jpg" alt="Bridal Atelier" loading="lazy"
+        <img class="collection-card-img" src="images/Bridal-Atelier.jpg" alt="Bridal Atelier" loading="lazy"
           data-cloudinary-tag="bridal-hero">
         <div class="collection-card-inner">
           <span class="collection-tag">Bridal 2025</span>
@@ -1824,24 +1841,24 @@
     </div>
 
     <div class="port-filters reveal">
-      <button class="port-filter-btn active" data-filter="all">All</button>
-      <button class="port-filter-btn" data-filter="evening">Evening Couture</button>
-      <button class="port-filter-btn" data-filter="bridal">Bridal</button>
-      <button class="port-filter-btn" data-filter="occasion">Occasion</button>
+      <button type="button" class="port-filter-btn active" data-filter="all">All</button>
+      <button type="button" class="port-filter-btn" data-filter="evening">Evening Couture</button>
+      <button type="button" class="port-filter-btn" data-filter="bridal">Bridal</button>
+      <button type="button" class="port-filter-btn" data-filter="occasion">Occasion</button>
     </div>
     <div class="portfolio-status" id="portfolioStatus" aria-live="polite" hidden></div>
 
     <div class="portfolio-masonry" id="portfolioGrid"></div>
 
     <div class="port-load-more">
-      <button class="port-load-btn" id="loadMoreBtn" onclick="loadMore()">Load More</button>
+      <button type="button" class="port-load-btn" id="loadMoreBtn" onclick="loadMore(event)">Load More</button>
     </div>
   </section>
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
     <div class="lightbox-inner">
-      <button class="lightbox-close" onclick="closeLightbox()">&#215;</button>
+      <button type="button" class="lightbox-close" onclick="closeLightbox()">&#215;</button>
       <img class="lightbox-img" id="lightboxImg" src="" alt="">
       <div class="lightbox-caption">
         <div class="lightbox-caption-year" id="lightboxYear"></div>
@@ -1849,8 +1866,8 @@
       </div>
       <div class="lightbox-counter" id="lightboxCounter"></div>
     </div>
-    <button class="lightbox-prev" onclick="lightboxNav(-1)">&#8592;</button>
-    <button class="lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
+    <button type="button" class="lightbox-prev" onclick="lightboxNav(-1)">&#8592;</button>
+    <button type="button" class="lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
   </div>
 
   <section id="testimonials">
@@ -1922,9 +1939,7 @@
   <section id="about">
     <div class="about-inner">
       <div class="about-img-wrapper reveal-left">
-        <!-- <img class="about-img" src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=85"
-          alt="Designer Portrait" loading="lazy"> -->
-        <img class="about-img" src="/images/karina_profile.png" alt="Designer Portrait" loading="lazy">
+        <img class="about-img" src="images/Profile.jpg" alt="Designer Portrait" loading="lazy">
         <div class="about-img-accent"></div>
       </div>
       <div class="reveal-right">
@@ -2009,26 +2024,26 @@
           <div class="chat-header-title">Atelier Assistant</div>
           <div class="chat-header-sub">Here to guide you</div>
         </div>
-        <button class="chat-close" onclick="toggleChat()">×</button>
+        <button type="button" class="chat-close" onclick="toggleChat()">×</button>
       </div>
       <div class="chat-messages" id="chat-messages">
         <div class="chat-msg bot">Welcome to Maison Karina. I'm here to answer any questions about our couture process,
           consultations, or collections. How may I assist you?</div>
       </div>
       <div class="chat-suggestions" id="chat-chips">
-        <button class="chat-chip" onclick="sendChip(this)">Booking process</button>
-        <button class="chat-chip" onclick="sendChip(this)">Pricing</button>
-        <button class="chat-chip" onclick="sendChip(this)">Timeline</button>
-        <button class="chat-chip" onclick="sendChip(this)">Fabrics</button>
+        <button type="button" class="chat-chip" onclick="sendChip(this)">Booking process</button>
+        <button type="button" class="chat-chip" onclick="sendChip(this)">Pricing</button>
+        <button type="button" class="chat-chip" onclick="sendChip(this)">Timeline</button>
+        <button type="button" class="chat-chip" onclick="sendChip(this)">Fabrics</button>
       </div>
       <div class="chat-input-area">
         <input class="chat-input" id="chat-input" type="text" placeholder="Ask a question..."
           onkeydown="if(event.key==='Enter') sendMessage()">
-        <button class="chat-send" onclick="sendMessage()">→</button>
+        <button type="button" class="chat-send" onclick="sendMessage()">→</button>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-      <button class="chat-toggle" onclick="toggleChat()">
+      <button type="button" class="chat-toggle" onclick="toggleChat()">
         <div class="chat-badge" id="chat-badge"></div>
         <svg viewBox="0 0 24 24">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -2283,6 +2298,12 @@ Always guide clients toward booking a consultation for specific requests. Keep r
     const CLOUDINARY_LIST_TAGS = ['portfolio', 'evening', 'bridal', 'occasion']; // Add more tags here if needed so those assets can appear in "All".
     const CLOUDINARY_RESOURCE_TYPE = 'image';
     const USE_DEMO_FALLBACK = false; // Set true only if you want hardcoded local demo images on errors.
+    const ENABLE_CLOUDINARY_DEBUG_LOGS = false;
+
+    function cloudinaryWarn() {
+      if (!ENABLE_CLOUDINARY_DEBUG_LOGS || !window.console || typeof console.warn !== 'function') return;
+      console.warn.apply(console, arguments);
+    }
 
     function setPortfolioStatus(message, tone) {
       var status = document.getElementById('portfolioStatus');
@@ -2390,39 +2411,42 @@ Always guide clients toward booking a consultation for specific requests. Keep r
       var uniqueTags = Array.from(new Set((tags || []).map(function (t) { return String(t || '').trim(); }).filter(Boolean)));
       var allResources = [];
       var byPublicId = {};
-      var hadSuccess = false;
       var lastError = '';
-      for (var i = 0; i < uniqueTags.length; i++) {
-        var tag = uniqueTags[i];
+      var results = await Promise.all(uniqueTags.map(async function (tag) {
         var url = 'https://res.cloudinary.com/' + CLOUDINARY_CLOUD_NAME + '/' + CLOUDINARY_RESOURCE_TYPE + '/list/' + encodeURIComponent(tag) + '.json';
         try {
           var res = await fetch(url);
-          if (res.status === 404) continue; // Tag not found yet.
+          if (res.status === 404) return { tag: tag, resources: [] };
           if (!res.ok) throw new Error('[' + tag + '] HTTP ' + res.status);
           var data = await res.json();
-          hadSuccess = true;
-          (data.resources || []).forEach(function (r) {
-            if (!r || !r.public_id) return;
-            var existing = byPublicId[r.public_id];
-            if (existing) {
-              existing.__listTags = Array.isArray(existing.__listTags) ? existing.__listTags : [];
-              if (existing.__listTags.indexOf(tag) === -1) existing.__listTags.push(tag);
-              if (Array.isArray(r.tags)) {
-                existing.tags = Array.isArray(existing.tags) ? existing.tags : [];
-                r.tags.forEach(function (t) { if (existing.tags.indexOf(t) === -1) existing.tags.push(t); });
-              }
-              return;
-            }
-            var copy = Object.assign({}, r);
-            copy.__listTags = [tag];
-            byPublicId[r.public_id] = copy;
-            allResources.push(copy);
-          });
+          return { tag: tag, resources: data.resources || [] };
         } catch (err) {
           lastError = err.message || String(err);
-          console.warn('Cloudinary list error for tag "' + tag + '":', lastError);
+          cloudinaryWarn('Cloudinary list error for tag "' + tag + '":', lastError);
+          return { tag: tag, resources: [], error: true };
         }
-      }
+      }));
+      var hadSuccess = results.some(function (r) { return !r.error; });
+      results.forEach(function (item) {
+        var tag = item.tag;
+        (item.resources || []).forEach(function (r) {
+          if (!r || !r.public_id) return;
+          var existing = byPublicId[r.public_id];
+          if (existing) {
+            existing.__listTags = Array.isArray(existing.__listTags) ? existing.__listTags : [];
+            if (existing.__listTags.indexOf(tag) === -1) existing.__listTags.push(tag);
+            if (Array.isArray(r.tags)) {
+              existing.tags = Array.isArray(existing.tags) ? existing.tags : [];
+              r.tags.forEach(function (t) { if (existing.tags.indexOf(t) === -1) existing.tags.push(t); });
+            }
+            return;
+          }
+          var copy = Object.assign({}, r);
+          copy.__listTags = [tag];
+          byPublicId[r.public_id] = copy;
+          allResources.push(copy);
+        });
+      });
       if (!allResources.length && lastError && !hadSuccess) throw new Error(lastError);
       return allResources;
     }
@@ -2456,7 +2480,7 @@ Always guide clients toward booking a consultation for specific requests. Keep r
         }
         return photos;
       } catch (err) {
-        console.warn('Cloudinary list error:', err.message);
+        cloudinaryWarn('Cloudinary list error:', err.message);
         showPortfolioLoading(false);
         setPortfolioStatus('Cloudinary list failed. Enable "Resource list" and use tags: portfolio, evening, bridal, occasion.', 'error');
         return USE_DEMO_FALLBACK ? getDemoPhotos() : [];
@@ -2538,7 +2562,7 @@ Always guide clients toward booking a consultation for specific requests. Keep r
           cacheSlotUrl(tag, url);
         }
       } catch (err) {
-        console.warn('Cloudinary slot image error:', err.message || String(err));
+        cloudinaryWarn('Cloudinary slot image error:', err.message || String(err));
       }
     }
 
@@ -2564,10 +2588,44 @@ Always guide clients toward booking a consultation for specific requests. Keep r
     // ================================================================
     const ITEMS_PER_PAGE = 6;
     let ALL_PHOTOS = [];
+    let portfolioLoaded = false;
+    let portfolioLoadPromise = null;
     let currentFilter = 'all';
     let visibleCount = ITEMS_PER_PAGE;
     let lightboxIndex = 0;
     let _lbFiltered = [];
+
+    function ensurePortfolioLoaded() {
+      if (portfolioLoadPromise) return portfolioLoadPromise;
+      portfolioLoadPromise = fetchCloudinaryPhotos().then(function (photos) {
+        ALL_PHOTOS = photos;
+        portfolioLoaded = true;
+        renderPortfolio();
+        return photos;
+      }).catch(function (err) {
+        portfolioLoaded = true;
+        throw err;
+      });
+      return portfolioLoadPromise;
+    }
+
+    function observePortfolioLoad() {
+      var portfolioSection = document.getElementById('portfolio');
+      if (!portfolioSection || !('IntersectionObserver' in window)) {
+        ensurePortfolioLoaded();
+        return;
+      }
+      var started = false;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (started || !entry.isIntersecting) return;
+          started = true;
+          io.disconnect();
+          ensurePortfolioLoaded();
+        });
+      }, { rootMargin: '300px 0px' });
+      io.observe(portfolioSection);
+    }
 
     function getFiltered() {
       return currentFilter === 'all' ? ALL_PHOTOS : ALL_PHOTOS.filter(function (p) { return p.category === currentFilter; });
@@ -2599,13 +2657,38 @@ Always guide clients toward booking a consultation for specific requests. Keep r
       btn.textContent = remaining > 0 ? 'Load More (' + remaining + ' remaining)' : 'All ' + filtered.length + ' pieces shown';
     }
 
-    function loadMore() { visibleCount += ITEMS_PER_PAGE; renderPortfolio(); }
+    function loadMore(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      var btn = document.getElementById('loadMoreBtn');
+      var prevTop = btn ? btn.getBoundingClientRect().top : 0;
+      visibleCount += ITEMS_PER_PAGE;
+      renderPortfolio();
+      if (btn) {
+        var newTop = btn.getBoundingClientRect().top;
+        var delta = newTop - prevTop;
+        if (delta) window.scrollBy(0, delta);
+      }
+    }
 
     document.querySelectorAll('.port-filter-btn').forEach(function (btn) {
       btn.addEventListener('click', function () {
+        var selectedFilter = this.dataset.filter;
         document.querySelectorAll('.port-filter-btn').forEach(function (b) { b.classList.remove('active'); });
         this.classList.add('active');
-        currentFilter = this.dataset.filter;
+        if (!portfolioLoaded) {
+          showPortfolioLoading(true);
+          setPortfolioStatus('Loading Cloudinary portfolio...', 'info');
+          ensurePortfolioLoaded().then(function () {
+            currentFilter = selectedFilter;
+            visibleCount = ITEMS_PER_PAGE;
+            renderPortfolio();
+          });
+          return;
+        }
+        currentFilter = selectedFilter;
         visibleCount = ITEMS_PER_PAGE;
         renderPortfolio();
       });
@@ -2637,7 +2720,7 @@ Always guide clients toward booking a consultation for specific requests. Keep r
 
     // Boot
     loadCloudinarySlotImages();
-    fetchCloudinaryPhotos().then(function (photos) { ALL_PHOTOS = photos; renderPortfolio(); });
+    observePortfolioLoad();
   </script>
 </body>
 
