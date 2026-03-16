@@ -575,59 +575,97 @@
 
     .portfolio-header {
       text-align: center;
-      margin-bottom: 80px;
+      margin-bottom: 60px;
     }
 
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 3px;
+    /* filter tabs */
+    .port-filters {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .portfolio-status {
+      max-width: 880px;
+      margin: -20px auto 34px;
+      padding: 12px 16px;
+      border: 1px solid rgba(90, 74, 70, .2);
+      background: rgba(237, 232, 224, .55);
+      color: var(--taupe);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    .portfolio-status.is-success {
+      border-color: rgba(43, 122, 89, .32);
+      background: rgba(43, 122, 89, .08);
+      color: #245b43;
+    }
+
+    .portfolio-status.is-info {
+      border-color: rgba(94, 124, 160, .3);
+      background: rgba(94, 124, 160, .08);
+      color: #3d5f82;
+    }
+
+    .portfolio-status.is-error {
+      border-color: rgba(145, 59, 49, .35);
+      background: rgba(145, 59, 49, .08);
+      color: #7c3028;
+    }
+
+    .port-filter-btn {
+      padding: 8px 20px;
+      background: transparent;
+      border: 1px solid rgba(90, 74, 70, .25);
+      color: var(--mid-taupe);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+    }
+
+    .port-filter-btn:hover,
+    .port-filter-btn.active {
+      background: var(--taupe);
+      border-color: var(--taupe);
+      color: var(--ivory);
+    }
+
+    /* masonry */
+    .portfolio-masonry {
+      column-count: 3;
+      column-gap: 4px;
       max-width: 1400px;
       margin: 0 auto;
     }
 
     .port-item {
-      overflow: hidden;
+      break-inside: avoid;
       position: relative;
-    }
-
-    .port-item-1 {
-      grid-column: 1/6;
-      grid-row: 1/3;
-    }
-
-    .port-item-2 {
-      grid-column: 6/9;
-      grid-row: 1/2;
-    }
-
-    .port-item-3 {
-      grid-column: 9/13;
-      grid-row: 1/2;
-    }
-
-    .port-item-4 {
-      grid-column: 6/9;
-      grid-row: 2/3;
-    }
-
-    .port-item-5 {
-      grid-column: 9/13;
-      grid-row: 2/3;
+      overflow: hidden;
+      margin-bottom: 4px;
+      cursor: pointer;
+      display: block;
     }
 
     .port-img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
       display: block;
-      min-height: 260px;
       background: var(--beige);
-      transition: transform .8s cubic-bezier(.25, .46, .45, .94);
+      transition: transform .7s cubic-bezier(.25, .46, .45, .94);
     }
 
     .port-item:hover .port-img {
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
     .port-caption {
@@ -635,10 +673,10 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 24px;
-      background: linear-gradient(to top, rgba(17, 17, 17, .65), transparent);
+      padding: 20px 24px;
+      background: linear-gradient(to top, rgba(17, 17, 17, .72), transparent);
       opacity: 0;
-      transition: opacity .4s;
+      transition: opacity .35s;
     }
 
     .port-item:hover .port-caption {
@@ -647,15 +685,180 @@
 
     .port-caption-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
+      font-size: 17px;
       color: var(--ivory);
       font-weight: 300;
     }
 
     .port-caption-year {
+      font-size: 9px;
+      letter-spacing: .22em;
+      color: var(--gold);
+    }
+
+    /* load more */
+    .port-load-more {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    .port-load-btn {
+      padding: 14px 40px;
+      background: transparent;
+      border: 1px solid var(--taupe);
+      color: var(--taupe);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+    }
+
+    .port-load-btn:hover {
+      background: var(--taupe);
+      color: var(--ivory);
+    }
+
+    .port-load-btn:disabled {
+      opacity: .35;
+      cursor: default;
+    }
+
+    /* lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(17, 17, 17, .95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 80vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .lightbox-caption {
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .lightbox-caption-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: var(--ivory);
+      font-weight: 300;
+    }
+
+    .lightbox-caption-year {
+      font-size: 10px;
+      letter-spacing: .25em;
+      color: var(--gold);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -44px;
+      right: 0;
+      background: none;
+      border: none;
+      color: rgba(246, 241, 235, .6);
+      font-size: 32px;
+      cursor: pointer;
+      line-height: 1;
+      transition: color .2s;
+    }
+
+    .lightbox-close:hover {
+      color: var(--ivory);
+    }
+
+    .lightbox-prev,
+    .lightbox-next {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(246, 241, 235, .08);
+      border: none;
+      color: rgba(246, 241, 235, .7);
+      font-size: 28px;
+      cursor: pointer;
+      padding: 20px 16px;
+      transition: all .2s;
+    }
+
+    .lightbox-prev {
+      left: 16px;
+    }
+
+    .lightbox-next {
+      right: 16px;
+    }
+
+    .lightbox-prev:hover,
+    .lightbox-next:hover {
+      background: rgba(246, 241, 235, .15);
+      color: var(--ivory);
+    }
+
+    .lightbox-counter {
       font-size: 10px;
       letter-spacing: .2em;
-      color: var(--gold);
+      color: rgba(246, 241, 235, .4);
+      margin-top: 8px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      #portfolio {
+        padding: 80px 16px;
+      }
+
+      .portfolio-masonry {
+        column-count: 2;
+        column-gap: 3px;
+      }
+
+      .lightbox-prev {
+        left: 4px;
+      }
+
+      .lightbox-next {
+        right: 4px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .portfolio-masonry {
+        column-count: 1;
+      }
     }
 
     /* TESTIMONIALS */
@@ -1396,19 +1599,6 @@
         flex: 1 1 100%;
       }
 
-      .portfolio-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .port-item-1,
-      .port-item-2,
-      .port-item-3,
-      .port-item-4,
-      .port-item-5 {
-        grid-column: auto;
-        grid-row: auto;
-      }
-
       .testimonials-grid {
         grid-template-columns: 1fr;
       }
@@ -1494,6 +1684,10 @@
     body.menu-open .nav-logo {
       color: var(--black) !important;
     }
+
+    body.menu-open .hamburger span {
+      background: var(--taupe) !important;
+    }
   </style>
 </head>
 
@@ -1556,7 +1750,8 @@
     </div>
     <div class="collections-grid">
       <div class="collection-card reveal">
-        <img class="collection-card-img" src="images/Evening-Couture.jpg" alt="Evening Couture" loading="lazy">
+        <img class="collection-card-img" src="images/Evening-Couture.jpg" alt="Evening Couture" loading="lazy"
+          data-cloudinary-tag="evening-hero">
         <div class="collection-card-inner">
           <span class="collection-tag">SS 2025</span>
           <div class="collection-name">Evening<br>Couture</div>
@@ -1564,9 +1759,8 @@
         </div>
       </div>
       <div class="collection-card reveal" style="transition-delay:.12s">
-        <!-- <img class="collection-card-img" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&q=85"
-          alt="Bridal Atelier" loading="lazy"> -->
-        <img class="collection-card-img" src="/images/Bridal-Atelier.jpg" alt="Bridal Atelier" loading="lazy">
+        <img class="collection-card-img" src="/images/Bridal-Atelier.jpg" alt="Bridal Atelier" loading="lazy"
+          data-cloudinary-tag="bridal-hero">
         <div class="collection-card-inner">
           <span class="collection-tag">Bridal 2025</span>
           <div class="collection-name">Bridal<br>Atelier</div>
@@ -1574,7 +1768,8 @@
         </div>
       </div>
       <div class="collection-card reveal" style="transition-delay:.24s">
-        <img class="collection-card-img" src="images/Custom-Occasion.jpg" alt="Custom Occasion" loading="lazy">
+        <img class="collection-card-img" src="images/Custom-Occasion.jpg" alt="Custom Occasion" loading="lazy"
+          data-cloudinary-tag="occasion-hero">
         <div class="collection-card-inner">
           <span class="collection-tag">Bespoke</span>
           <div class="collection-name">Custom<br>Occasion</div>
@@ -1627,44 +1822,36 @@
       <span class="section-eyebrow">Lookbook</span>
       <h2 class="section-title">Editorial<br><em style="font-style:italic;color:var(--rose)">Portfolio</em></h2>
     </div>
-    <div class="portfolio-grid reveal">
-      <div class="port-item port-item-1">
-        <img class="port-img" src="images/Nuit-Etoilee.jpg" alt="Couture 2025" loading="lazy">
-        <div class="port-caption">
-          <div class="port-caption-year">2025</div>
-          <div class="port-caption-title">La Nuit Étoilée</div>
-        </div>
-      </div>
-      <div class="port-item port-item-2">
-        <img class="port-img" src="images/Bridal-Dreams.jpg" alt="Couture 2025" loading="lazy">
-        <div class="port-caption">
-          <div class="port-caption-year">2025</div>
-          <div class="port-caption-title">Bridal Dreams</div>
-        </div>
-      </div>
-      <div class="port-item port-item-3">
-        <img class="port-img" src="images/Femme-Soleil.jpg" alt="Couture 2024" loading="lazy">
-        <div class="port-caption">
-          <div class="port-caption-year">2024</div>
-          <div class="port-caption-title">Femme Soleil</div>
-        </div>
-      </div>
-      <div class="port-item port-item-4">
-        <img class="port-img" src="images/Nuit-Doree.jpg" alt="Couture 2024" loading="lazy">
-        <div class="port-caption">
-          <div class="port-caption-year">2024</div>
-          <div class="port-caption-title">L'Aube Dorée</div>
-        </div>
-      </div>
-      <div class="port-item port-item-5">
-        <img class="port-img" src="images/Silence-Silk.jpg" alt="Couture 2023" loading="lazy">
-        <div class="port-caption">
-          <div class="port-caption-year">2023</div>
-          <div class="port-caption-title">Silence & Silk</div>
-        </div>
-      </div>
+
+    <div class="port-filters reveal">
+      <button class="port-filter-btn active" data-filter="all">All</button>
+      <button class="port-filter-btn" data-filter="evening">Evening Couture</button>
+      <button class="port-filter-btn" data-filter="bridal">Bridal</button>
+      <button class="port-filter-btn" data-filter="occasion">Occasion</button>
+    </div>
+    <div class="portfolio-status" id="portfolioStatus" aria-live="polite" hidden></div>
+
+    <div class="portfolio-masonry" id="portfolioGrid"></div>
+
+    <div class="port-load-more">
+      <button class="port-load-btn" id="loadMoreBtn" onclick="loadMore()">Load More</button>
     </div>
   </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" onclick="closeLightbox()">&#215;</button>
+      <img class="lightbox-img" id="lightboxImg" src="" alt="">
+      <div class="lightbox-caption">
+        <div class="lightbox-caption-year" id="lightboxYear"></div>
+        <div class="lightbox-caption-title" id="lightboxTitle"></div>
+      </div>
+      <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+    <button class="lightbox-prev" onclick="lightboxNav(-1)">&#8592;</button>
+    <button class="lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
+  </div>
 
   <section id="testimonials">
     <div class="testimonials-header reveal">
@@ -1790,11 +1977,10 @@
       <div class="footer-col">
         <h4>Connect</h4>
         <ul>
-          <li><a href="https://www.instagram.com/design_by_kanha/">@design_by_kanha</a></li>
-          <li><a href="#"><span class="__cf_email__"
-                data-cfemail="5f3e2b3a33363a2d1f323e362c30313a333e2d3e713c3032">[email&#160;protected]</span></a></li>
+          <li><a href="https://www.instagram.com/design_by_kanha/">@DesignByKanha</a></li>
+          <li><a href="mailto:atelier@maisonkarina.com">atelier@maisonkarina.com</a></li>
           <li><a href="tel:+33142681900">+33 1 42 68 19 00</a></li>
-          <li><a href="#">Press Inquiries</a></li>
+          <!-- <li><a href="#">Press Inquiries</a></li> -->
         </ul>
       </div>
     </div>
@@ -1803,9 +1989,11 @@
       <p class="footer-legal">&copy; <span id="dynamicYear"></span> Maison Karina. All rights reserved. Private Couture
         Atelier &mdash; By Appointment Only.</p>
       <div class="footer-social">
+        <a href="#">Facebook</a>
         <a href="#">Instagram</a>
+        <a href="#">Telegram</a>
         <a href="#">Pinterest</a>
-        <a href="#">Press</a>
+        <!-- <a href="#">Press</a> -->
       </div>
     </div>
   </footer>
@@ -1940,7 +2128,7 @@
         btn.disabled = false;
         status.style.display = 'block';
         status.style.color = '#F5D5CF';
-        status.textContent = 'Something went wrong. Please email us directly at atelier@maisonKarina.com';
+        status.textContent = 'Something went wrong. Please email us directly at .com';
       }
     }
 
@@ -1948,12 +2136,12 @@
     // STEP 2: Paste your Anthropic API key below
     const ANTHROPIC_API_KEY = 'YOUR_ANTHROPIC_API_KEY_HERE';
 
-    const ATELIER_SYSTEM_PROMPT = `You are the Atelier Assistant for Maison Karina, a private luxury couture atelier in Paris founded by designer Karina Fontaine.
+    const ATELIER_SYSTEM_PROMPT = `You are the Atelier Assistant for Maison Karina, a private luxury couture atelier in Paris founded by designer Karina Kanha YIN.
 
 Your role is to warmly and elegantly assist clients with questions about the atelier. You speak with refined, feminine grace — never overly casual, always helpful.
 
 KEY FACTS ABOUT MAISON Karina:
-- Founded 2014 in Paris by Karina Fontaine
+- Founded 2026 in Cambodia by Karina Kanha YIN
 - Three collections: Evening Couture (SS 2025), Bridal Atelier, Custom Occasion (Bespoke)
 - All pieces are bespoke — no ready-to-wear
 - Private consultations by appointment only
@@ -1973,8 +2161,8 @@ FABRICS: Silk charmeuse, duchess satin, Chantilly lace, silk organza, mikado sil
 
 PROCESS: Consultation → Sketch & Concept → Fabric Selection → Fittings → Final Creation
 
-CONTACT: atelier@maisonKarina.com | +33 1 42 68 19 00
-ADDRESS: 12 Rue du Faubourg Saint-Honoré, 75008 Paris
+CONTACT: atelier@maisonkarina.com | +33 1 42 68 19 00
+ADDRESS: 6 Rue de la butte verte, Phnom Penh, Cambodia
 
 Always guide clients toward booking a consultation for specific requests. Keep responses concise and elegant — 2–4 sentences unless more detail is needed. Never mention competitor brands.`;
 
@@ -2071,9 +2259,385 @@ Always guide clients toward booking a consultation for specific requests. Keep r
         addMsg(reply, 'bot');
       } catch (err) {
         typing.remove();
-        addMsg("I'm temporarily unavailable. Please contact us at atelier@maisonKarina.com", 'bot');
+        addMsg("I'm temporarily unavailable. Please contact us at .com", 'bot');
       }
     }
+
+    // ================================================================
+    //  CLOUDINARY CONFIG
+    //  1. Sign up free at cloudinary.com
+    //  2. Replace YOUR_CLOUD_NAME with your Cloud name (Dashboard top-right)
+    //  3. In Cloudinary: Settings > Security > enable "Resource list"
+    //  4. Add the same tag to each portfolio image (for example: "portfolio")
+    //     Note: client-side list URLs are tag-based, not folder-based.
+    //
+    //  NAME YOUR FILES like:  evening_la-nuit-2025.jpg
+    //                          bridal_voile-2024.jpg
+    //                          occasion_soiree-2025.jpg
+    //  Metadata keys title/year are used when present.
+    //  Category is resolved from tags:
+    //  evening -> evening, bridal -> bridal, occasion -> occasion.
+    //  portfolio or no category-tag -> shown in "All".
+    // ================================================================
+    const CLOUDINARY_CLOUD_NAME = 'deqtmhh7l';
+    const CLOUDINARY_LIST_TAGS = ['portfolio', 'evening', 'bridal', 'occasion']; // Add more tags here if needed so those assets can appear in "All".
+    const CLOUDINARY_RESOURCE_TYPE = 'image';
+    const USE_DEMO_FALLBACK = false; // Set true only if you want hardcoded local demo images on errors.
+
+    function setPortfolioStatus(message, tone) {
+      var status = document.getElementById('portfolioStatus');
+      if (!status) return;
+      if (!message) {
+        status.hidden = true;
+        status.textContent = '';
+        status.className = 'portfolio-status';
+        return;
+      }
+      status.hidden = false;
+      status.textContent = message;
+      status.className = 'portfolio-status' + (tone ? ' is-' + tone : '');
+    }
+
+    function getCategoryFromFilename(f) {
+      f = f.toLowerCase();
+      if (f.indexOf('evening_') !== -1) return 'evening';
+      if (f.indexOf('bridal_') !== -1) return 'bridal';
+      if (f.indexOf('occasion_') !== -1) return 'occasion';
+      return 'occasion';
+    }
+    function getTitleFromFilename(f) {
+      var base = String(f || '').split('/').pop().replace(/\.[^.]+$/, '');
+      base = base
+        .replace(/^(evening|bridal|occasion)_/i, '')
+        .replace(/-\d{4}$/, '')
+        .replace(/_[a-z0-9]{5,}$/, '')
+        .replace(/[-_]+/g, ' ')
+        .trim();
+      return base ? base.replace(/\b\w/g, function (c) { return c.toUpperCase(); }) : 'Untitled';
+    }
+    function getYearFromFilename(f) {
+      var m = f.match(/-(\d{4})(?:\.[^.]+)?$/);
+      return m ? m[1] : new Date().getFullYear().toString();
+    }
+
+    function getNormalizedTags(resource) {
+      var sourceTags = Array.isArray(resource && resource.tags) ? resource.tags : [];
+      var listTags = Array.isArray(resource && resource.__listTags) ? resource.__listTags : [];
+      var merged = sourceTags.concat(listTags);
+      var normalized = [];
+      for (var i = 0; i < merged.length; i++) {
+        var tag = String(merged[i] || '').toLowerCase().trim();
+        if (!tag || normalized.indexOf(tag) !== -1) continue;
+        normalized.push(tag);
+      }
+      return normalized;
+    }
+
+    function getCategoryFromTags(tags) {
+      if (tags.indexOf('evening') !== -1) return 'evening';
+      if (tags.indexOf('bridal') !== -1) return 'bridal';
+      if (tags.indexOf('occasion') !== -1) return 'occasion';
+      return '';
+    }
+
+    function readKey(obj, key) {
+      if (!obj || typeof obj !== 'object') return '';
+      if (obj[key] != null && obj[key] !== '') return obj[key];
+      var lower = String(key).toLowerCase();
+      var keys = Object.keys(obj);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].toLowerCase() === lower && obj[keys[i]] != null && obj[keys[i]] !== '') return obj[keys[i]];
+      }
+      return '';
+    }
+
+    function getCloudinaryField(resource, key) {
+      var fromContext = readKey(resource && resource.context && resource.context.custom, key);
+      if (fromContext) return fromContext;
+      var fromMetadata = readKey(resource && resource.metadata, key);
+      if (fromMetadata) return fromMetadata;
+      var fromRoot = readKey(resource, key);
+      if (fromRoot) return fromRoot;
+      return '';
+    }
+
+    function getCategoryFromResource(resource) {
+      var tags = getNormalizedTags(resource);
+      var fromTag = getCategoryFromTags(tags);
+      if (fromTag) return fromTag;
+      // Any non-category tag (or no tag) should remain visible only in "All".
+      return '';
+    }
+
+    function getTitleFromResource(resource) {
+      var explicitTitle =
+        getCloudinaryField(resource, 'title') ||
+        getCloudinaryField(resource, 'display_name') ||
+        getCloudinaryField(resource, 'name') ||
+        getCloudinaryField(resource, 'caption');
+      if (explicitTitle) return String(explicitTitle).trim();
+      return getTitleFromFilename((resource && resource.public_id) || '');
+    }
+
+    function getYearFromResource(resource) {
+      var fromCloud = String(getCloudinaryField(resource, 'year') || '');
+      var yearMatch = fromCloud.match(/\d{4}/);
+      if (yearMatch) return yearMatch[0];
+      return getYearFromFilename((resource && resource.public_id) || '');
+    }
+
+    async function fetchCloudinaryResourcesByTags(tags) {
+      var uniqueTags = Array.from(new Set((tags || []).map(function (t) { return String(t || '').trim(); }).filter(Boolean)));
+      var allResources = [];
+      var byPublicId = {};
+      var hadSuccess = false;
+      var lastError = '';
+      for (var i = 0; i < uniqueTags.length; i++) {
+        var tag = uniqueTags[i];
+        var url = 'https://res.cloudinary.com/' + CLOUDINARY_CLOUD_NAME + '/' + CLOUDINARY_RESOURCE_TYPE + '/list/' + encodeURIComponent(tag) + '.json';
+        try {
+          var res = await fetch(url);
+          if (res.status === 404) continue; // Tag not found yet.
+          if (!res.ok) throw new Error('[' + tag + '] HTTP ' + res.status);
+          var data = await res.json();
+          hadSuccess = true;
+          (data.resources || []).forEach(function (r) {
+            if (!r || !r.public_id) return;
+            var existing = byPublicId[r.public_id];
+            if (existing) {
+              existing.__listTags = Array.isArray(existing.__listTags) ? existing.__listTags : [];
+              if (existing.__listTags.indexOf(tag) === -1) existing.__listTags.push(tag);
+              if (Array.isArray(r.tags)) {
+                existing.tags = Array.isArray(existing.tags) ? existing.tags : [];
+                r.tags.forEach(function (t) { if (existing.tags.indexOf(t) === -1) existing.tags.push(t); });
+              }
+              return;
+            }
+            var copy = Object.assign({}, r);
+            copy.__listTags = [tag];
+            byPublicId[r.public_id] = copy;
+            allResources.push(copy);
+          });
+        } catch (err) {
+          lastError = err.message || String(err);
+          console.warn('Cloudinary list error for tag "' + tag + '":', lastError);
+        }
+      }
+      if (!allResources.length && lastError && !hadSuccess) throw new Error(lastError);
+      return allResources;
+    }
+
+    async function fetchCloudinaryPhotos() {
+      showPortfolioLoading(true);
+      setPortfolioStatus('Loading Cloudinary portfolio...', 'info');
+      if (CLOUDINARY_CLOUD_NAME === 'YOUR_CLOUD_NAME') {
+        showPortfolioLoading(false);
+        setPortfolioStatus('Cloudinary is not configured yet. Set CLOUDINARY_CLOUD_NAME.', 'error');
+        return USE_DEMO_FALLBACK ? getDemoPhotos() : [];
+      }
+      try {
+        var resources = await fetchCloudinaryResourcesByTags(CLOUDINARY_LIST_TAGS);
+        var base = 'https://res.cloudinary.com/' + CLOUDINARY_CLOUD_NAME + '/' + CLOUDINARY_RESOURCE_TYPE + '/upload/';
+        var photos = resources.map(function (r) {
+          return {
+            title: getTitleFromResource(r),
+            year: getYearFromResource(r),
+            category: getCategoryFromResource(r),
+            thumb: base + 'f_auto,q_auto,w_600/' + r.public_id,
+            src: base + 'f_auto,q_auto,w_1400/' + r.public_id,
+          };
+        });
+        photos.sort(function (a, b) { return b.year.localeCompare(a.year) || a.title.localeCompare(b.title); });
+        showPortfolioLoading(false);
+        if (photos.length === 0) {
+          setPortfolioStatus('Connected to Cloudinary, but no assets were found for tags: ' + CLOUDINARY_LIST_TAGS.join(', ') + '.', 'info');
+        } else {
+          setPortfolioStatus('', '');
+        }
+        return photos;
+      } catch (err) {
+        console.warn('Cloudinary list error:', err.message);
+        showPortfolioLoading(false);
+        setPortfolioStatus('Cloudinary list failed. Enable "Resource list" and use tags: portfolio, evening, bridal, occasion.', 'error');
+        return USE_DEMO_FALLBACK ? getDemoPhotos() : [];
+      }
+    }
+
+    const CLOUDINARY_SLOT_CACHE_KEY = 'mk_slot_cache_' + CLOUDINARY_CLOUD_NAME;
+
+    function readSlotCache() {
+      try {
+        var raw = localStorage.getItem(CLOUDINARY_SLOT_CACHE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (err) {
+        return {};
+      }
+    }
+
+    function writeSlotCache(cache) {
+      try {
+        localStorage.setItem(CLOUDINARY_SLOT_CACHE_KEY, JSON.stringify(cache || {}));
+      } catch (err) {
+        // Ignore storage failures.
+      }
+    }
+
+    function getCachedSlotUrl(tag) {
+      var cache = readSlotCache();
+      var hit = cache && cache[tag];
+      return hit && hit.url ? String(hit.url) : '';
+    }
+
+    function cacheSlotUrl(tag, url) {
+      if (!tag || !url) return;
+      var cache = readSlotCache();
+      cache[tag] = { url: url, at: Date.now() };
+      writeSlotCache(cache);
+    }
+
+    function preloadImage(url) {
+      return new Promise(function (resolve, reject) {
+        var img = new Image();
+        img.onload = function () { resolve(url); };
+        img.onerror = reject;
+        img.src = url;
+      });
+    }
+
+    async function loadCloudinarySlotImages() {
+      if (CLOUDINARY_CLOUD_NAME === 'YOUR_CLOUD_NAME') return;
+      var slotEls = Array.from(document.querySelectorAll('[data-cloudinary-tag]'));
+      if (!slotEls.length) return;
+      var slotTags = Array.from(new Set(slotEls.map(function (el) { return String(el.getAttribute('data-cloudinary-tag') || '').trim(); }).filter(Boolean)));
+      if (!slotTags.length) return;
+      var base = 'https://res.cloudinary.com/' + CLOUDINARY_CLOUD_NAME + '/' + CLOUDINARY_RESOURCE_TYPE + '/upload/';
+
+      slotEls.forEach(function (el) {
+        var tag = String(el.getAttribute('data-cloudinary-tag') || '').trim();
+        var cached = getCachedSlotUrl(tag);
+        if (cached) el.src = cached;
+      });
+
+      try {
+        var resources = await fetchCloudinaryResourcesByTags(slotTags);
+        var byTag = {};
+        resources.forEach(function (r) {
+          var tags = Array.isArray(r && r.__listTags) ? r.__listTags : [];
+          tags.forEach(function (tag) {
+            if (!byTag[tag]) byTag[tag] = r;
+          });
+        });
+        for (var i = 0; i < slotEls.length; i++) {
+          var el = slotEls[i];
+          var tag = String(el.getAttribute('data-cloudinary-tag') || '').trim();
+          var resource = byTag[tag];
+          if (!resource || !resource.public_id) continue;
+          var url = base + 'f_auto,q_auto,w_1200/' + resource.public_id;
+          try { await preloadImage(url); } catch (e) { continue; }
+          el.src = url;
+          cacheSlotUrl(tag, url);
+        }
+      } catch (err) {
+        console.warn('Cloudinary slot image error:', err.message || String(err));
+      }
+    }
+
+    function showPortfolioLoading(show) {
+      var grid = document.getElementById('portfolioGrid');
+      if (show) {
+        grid.innerHTML = '<div style="column-span:all;text-align:center;padding:60px 0;color:var(--mid-taupe);font-size:11px;letter-spacing:.25em;text-transform:uppercase;"><div style="width:32px;height:32px;border:1px solid var(--rose);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px;"></div>Loading portfolio...</div>';
+      }
+    }
+
+    function getDemoPhotos() {
+      return [
+        { title: "La Nuit Etoilee", year: "2025", category: "evening", thumb: "images/Evening-Couture.jpg", src: "images/Evening-Couture.jpg" },
+        { title: "Bridal Dreams", year: "2025", category: "bridal", thumb: "images/Bridal-Atelier.jpg", src: "images/Bridal-Atelier.jpg" },
+        { title: "Femme Soleil", year: "2024", category: "occasion", thumb: "images/Custom-Occasion.jpg", src: "images/Custom-Occasion.jpg" },
+        { title: "L'Aube Doree", year: "2024", category: "evening", thumb: "images/Hero-Image.jpg", src: "images/Hero-Image.jpg" },
+        { title: "Silence & Silk", year: "2023", category: "bridal", thumb: "images/Hero-Image-1.jpg", src: "images/Hero-Image-1.jpg" },
+      ];
+    }
+
+    // ================================================================
+    //  ENGINE
+    // ================================================================
+    const ITEMS_PER_PAGE = 6;
+    let ALL_PHOTOS = [];
+    let currentFilter = 'all';
+    let visibleCount = ITEMS_PER_PAGE;
+    let lightboxIndex = 0;
+    let _lbFiltered = [];
+
+    function getFiltered() {
+      return currentFilter === 'all' ? ALL_PHOTOS : ALL_PHOTOS.filter(function (p) { return p.category === currentFilter; });
+    }
+
+    function renderPortfolio() {
+      var grid = document.getElementById('portfolioGrid');
+      var btn = document.getElementById('loadMoreBtn');
+      var filtered = getFiltered();
+      var visible = filtered.slice(0, visibleCount);
+      _lbFiltered = visible;
+      grid.innerHTML = '';
+      if (visible.length === 0) {
+        grid.innerHTML = '<div style="column-span:all;text-align:center;padding:60px 0;color:var(--mid-taupe);font-size:12px;letter-spacing:.15em;">No pieces in this category yet.</div>';
+        btn.style.display = 'none'; return;
+      }
+      btn.style.display = '';
+      visible.forEach(function (photo, i) {
+        var div = document.createElement('div');
+        div.className = 'port-item';
+        div.style.cssText = 'opacity:0;transform:translateY(18px);transition:opacity .5s ' + (i % ITEMS_PER_PAGE * 0.045) + 's,transform .5s ' + (i % ITEMS_PER_PAGE * 0.045) + 's';
+        div.innerHTML = '<img class="port-img" src="' + photo.thumb + '" alt="' + photo.title + '" loading="lazy"><div class="port-caption"><div class="port-caption-year">' + photo.year + '</div><div class="port-caption-title">' + photo.title + '</div></div>';
+        (function (idx) { div.addEventListener('click', function () { openLightbox(idx); }); })(i);
+        grid.appendChild(div);
+        requestAnimationFrame(function () { requestAnimationFrame(function () { div.style.opacity = '1'; div.style.transform = 'none'; }); });
+      });
+      var remaining = filtered.length - visibleCount;
+      btn.disabled = remaining <= 0;
+      btn.textContent = remaining > 0 ? 'Load More (' + remaining + ' remaining)' : 'All ' + filtered.length + ' pieces shown';
+    }
+
+    function loadMore() { visibleCount += ITEMS_PER_PAGE; renderPortfolio(); }
+
+    document.querySelectorAll('.port-filter-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.port-filter-btn').forEach(function (b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        currentFilter = this.dataset.filter;
+        visibleCount = ITEMS_PER_PAGE;
+        renderPortfolio();
+      });
+    });
+
+    function openLightbox(idx) {
+      lightboxIndex = idx; updateLightbox();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function updateLightbox() {
+      var photo = _lbFiltered[lightboxIndex]; if (!photo) return;
+      var img = document.getElementById('lightboxImg');
+      img.style.opacity = '0'; img.src = photo.src;
+      img.onload = function () { img.style.transition = 'opacity .3s'; img.style.opacity = '1'; };
+      document.getElementById('lightboxTitle').textContent = photo.title;
+      document.getElementById('lightboxYear').textContent = photo.year;
+      document.getElementById('lightboxCounter').textContent = (lightboxIndex + 1) + ' / ' + _lbFiltered.length;
+    }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+    function closeLightboxOnBg(e) { if (e.target === document.getElementById('lightbox')) closeLightbox(); }
+    function lightboxNav(dir) { lightboxIndex = (lightboxIndex + dir + _lbFiltered.length) % _lbFiltered.length; updateLightbox(); }
+    document.addEventListener('keydown', function (e) {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'ArrowRight') lightboxNav(1);
+      if (e.key === 'ArrowLeft') lightboxNav(-1);
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    // Boot
+    loadCloudinarySlotImages();
+    fetchCloudinaryPhotos().then(function (photos) { ALL_PHOTOS = photos; renderPortfolio(); });
   </script>
 </body>
 

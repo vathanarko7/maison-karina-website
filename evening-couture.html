@@ -372,6 +372,66 @@
       color: var(--gold);
     }
 
+    .cloud-gallery-status {
+      max-width: 1100px;
+      margin: 0 auto 26px;
+      padding: 12px 14px;
+      border: 1px solid rgba(90, 74, 70, .2);
+      background: rgba(237, 232, 224, .55);
+      color: var(--taupe);
+      font-size: 9px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    .cloud-gallery-status.is-success {
+      border-color: rgba(43, 122, 89, .32);
+      background: rgba(43, 122, 89, .08);
+      color: #245b43;
+    }
+
+    .cloud-gallery-status.is-info {
+      border-color: rgba(94, 124, 160, .3);
+      background: rgba(94, 124, 160, .08);
+      color: #3d5f82;
+    }
+
+    .cloud-gallery-status.is-error {
+      border-color: rgba(145, 59, 49, .35);
+      background: rgba(145, 59, 49, .08);
+      color: #7c3028;
+    }
+
+    .gallery-load-more {
+      text-align: center;
+      margin-top: 34px;
+    }
+
+    .gallery-load-btn {
+      padding: 12px 34px;
+      background: transparent;
+      border: 1px solid var(--taupe);
+      color: var(--taupe);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+    }
+
+    .gallery-load-btn:hover:not(:disabled) {
+      background: var(--taupe);
+      color: var(--ivory);
+    }
+
+    .gallery-load-btn:disabled {
+      opacity: .55;
+      cursor: default;
+    }
+
     /* DETAILS STRIP */
     .col-details {
       background: var(--beige);
@@ -763,7 +823,7 @@
 
   <!-- HERO -->
   <div class="col-hero">
-    <div class="col-hero-bg"></div>
+    <div class="col-hero-bg" data-cloudinary-bg-tag="evening-hero"></div>
     <div class="col-hero-content">
       <span class="col-hero-tag">SS 2025 — Evening Couture</span>
       <h1 class="col-hero-title">Evening<br><em>Couture</em></h1>
@@ -794,7 +854,7 @@
       </div>
     </div>
     <div class="col-intro-img reveal-right">
-      <img src="images/Evening-Couture.jpg" alt="Evening Couture">
+      <img src="images/Evening-Couture.jpg" alt="Evening Couture" data-cloudinary-tag="evening-hero">
       <div class="col-intro-img-accent"></div>
     </div>
   </div>
@@ -805,45 +865,49 @@
       <span class="eyebrow">Lookbook</span>
       <h3>The Collection Gallery</h3>
     </div>
-    <div class="col-gallery-grid reveal">
+    <div class="cloud-gallery-status" id="collectionGalleryStatus" aria-live="polite" hidden></div>
+    <div class="col-gallery-grid reveal" id="galleryGridPrimary">
       <div class="gallery-item">
-        <img src="images/Nuit-Doree.jpg" alt="Gown I">
+        <img src="images/Evening-Couture.jpg" alt="Gown I">
         <div class="gallery-item-caption">
           <p>La Nuit Dorée</p><span>Evening Couture — SS 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="images/Eclat-Noir.jpg" alt="Gown II">
+        <img src="images/Evening-Couture.jpg" alt="Gown II">
         <div class="gallery-item-caption">
           <p>L'Éclat Noir</p><span>Evening Couture — SS 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="images/Velours-Minuit.jpg" alt="Gown III">
+        <img src="images/Evening-Couture.jpg" alt="Gown III">
         <div class="gallery-item-caption">
           <p>Velours Minuit</p><span>Evening Couture — SS 2025</span>
         </div>
       </div>
     </div>
-    <div class="col-gallery-grid-2 reveal" style="transition-delay:.1s">
+    <div class="col-gallery-grid-2 reveal" id="galleryGridSecondary" style="transition-delay:.1s">
       <div class="gallery-item tall">
-        <img src="images/Darkness-Light.jpg" alt="Gown IV" style="aspect-ratio:2/3">
+        <img src="images/Evening-Couture.jpg" alt="Gown IV" style="aspect-ratio:2/3">
         <div class="gallery-item-caption">
           <p>Soie Champagne</p><span>Evening Couture — SS 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="images/Lumiere-Rose.jpg" alt="Gown V">
+        <img src="images/Evening-Couture.jpg" alt="Gown V">
         <div class="gallery-item-caption">
           <p>Lumière Rose</p><span>Evening Couture — SS 2025</span>
         </div>
       </div>
       <div class="gallery-item">
-        <img src="images/Clair-de-Lune.jpg" alt="Gown VI">
+        <img src="images/Evening-Couture.jpg" alt="Gown VI">
         <div class="gallery-item-caption">
           <p>Clair de Lune</p><span>Evening Couture — SS 2025</span>
         </div>
       </div>
+    </div>
+    <div class="gallery-load-more">
+      <button class="gallery-load-btn" id="collectionLoadMoreBtn" onclick="loadMoreCollection()">Load More</button>
     </div>
   </div>
 
@@ -874,8 +938,8 @@
   <!-- FEATURED PIECE -->
   <div class="col-featured">
     <div class="col-featured-imgs reveal-left">
-      <img src="images/Nuit-Doree.jpg" alt="Featured front">
-      <img src="images/Darkness-Light.jpg" alt="Featured back">
+      <img src="images/Evening-Couture.jpg" alt="Featured front" data-cloudinary-tag="evening-featured-front">
+      <img src="images/Evening-Couture.jpg" alt="Featured back" data-cloudinary-tag="evening-featured-back">
     </div>
     <div class="col-featured-text reveal-right">
       <span class="eyebrow">Featured Piece</span>
@@ -948,6 +1012,354 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.1 });
     revealEls.forEach(el => obs.observe(el));
+
+    const CLOUDINARY_CLOUD_NAME = 'deqtmhh7l';
+    const CLOUDINARY_LIST_TAGS = ['portfolio', 'evening', 'bridal', 'occasion']; // Add more tags here if needed so those assets can appear in "All".
+    const CLOUDINARY_RESOURCE_TYPE = 'image';
+    const PAGE_CATEGORY = 'evening';
+    const PAGE_LABEL = 'Evening Couture';
+    const COLLECTION_ITEMS_PER_PAGE = 6;
+    let collectionVisibleCount = COLLECTION_ITEMS_PER_PAGE;
+    let COLLECTION_PHOTOS = [];
+
+    function setGalleryStatus(message, tone) {
+      const el = document.getElementById('collectionGalleryStatus');
+      if (!el) return;
+      if (!message) {
+        el.hidden = true;
+        el.textContent = '';
+        el.className = 'cloud-gallery-status';
+        return;
+      }
+      el.hidden = false;
+      el.textContent = message;
+      el.className = 'cloud-gallery-status' + (tone ? ' is-' + tone : '');
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function getCategoryFromFilename(f) {
+      f = String(f || '').toLowerCase();
+      if (f.indexOf('evening_') !== -1) return 'evening';
+      if (f.indexOf('bridal_') !== -1) return 'bridal';
+      if (f.indexOf('occasion_') !== -1) return 'occasion';
+      return '';
+    }
+
+    function getTitleFromFilename(f) {
+      var base = String(f || '').split('/').pop().replace(/\.[^.]+$/, '');
+      base = base
+        .replace(/^(evening|bridal|occasion)_/i, '')
+        .replace(/-\d{4}$/, '')
+        .replace(/_[a-z0-9]{5,}$/, '')
+        .replace(/[-_]+/g, ' ')
+        .trim();
+      return base ? base.replace(/\b\w/g, function (c) { return c.toUpperCase(); }) : 'Untitled';
+    }
+
+    function getYearFromFilename(f) {
+      var m = String(f || '').match(/-(\d{4})(?:\.[^.]+)?$/);
+      return m ? m[1] : new Date().getFullYear().toString();
+    }
+
+    function getNormalizedTags(resource) {
+      var sourceTags = Array.isArray(resource && resource.tags) ? resource.tags : [];
+      var listTags = Array.isArray(resource && resource.__listTags) ? resource.__listTags : [];
+      var merged = sourceTags.concat(listTags);
+      var normalized = [];
+      for (var i = 0; i < merged.length; i++) {
+        var tag = String(merged[i] || '').toLowerCase().trim();
+        if (!tag || normalized.indexOf(tag) !== -1) continue;
+        normalized.push(tag);
+      }
+      return normalized;
+    }
+
+    function getCategoryFromTags(tags) {
+      if (tags.indexOf('evening') !== -1) return 'evening';
+      if (tags.indexOf('bridal') !== -1) return 'bridal';
+      if (tags.indexOf('occasion') !== -1) return 'occasion';
+      return '';
+    }
+
+    function readKey(obj, key) {
+      if (!obj || typeof obj !== 'object') return '';
+      if (obj[key] != null && obj[key] !== '') return obj[key];
+      var lower = String(key).toLowerCase();
+      var keys = Object.keys(obj);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].toLowerCase() === lower && obj[keys[i]] != null && obj[keys[i]] !== '') return obj[keys[i]];
+      }
+      return '';
+    }
+
+    function getCloudinaryField(resource, key) {
+      var fromContext = readKey(resource && resource.context && resource.context.custom, key);
+      if (fromContext) return fromContext;
+      var fromMetadata = readKey(resource && resource.metadata, key);
+      if (fromMetadata) return fromMetadata;
+      var fromRoot = readKey(resource, key);
+      if (fromRoot) return fromRoot;
+      return '';
+    }
+
+    function getCategoryFromResource(resource) {
+      var tags = getNormalizedTags(resource);
+      var fromTag = getCategoryFromTags(tags);
+      if (fromTag) return fromTag;
+      // Any non-category tag (or no tag) should remain visible only in "All".
+      return '';
+    }
+
+    function getTitleFromResource(resource) {
+      var explicitTitle =
+        getCloudinaryField(resource, 'title') ||
+        getCloudinaryField(resource, 'display_name') ||
+        getCloudinaryField(resource, 'name') ||
+        getCloudinaryField(resource, 'caption');
+      if (explicitTitle) return String(explicitTitle).trim();
+      return getTitleFromFilename(resource && resource.public_id);
+    }
+
+    function getYearFromResource(resource) {
+      var fromCloud = String(getCloudinaryField(resource, 'year') || '');
+      var yearMatch = fromCloud.match(/\d{4}/);
+      if (yearMatch) return yearMatch[0];
+      return getYearFromFilename(resource && resource.public_id);
+    }
+
+    async function fetchCloudinaryResourcesByTags(tags) {
+      var uniqueTags = Array.from(new Set((tags || []).map(function (t) { return String(t || '').trim(); }).filter(Boolean)));
+      var allResources = [];
+      var byPublicId = {};
+      var hadSuccess = false;
+      var lastError = '';
+      for (var i = 0; i < uniqueTags.length; i++) {
+        var tag = uniqueTags[i];
+        var url = 'https://res.cloudinary.com/' + CLOUDINARY_CLOUD_NAME + '/' + CLOUDINARY_RESOURCE_TYPE + '/list/' + encodeURIComponent(tag) + '.json';
+        try {
+          var res = await fetch(url);
+          if (res.status === 404) continue;
+          if (!res.ok) throw new Error('[' + tag + '] HTTP ' + res.status);
+          var data = await res.json();
+          hadSuccess = true;
+          (data.resources || []).forEach(function (r) {
+            if (!r || !r.public_id) return;
+            var existing = byPublicId[r.public_id];
+            if (existing) {
+              existing.__listTags = Array.isArray(existing.__listTags) ? existing.__listTags : [];
+              if (existing.__listTags.indexOf(tag) === -1) existing.__listTags.push(tag);
+              if (Array.isArray(r.tags)) {
+                existing.tags = Array.isArray(existing.tags) ? existing.tags : [];
+                r.tags.forEach(function (t) { if (existing.tags.indexOf(t) === -1) existing.tags.push(t); });
+              }
+              return;
+            }
+            var copy = Object.assign({}, r);
+            copy.__listTags = [tag];
+            byPublicId[r.public_id] = copy;
+            allResources.push(copy);
+          });
+        } catch (err) {
+          lastError = err.message || String(err);
+          console.warn('Cloudinary list error for tag "' + tag + '":', lastError);
+        }
+      }
+      if (!allResources.length && lastError && !hadSuccess) throw new Error(lastError);
+      return allResources;
+    }
+
+    function setCollectionHeroBackground(el, imageUrl) {
+      el.style.backgroundImage = "linear-gradient(to bottom, rgba(20, 15, 14, .52) 0%, rgba(20, 15, 14, .74) 100%), url('" + imageUrl + "')";
+    }
+
+    const CLOUDINARY_SLOT_CACHE_KEY = 'mk_slot_cache_' + CLOUDINARY_CLOUD_NAME;
+
+    function readSlotCache() {
+      try {
+        var raw = localStorage.getItem(CLOUDINARY_SLOT_CACHE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (err) {
+        return {};
+      }
+    }
+
+    function writeSlotCache(cache) {
+      try {
+        localStorage.setItem(CLOUDINARY_SLOT_CACHE_KEY, JSON.stringify(cache || {}));
+      } catch (err) {
+        // Ignore storage failures.
+      }
+    }
+
+    function getCachedSlotUrl(tag) {
+      var cache = readSlotCache();
+      var hit = cache && cache[tag];
+      return hit && hit.url ? String(hit.url) : '';
+    }
+
+    function cacheSlotUrl(tag, url) {
+      if (!tag || !url) return;
+      var cache = readSlotCache();
+      cache[tag] = { url: url, at: Date.now() };
+      writeSlotCache(cache);
+    }
+
+    function preloadImage(url) {
+      return new Promise(function (resolve, reject) {
+        var img = new Image();
+        img.onload = function () { resolve(url); };
+        img.onerror = reject;
+        img.src = url;
+      });
+    }
+
+    async function loadCloudinarySlotImages() {
+      if (CLOUDINARY_CLOUD_NAME === 'YOUR_CLOUD_NAME') return;
+      var imgSlotEls = Array.from(document.querySelectorAll('[data-cloudinary-tag]'));
+      var bgSlotEls = Array.from(document.querySelectorAll('[data-cloudinary-bg-tag]'));
+      var allTags = imgSlotEls
+        .map(function (el) { return String(el.getAttribute('data-cloudinary-tag') || '').trim(); })
+        .concat(bgSlotEls.map(function (el) { return String(el.getAttribute('data-cloudinary-bg-tag') || '').trim(); }))
+        .filter(Boolean);
+      var slotTags = Array.from(new Set(allTags));
+      if (!slotTags.length) return;
+      var base = 'https://res.cloudinary.com/' + CLOUDINARY_CLOUD_NAME + '/' + CLOUDINARY_RESOURCE_TYPE + '/upload/';
+
+      imgSlotEls.forEach(function (el) {
+        var tag = String(el.getAttribute('data-cloudinary-tag') || '').trim();
+        var cached = getCachedSlotUrl(tag);
+        if (cached) el.src = cached;
+      });
+      bgSlotEls.forEach(function (el) {
+        var tag = String(el.getAttribute('data-cloudinary-bg-tag') || '').trim();
+        var cached = getCachedSlotUrl(tag);
+        if (cached) setCollectionHeroBackground(el, cached);
+      });
+
+      try {
+        var resources = await fetchCloudinaryResourcesByTags(slotTags);
+        var byTag = {};
+        resources.forEach(function (r) {
+          var tags = Array.isArray(r && r.__listTags) ? r.__listTags : [];
+          tags.forEach(function (tag) {
+            if (!byTag[tag]) byTag[tag] = r;
+          });
+        });
+        for (var i = 0; i < imgSlotEls.length; i++) {
+          var el = imgSlotEls[i];
+          var tag = String(el.getAttribute('data-cloudinary-tag') || '').trim();
+          var resource = byTag[tag];
+          if (!resource || !resource.public_id) continue;
+          var url = base + 'f_auto,q_auto,w_1200/' + resource.public_id;
+          try { await preloadImage(url); } catch (e) { continue; }
+          el.src = url;
+          cacheSlotUrl(tag, url);
+        }
+        for (var j = 0; j < bgSlotEls.length; j++) {
+          var bgEl = bgSlotEls[j];
+          var bgTag = String(bgEl.getAttribute('data-cloudinary-bg-tag') || '').trim();
+          var bgResource = byTag[bgTag];
+          if (!bgResource || !bgResource.public_id) continue;
+          var bgUrl = base + 'f_auto,q_auto,w_1800/' + bgResource.public_id;
+          try { await preloadImage(bgUrl); } catch (e) { continue; }
+          setCollectionHeroBackground(bgEl, bgUrl);
+          cacheSlotUrl(bgTag, bgUrl);
+        }
+      } catch (err) {
+        console.warn('Cloudinary slot image error:', err.message || String(err));
+      }
+    }
+
+    function buildGalleryItem(photo, isTall) {
+      var div = document.createElement('div');
+      div.className = 'gallery-item' + (isTall ? ' tall' : '');
+      var style = isTall ? ' style="aspect-ratio:2/3"' : '';
+      div.innerHTML = '<img src="' + photo.thumb + '" alt="' + escapeHtml(photo.title) + '"' + style + ' loading="lazy">' +
+        '<div class="gallery-item-caption"><p>' + escapeHtml(photo.title) + '</p><span>' + PAGE_LABEL + ' - ' + escapeHtml(photo.year) + '</span></div>';
+      return div;
+    }
+
+    function renderCollectionGallery() {
+      var primary = document.getElementById('galleryGridPrimary');
+      var secondary = document.getElementById('galleryGridSecondary');
+      var btn = document.getElementById('collectionLoadMoreBtn');
+      if (!primary || !secondary || !btn) return;
+      var visible = COLLECTION_PHOTOS.slice(0, collectionVisibleCount);
+      primary.innerHTML = '';
+      secondary.innerHTML = '';
+      if (!visible.length) {
+        btn.style.display = 'none';
+        return;
+      }
+      var midpoint = Math.ceil(visible.length / 2);
+      visible.forEach(function (photo, idx) {
+        var isTall = idx === midpoint;
+        var target = idx < midpoint ? primary : secondary;
+        target.appendChild(buildGalleryItem(photo, isTall));
+      });
+      var remaining = COLLECTION_PHOTOS.length - visible.length;
+      btn.style.display = '';
+      btn.disabled = remaining <= 0;
+      btn.textContent = remaining > 0 ? 'Load More (' + remaining + ' remaining)' : 'All ' + COLLECTION_PHOTOS.length + ' pieces shown';
+    }
+
+    function loadMoreCollection() {
+      collectionVisibleCount += COLLECTION_ITEMS_PER_PAGE;
+      renderCollectionGallery();
+    }
+
+    async function loadCollectionGallery() {
+      var primary = document.getElementById('galleryGridPrimary');
+      var secondary = document.getElementById('galleryGridSecondary');
+      var btn = document.getElementById('collectionLoadMoreBtn');
+      if (!primary || !secondary || !btn) return;
+      if (CLOUDINARY_CLOUD_NAME === 'YOUR_CLOUD_NAME') {
+        setGalleryStatus('Cloudinary not configured. Showing default gallery.', 'error');
+        btn.style.display = 'none';
+        return;
+      }
+      setGalleryStatus('Loading Cloudinary gallery...', 'info');
+      try {
+        var resources = await fetchCloudinaryResourcesByTags(CLOUDINARY_LIST_TAGS);
+        var base = 'https://res.cloudinary.com/' + CLOUDINARY_CLOUD_NAME + '/' + CLOUDINARY_RESOURCE_TYPE + '/upload/';
+        var allPhotos = resources.map(function (r) {
+          return {
+            title: getTitleFromResource(r),
+            year: getYearFromResource(r),
+            category: getCategoryFromResource(r),
+            thumb: base + 'f_auto,q_auto,w_900/' + r.public_id
+          };
+        });
+        var filtered = allPhotos
+          .filter(function (p) { return p.category === PAGE_CATEGORY; })
+          .sort(function (a, b) { return b.year.localeCompare(a.year) || a.title.localeCompare(b.title); });
+        if (!filtered.length) {
+          setGalleryStatus('No ' + PAGE_LABEL + ' photos found with tag "' + PAGE_CATEGORY + '".', 'info');
+          COLLECTION_PHOTOS = [];
+          renderCollectionGallery();
+          return;
+        }
+        COLLECTION_PHOTOS = filtered;
+        collectionVisibleCount = COLLECTION_ITEMS_PER_PAGE;
+        renderCollectionGallery();
+        setGalleryStatus('', '');
+      } catch (err) {
+        console.warn('Cloudinary gallery error:', err.message);
+        setGalleryStatus('Cloudinary gallery failed. Showing default gallery.', 'error');
+        btn.style.display = 'none';
+      }
+    }
+
+    loadCloudinarySlotImages();
+    loadCollectionGallery();
   </script>
 </body>
 
