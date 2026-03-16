@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share Your Experience — Maison Karina</title>
+  <meta name="description"
+    content="Share your Maison Karina couture experience. We would be honoured to hear your story.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/favicon-180.png">
+  <link rel="manifest" href="icons/site.webmanifest">
+  <meta name="theme-color" content="#1A1410">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ivory: #F6F1EB;
+      --rose: #D8B7B1;
+      --taupe: #5A4A46;
+      --gold: #C6A75E;
+      --black: #111111;
+      --beige: #EDE8E0;
+      --light-rose: #F0E4E1;
+      --mid-taupe: #8A7470;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      background: var(--ivory);
+      color: var(--taupe);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      padding: 24px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(198, 167, 94, .15);
+      background: rgba(246, 241, 235, .97);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: .12em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--gold);
+    }
+
+    .nav-back {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--mid-taupe);
+      text-decoration: none;
+      transition: color .3s;
+    }
+
+    .nav-back::before {
+      content: '← ';
+    }
+
+    .nav-back:hover {
+      color: var(--gold);
+    }
+
+    /* MAIN */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px;
+    }
+
+    .review-wrapper {
+      max-width: 620px;
+      width: 100%;
+    }
+
+    /* HEADER */
+    .review-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .review-eyebrow {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .review-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 300;
+      color: var(--black);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .review-title em {
+      font-style: italic;
+      color: var(--rose);
+    }
+
+    .review-subtitle {
+      font-size: 13px;
+      color: var(--mid-taupe);
+      line-height: 1.9;
+      letter-spacing: .04em;
+    }
+
+    /* STAR RATING */
+    .star-group {
+      margin-bottom: 28px;
+    }
+
+    .star-group label:first-child {
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--mid-taupe);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .stars {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .stars input {
+      display: none;
+    }
+
+    .stars label {
+      font-size: 28px;
+      color: rgba(90, 74, 70, .2);
+      cursor: pointer;
+      transition: color .15s;
+      line-height: 1;
+    }
+
+    .stars input:checked~label,
+    .stars label:hover,
+    .stars label:hover~label {
+      color: var(--gold);
+    }
+
+    /* FORM */
+    .review-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 15px 18px;
+      border: 1px solid rgba(90, 74, 70, .18);
+      background: #fff;
+      color: var(--taupe);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: .05em;
+      transition: border-color .3s;
+      outline: none;
+      border-radius: 0;
+    }
+
+    .form-input::placeholder {
+      color: rgba(90, 74, 70, .35);
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+    }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 140px;
+      line-height: 1.8;
+    }
+
+    .form-note {
+      font-size: 10px;
+      color: var(--mid-taupe);
+      letter-spacing: .08em;
+      line-height: 1.7;
+      margin-top: 4px;
+    }
+
+    /* SUBMIT */
+    .btn-submit {
+      padding: 17px;
+      background: var(--taupe);
+      color: var(--ivory);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: all .3s;
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover {
+      background: var(--gold);
+    }
+
+    .btn-submit:disabled {
+      opacity: .5;
+      cursor: default;
+    }
+
+    /* SUCCESS STATE */
+    .review-success {
+      display: none;
+      text-align: center;
+      padding: 60px 40px;
+      background: #fff;
+      border: 1px solid rgba(198, 167, 94, .2);
+    }
+
+    .review-success.visible {
+      display: block;
+    }
+
+    .review-form-wrap.hidden {
+      display: none;
+    }
+
+    .success-icon {
+      font-size: 36px;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--black);
+      margin-bottom: 16px;
+    }
+
+    .success-text {
+      font-size: 13px;
+      color: var(--mid-taupe);
+      line-height: 1.9;
+      margin-bottom: 32px;
+    }
+
+    .btn-home {
+      display: inline-block;
+      padding: 14px 36px;
+      border: 1px solid var(--taupe);
+      color: var(--taupe);
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all .3s;
+    }
+
+    .btn-home:hover {
+      background: var(--taupe);
+      color: var(--ivory);
+    }
+
+    /* STATUS */
+    #review-status {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 18px;
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-align: center;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 32px 60px;
+      text-align: center;
+      border-top: 1px solid rgba(90, 74, 70, .08);
+    }
+
+    .footer-legal {
+      font-size: 10px;
+      color: rgba(90, 74, 70, .35);
+      letter-spacing: .12em;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        padding: 18px 24px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Maison <span>Karina</span></a>
+    <a href="index.html#booking" class="nav-back">Back to site</a>
+  </nav>
+
+  <main>
+    <div class="review-wrapper">
+
+      <div class="review-header">
+        <span class="review-eyebrow">Client Love Letters</span>
+        <h1 class="review-title">Share Your<br><em>Experience</em></h1>
+        <p class="review-subtitle">We would be honoured to hear your story. Your review will be published on our site
+          after a brief review by our team.</p>
+      </div>
+
+      <!-- Success state -->
+      <div class="review-success" id="reviewSuccess">
+        <div class="success-icon">✦</div>
+        <h2 class="success-title">Thank You</h2>
+        <p class="success-text">Your review has been received with gratitude.<br>We will publish it on our site shortly.
+        </p>
+        <a href="index.html" class="btn-home">Return to Maison Karina</a>
+      </div>
+
+      <!-- Form -->
+      <div class="review-form-wrap" id="reviewFormWrap">
+        <form class="review-form" id="reviewForm" onsubmit="submitReview(event)">
+
+          <div class="star-group">
+            <label>Your rating</label>
+            <div class="stars">
+              <input type="radio" name="stars" id="s5" value="5" checked>
+              <label for="s5">★</label>
+              <input type="radio" name="stars" id="s4" value="4">
+              <label for="s4">★</label>
+              <input type="radio" name="stars" id="s3" value="3">
+              <label for="s3">★</label>
+              <input type="radio" name="stars" id="s2" value="2">
+              <label for="s2">★</label>
+              <input type="radio" name="stars" id="s1" value="1">
+              <label for="s1">★</label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <input class="form-input" type="text" id="reviewName" placeholder="Your Name" required maxlength="60">
+            <input class="form-input" type="text" id="reviewCity" placeholder="Your City" required maxlength="60">
+          </div>
+
+          <input class="form-input" type="email" id="reviewEmail" placeholder="Email Address (not published)" required>
+
+          <textarea class="form-input" id="reviewText" placeholder="Tell us about your experience with Maison Karina..."
+            required minlength="30" maxlength="500"></textarea>
+          <p class="form-note">Minimum 30 characters. Maximum 500 characters. Your email address will never be
+            published.</p>
+
+          <div id="review-status"></div>
+
+          <button type="submit" class="btn-submit" id="reviewSubmitBtn">Submit Review</button>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p class="footer-legal">© <span id="yr"></span> Maison Karina — Private Couture Atelier</p>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // ================================================================
+    //  PASTE YOUR REVIEWS GOOGLE APPS SCRIPT URL HERE
+    // ================================================================
+    const REVIEWS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9oxVuVkzfLu6Ec7FLHIUh7-zMSQ69g7NroAeksGjaaxc7USvkehE1ied93nnMnbhFlw/exec';
+
+    async function submitReview(e) {
+      e.preventDefault();
+      var btn = document.getElementById('reviewSubmitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      document.getElementById('review-status').style.display = 'none';
+
+      var stars = document.querySelector('input[name="stars"]:checked');
+      var data = {
+        action: 'submitReview',
+        data: {
+          name: document.getElementById('reviewName').value.trim(),
+          city: document.getElementById('reviewCity').value.trim(),
+          email: document.getElementById('reviewEmail').value.trim(),
+          stars: stars ? parseInt(stars.value) : 5,
+          text: document.getElementById('reviewText').value.trim(),
+        }
+      };
+
+      // Basic client-side validation
+      if (data.data.text.length < 10) {
+        btn.disabled = false;
+        btn.textContent = 'Submit Review';
+        showStatus('Please write at least a few words about your experience.');
+        return;
+      }
+
+      // Demo mode — not yet configured
+      if (!REVIEWS_SCRIPT_URL || REVIEWS_SCRIPT_URL.indexOf('YOUR_') !== -1) {
+        setTimeout(showSuccess, 800);
+        return;
+      }
+
+      // Google Apps Script requires no-cors for cross-origin POST.
+      // We use no-cors (fire-and-forget) and show success optimistically —
+      // the review is saved server-side even though we can't read the response.
+      try {
+        fetch(REVIEWS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',           // <-- key fix for Google Apps Script
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(data),
+        });
+        // no-cors returns an opaque response — we can't read it,
+        // but the POST is sent and Apps Script processes it fine.
+        // Show success after a short delay to feel responsive.
+        setTimeout(showSuccess, 1000);
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Submit Review';
+        showStatus('Connection failed. Please check your internet and try again.');
+      }
+    }
+
+    function showStatus(msg) {
+      var status = document.getElementById('review-status');
+      status.style.cssText = 'display:block;color:#7c3028;background:rgba(145,59,49,.06);border:1px solid rgba(145,59,49,.2);margin-top:16px;padding:14px 18px;font-size:12px;letter-spacing:.06em;text-align:center;';
+      status.textContent = msg;
+    }
+
+    function showSuccess() {
+      document.getElementById('reviewFormWrap').classList.add('hidden');
+      document.getElementById('reviewSuccess').classList.add('visible');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+
+</html>

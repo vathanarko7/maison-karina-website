@@ -17,11 +17,11 @@
   <meta name="twitter:title" content="Maison Karina — Private Couture Atelier">
   <meta name="twitter:description"
     content="Maison Karina is a private couture atelier in Phnom Penh. Bespoke evening gowns, bridal, and custom occasion wear crafted with timeless artistry. By appointment only.">
-  <link rel="icon" href="images/favicon.ico" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" href="icons/favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/favicon-180.png">
+  <link rel="manifest" href="icons/site.webmanifest">
   <meta name="theme-color" content="#1A1410">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1705,6 +1705,61 @@
     body.menu-open .hamburger span {
       background: var(--taupe) !important;
     }
+
+    /* REVIEW SUBMIT LINK */
+    .testimonials-footer {
+      text-align: center;
+      margin-top: 52px;
+    }
+
+    .review-link {
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--mid-taupe);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(90, 74, 70, .25);
+      padding-bottom: 2px;
+      transition: all .3s;
+    }
+
+    .review-link:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* DYNAMIC TESTIMONIALS LOADING */
+    .testimonials-loading {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--mid-taupe);
+      font-size: 11px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+    }
+
+    .testimonials-loading-spinner {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--rose);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .testimonials-error {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: var(--mid-taupe);
+    }
   </style>
 </head>
 
@@ -1870,7 +1925,7 @@
     <button type="button" class="lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
   </div>
 
-  <section id="testimonials">
+  <!-- <section id="testimonials">
     <div class="testimonials-header reveal">
       <span class="section-eyebrow">Client Love Letters</span>
       <h2 class="section-title">Words from<br><em style="font-style:italic;color:var(--rose)">Our Clients</em></h2>
@@ -1900,6 +1955,25 @@
           attention to detail — absolutely extraordinary.</p>
         <p class="testimonial-author">— Marie-Claire D., Geneva</p>
       </div>
+    </div>
+  </section> -->
+
+  <section id="testimonials">
+    <div class="testimonials-header reveal">
+      <span class="section-eyebrow">Client Love Letters</span>
+      <h2 class="section-title">Words from<br><em style="font-style:italic;color:var(--rose)">Our Clients</em></h2>
+    </div>
+
+    <!-- Dynamic reviews loaded from Google Sheets -->
+    <div class="testimonials-grid" id="testimonialsGrid">
+      <div class="testimonials-loading" style="grid-column:1/-1;">
+        <div class="testimonials-loading-spinner"></div>
+        Loading reviews...
+      </div>
+    </div>
+
+    <div class="testimonials-footer reveal">
+      <a href="leave-review.html" class="review-link">Share your experience →</a>
     </div>
   </section>
 
@@ -2721,6 +2795,78 @@ Always guide clients toward booking a consultation for specific requests. Keep r
     // Boot
     loadCloudinarySlotImages();
     observePortfolioLoad();
+
+    // ================================================================
+    //  DYNAMIC REVIEWS — Google Sheets
+    //  STEP 1: Set your Google Apps Script Web App URL below
+    //  STEP 2: Deploy the reviews-script.gs from the file provided
+    // ================================================================
+    const REVIEWS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9oxVuVkzfLu6Ec7FLHIUh7-zMSQ69g7NroAeksGjaaxc7USvkehE1ied93nnMnbhFlw/exec';
+
+    // Fallback reviews shown before Google Sheets is connected
+    const FALLBACK_REVIEWS = [
+      { name: 'Isabelle M.', city: 'Paris', stars: 5, text: 'Wearing my gown felt like stepping into the most confident version of myself. The experience was as beautiful as the dress.' },
+      { name: 'Camille R.', city: 'Monaco', stars: 5, text: 'It was more than a dress — it was an unforgettable couture experience. Karina understood my vision better than I did.' },
+      { name: 'Sophia L.', city: 'London', stars: 5, text: 'From the first consultation to the final fitting, I felt completely seen and cared for. This is what true luxury feels like.' },
+      { name: 'Marie-Claire D.', city: 'Geneva', stars: 5, text: 'My wedding gown exceeded every dream I had. The craftsmanship, the fabric, the attention to detail — absolutely extraordinary.' },
+    ];
+
+    function renderReviews(reviews) {
+      var grid = document.getElementById('testimonialsGrid');
+      if (!grid) return;
+      if (!reviews || reviews.length === 0) {
+        grid.innerHTML = '<div class="testimonials-error">No reviews yet. Be the first to share your experience.</div>';
+        return;
+      }
+      grid.innerHTML = '';
+      reviews.forEach(function (r, i) {
+        var stars = '';
+        for (var s = 0; s < (r.stars || 5); s++) stars += '★';
+        var div = document.createElement('div');
+        div.className = 'testimonial reveal';
+        if (i % 2 === 1) div.style.transitionDelay = '.15s';
+        div.innerHTML =
+          '<div class="testimonial-stars">' + stars + '</div>' +
+          '<p class="testimonial-text">' + escapeHtml(r.text) + '</p>' +
+          '<p class="testimonial-author">— ' + escapeHtml(r.name) + ', ' + escapeHtml(r.city) + '</p>';
+        grid.appendChild(div);
+        // Trigger reveal animation
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            div.classList.add('visible');
+          });
+        });
+      });
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    async function loadReviews() {
+      if (REVIEWS_SCRIPT_URL === 'YOUR_REVIEWS_SCRIPT_URL_HERE') {
+        renderReviews(FALLBACK_REVIEWS);
+        return;
+      }
+      try {
+        var res = await fetch(REVIEWS_SCRIPT_URL + '?action=getReviews');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        var data = await res.json();
+        var reviews = (data.reviews && data.reviews.length > 0) ? data.reviews : FALLBACK_REVIEWS;
+        renderReviews(reviews);
+      } catch (err) {
+        renderReviews(FALLBACK_REVIEWS);
+      }
+    }
+
+    // Load reviews when page is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadReviews);
+    } else {
+      loadReviews();
+    }
   </script>
 </body>
 
