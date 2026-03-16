@@ -323,3 +323,133 @@ function buildResponse(obj) {
     ContentService.MimeType.JSON,
   );
 }
+
+// ── SHEET PROTECTION ──────────────────────────────────────────
+// Run protectSheet() ONCE after setupSheet().
+//
+// Rules:
+//   Row 1 (headers)          → HARD BLOCK — cannot edit at all
+//   Col A (Timestamp) rows 2+→ HARD BLOCK — set by script automatically
+//   Col E (Stars) rows 2+    → HARD BLOCK — set by script automatically
+//   Col B (Name) rows 2+     → WARNING — can override to fix typos
+//   Col C (City) rows 2+     → WARNING — can override to fix typos
+//   Col D (Email) rows 2+    → WARNING — can override to fix typos
+//   Col F (Review) rows 2+   → WARNING — can override to fix typos
+//   Col G (Approved) rows 2+ → FREE — set YES / NO / PENDING
+//   Col H (Notes) rows 2+    → FREE — write internal notes
+function protectSheet() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) throw new Error("Sheet not found. Run setupSheet() first.");
+
+  // Remove all existing protections first
+  sheet
+    .getProtections(SpreadsheetApp.ProtectionType.RANGE)
+    .forEach(function (p) {
+      p.remove();
+    });
+  sheet
+    .getProtections(SpreadsheetApp.ProtectionType.SHEET)
+    .forEach(function (p) {
+      p.remove();
+    });
+
+  var lastRow = Math.max(sheet.getMaxRows(), 1000);
+  var me = Session.getEffectiveUser();
+
+  // ── 1. HARD BLOCK: Row 1 (entire header row) ─────────────────
+  var p1 = sheet
+    .getRange("1:1")
+    .protect()
+    .setDescription("Headers — hard blocked");
+  p1.addEditor(me);
+  p1.removeEditors(
+    p1.getEditors().filter(function (u) {
+      return u.getEmail() !== me.getEmail();
+    }),
+  );
+
+  // ── 2. HARD BLOCK: Column A rows 2+ (Timestamp) ─────────────
+  var p2 = sheet
+    .getRange(2, 1, lastRow - 1, 1)
+    .protect()
+    .setDescription("Timestamp — hard blocked, set by script");
+  p2.addEditor(me);
+  p2.removeEditors(
+    p2.getEditors().filter(function (u) {
+      return u.getEmail() !== me.getEmail();
+    }),
+  );
+
+  // ── 3. HARD BLOCK: Column E rows 2+ (Stars) ─────────────────
+  var p3 = sheet
+    .getRange(2, 5, lastRow - 1, 1)
+    .protect()
+    .setDescription("Stars — hard blocked, set by script");
+  p3.addEditor(me);
+  p3.removeEditors(
+    p3.getEditors().filter(function (u) {
+      return u.getEmail() !== me.getEmail();
+    }),
+  );
+
+  // ── 4. WARNING: Column B rows 2+ (Name) ─────────────────────
+  var p4 = sheet
+    .getRange(2, 2, lastRow - 1, 1)
+    .protect()
+    .setDescription("Name — warning before editing");
+  p4.setWarningOnly(true);
+
+  // ── 5. WARNING: Column C rows 2+ (City) ─────────────────────
+  var p5 = sheet
+    .getRange(2, 3, lastRow - 1, 1)
+    .protect()
+    .setDescription("City — warning before editing");
+  p5.setWarningOnly(true);
+
+  // ── 6. WARNING: Column D rows 2+ (Email) ────────────────────
+  var p6 = sheet
+    .getRange(2, 4, lastRow - 1, 1)
+    .protect()
+    .setDescription("Email — warning before editing");
+  p6.setWarningOnly(true);
+
+  // ── 7. WARNING: Column F rows 2+ (Review text) ──────────────
+  var p7 = sheet
+    .getRange(2, 6, lastRow - 1, 1)
+    .protect()
+    .setDescription("Review — warning before editing");
+  p7.setWarningOnly(true);
+
+  // Columns G (Approved) and H (Notes) from row 2+ — no protection, fully free
+
+  Logger.log("Protection applied:");
+  Logger.log(
+    "  HARD BLOCK : Row 1 (headers), Col A (Timestamp), Col E (Stars)",
+  );
+  Logger.log(
+    "  WARNING    : Col B (Name), Col C (City), Col D (Email), Col F (Review)",
+  );
+  Logger.log("  FREE       : Col G (Approved), Col H (Notes)");
+}
+
+// ── REMOVE ALL PROTECTION ────────────────────────────────────
+// Run this if you need to do bulk edits, then run protectSheet() again.
+function removeProtection() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) throw new Error("Sheet not found.");
+
+  sheet
+    .getProtections(SpreadsheetApp.ProtectionType.RANGE)
+    .forEach(function (p) {
+      p.remove();
+    });
+  sheet
+    .getProtections(SpreadsheetApp.ProtectionType.SHEET)
+    .forEach(function (p) {
+      p.remove();
+    });
+
+  Logger.log("All protections removed. Run protectSheet() again when done.");
+}

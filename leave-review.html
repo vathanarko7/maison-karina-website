@@ -56,12 +56,26 @@
 
     /* NAV */
     nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
       padding: 24px 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid rgba(198, 167, 94, .15);
+      border-bottom: 1px solid rgba(198, 167, 94, .08);
+      background: rgba(246, 241, 235, .86);
+      backdrop-filter: blur(8px);
+      transition: background .4s, padding .4s, border-color .4s;
+    }
+
+    nav.scrolled {
       background: rgba(246, 241, 235, .97);
+      backdrop-filter: blur(12px);
+      padding: 16px 60px;
+      border-bottom: 1px solid rgba(198, 167, 94, .2);
     }
 
     .nav-logo {
@@ -100,7 +114,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 80px 24px;
+      padding: 152px 24px 80px;
     }
 
     .review-wrapper {
@@ -340,6 +354,14 @@
         padding: 18px 24px;
       }
 
+      nav.scrolled {
+        padding: 14px 24px;
+      }
+
+      main {
+        padding: 128px 24px 72px;
+      }
+
       .form-row {
         grid-template-columns: 1fr;
       }
@@ -353,9 +375,9 @@
 
 <body>
 
-  <nav>
+  <nav id="navbar">
     <a href="index.html" class="nav-logo">Maison <span>Karina</span></a>
-    <a href="index.html#booking" class="nav-back">Back to site</a>
+    <a href="index.html" class="nav-back">Back to site</a>
   </nav>
 
   <main>
@@ -424,11 +446,20 @@
 
   <script>
     document.getElementById('yr').textContent = new Date().getFullYear();
+    const nav = document.getElementById('navbar');
+
+    function syncNavState() {
+      if (!nav) return;
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }
+
+    syncNavState();
+    window.addEventListener('scroll', syncNavState, { passive: true });
 
     // ================================================================
     //  PASTE YOUR REVIEWS GOOGLE APPS SCRIPT URL HERE
     // ================================================================
-    const REVIEWS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9oxVuVkzfLu6Ec7FLHIUh7-zMSQ69g7NroAeksGjaaxc7USvkehE1ied93nnMnbhFlw/exec';
+    const REVIEWS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx1H96GKYh-uswqybhbSsk6hr4Icv3Zy0QDgMH-i9R_RNYRr6fT0gTBUbG3dd00aDx8/exec';
 
     async function submitReview(e) {
       e.preventDefault();

@@ -29,7 +29,7 @@ const CONFIG = {
   CALENDAR_ID: 'sovathana.soun@gmail.com',
 
   // Your atelier email — receives a copy of every booking
-  ATELIER_EMAIL: 'atelier@maisonkarina.com',
+  ATELIER_EMAIL: 'contact@maisonkarina.com',
 
   // Atelier name shown in emails
   ATELIER_NAME: 'Maison Karina',
@@ -105,7 +105,7 @@ function createBooking(data) {
     vision || 'Not specified',
     ``,
     `---`,
-    `Booked via maisonkarina.com`
+    `Booked via maison-karina-website.vercel.app`
   ].join('\n');
 
   const event = calendar.createEvent(eventTitle, startDate, endDate, {

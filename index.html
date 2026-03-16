@@ -2153,7 +2153,7 @@
 
     // ── GOOGLE CALENDAR BOOKING ──────────────────────────────────────────────
     // STEP 1: Paste your Google Apps Script Web App URL below
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIT-cL2Tt20g7O1ogFzNE83K4sncvrxd0Lu8Fsf-wDL7xQ25_WR9DFzNvxELxf4aTLTg/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHTSmHsYCQMvw8dHf5qzeN85Qaw0lubhZfH_D3nGsyMRpm3MYcm36FRyttXj0MA71EyQ/exec';
 
     async function handleSubmit(e) {
       e.preventDefault();
@@ -2221,39 +2221,182 @@
       }
     }
 
-    // ── AI CHATBOT ────────────────────────────────────────────────────────────
-    // STEP 2: Paste your Anthropic API key below
-    const ANTHROPIC_API_KEY = 'YOUR_ANTHROPIC_API_KEY_HERE';
+    //     // ── AI CHATBOT ────────────────────────────────────────────────────────────
+    //     // STEP 2: Paste your Anthropic API key below
+    //     const ANTHROPIC_API_KEY = 'YOUR_ANTHROPIC_API_KEY_HERE';
 
-    const ATELIER_SYSTEM_PROMPT = `You are the Atelier Assistant for Maison Karina, a private luxury couture atelier in Paris founded by designer Karina Kanha YIN.
+    //     const ATELIER_SYSTEM_PROMPT = `You are the Atelier Assistant for Maison Karina, a private luxury couture atelier in Paris founded by designer Karina Kanha YIN.
 
-Your role is to warmly and elegantly assist clients with questions about the atelier. You speak with refined, feminine grace — never overly casual, always helpful.
+    // Your role is to warmly and elegantly assist clients with questions about the atelier. You speak with refined, feminine grace — never overly casual, always helpful.
 
-KEY FACTS ABOUT MAISON Karina:
-- Founded 2026 in Cambodia by Karina Kanha YIN
-- Three collections: Evening Couture (SS 2025), Bridal Atelier, Custom Occasion (Bespoke)
+    // KEY FACTS ABOUT MAISON Karina:
+    // - Founded 2026 in Cambodia by Karina Kanha YIN
+    // - Three collections: Evening Couture (SS 2025), Bridal Atelier, Custom Occasion (Bespoke)
+    // - All pieces are bespoke — no ready-to-wear
+    // - Private consultations by appointment only
+    // - Limited pieces per season
+
+    // PRICING:
+    // - Custom Occasion: from €8,000
+    // - Evening Couture: from €15,000
+    // - Bridal Gowns: from €22,000
+
+    // TIMELINES:
+    // - Custom Occasion: 3–5 weeks, 3 fittings
+    // - Evening Couture: 6–8 weeks, 4 fittings
+    // - Bridal: 6–9 months, 5 fittings
+
+    // FABRICS: Silk charmeuse, duchess satin, Chantilly lace, silk organza, mikado silk, hand-beaded organza. Sourced from Lyon, Milan, Tokyo.
+
+    // PROCESS: Consultation → Sketch & Concept → Fabric Selection → Fittings → Final Creation
+
+    // CONTACT: atelier@maisonkarina.com | +33 1 42 68 19 00
+    // ADDRESS: 6 Rue de la butte verte, Phnom Penh, Cambodia
+
+    // Always guide clients toward booking a consultation for specific requests. Keep responses concise and elegant — 2–4 sentences unless more detail is needed. Never mention competitor brands.`;
+
+    //     let chatHistory = [];
+    //     let chatOpen = false;
+
+    //     function toggleChat() {
+    //       chatOpen = !chatOpen;
+    //       document.getElementById('chat-box').classList.toggle('open', chatOpen);
+    //       document.getElementById('chat-badge').style.display = chatOpen ? 'none' : 'block';
+    //     }
+
+    //     function addMsg(text, type) {
+    //       const el = document.createElement('div');
+    //       el.className = `chat-msg ${type}`;
+    //       el.textContent = text;
+    //       const msgs = document.getElementById('chat-messages');
+    //       msgs.appendChild(el);
+    //       msgs.scrollTop = msgs.scrollHeight;
+    //       return el;
+    //     }
+
+    //     function addTypingIndicator() {
+    //       const el = document.createElement('div');
+    //       el.className = 'chat-msg bot typing-indicator';
+    //       el.id = 'typing';
+    //       el.innerHTML = '<span></span><span></span><span></span>';
+    //       document.getElementById('chat-messages').appendChild(el);
+    //       document.getElementById('chat-messages').scrollTop = 99999;
+    //       return el;
+    //     }
+
+    //     async function sendChip(btn) {
+    //       const text = btn.textContent;
+    //       btn.parentElement.style.display = 'none';
+    //       addMsg(text, 'user');
+    //       chatHistory.push({ role: 'user', content: text });
+    //       await getBotReply();
+    //     }
+
+    //     async function sendMessage() {
+    //       const input = document.getElementById('chat-input');
+    //       const text = input.value.trim();
+    //       if (!text) return;
+    //       input.value = '';
+    //       addMsg(text, 'user');
+    //       chatHistory.push({ role: 'user', content: text });
+    //       await getBotReply();
+    //     }
+
+    //     async function getBotReply() {
+    //       const typing = addTypingIndicator();
+
+    //       // Demo mode — no API key
+    //       if (ANTHROPIC_API_KEY === 'YOUR_ANTHROPIC_API_KEY_HERE') {
+    //         await new Promise(r => setTimeout(r, 900));
+    //         typing.remove();
+    //         const demos = {
+    //           'pricing': 'Our creations begin at €8,000 for Custom Occasion, €15,000 for Evening Couture, and €22,000 for Bridal gowns. Each piece is entirely bespoke and priced according to complexity and fabric.',
+    //           'booking': 'We invite you to submit a consultation request through our booking form below. We respond within 48 hours to arrange your private appointment at the atelier.',
+    //           'timeline': 'Timelines range from 3–5 weeks for Custom Occasion to 6–9 months for Bridal. Each creation includes multiple fittings to ensure a flawless result.',
+    //           'fabric': 'We source exclusively from premier mills in Lyon, Milan, and Tokyo — including silk charmeuse, Chantilly lace, duchess satin, and hand-embroidered tulles.',
+    //           'bridal': 'Our Bridal Atelier creates one-of-a-kind wedding gowns with a minimum lead time of 6 months. We recommend booking 9–12 months before your wedding date.',
+    //           'process': 'Our couture journey moves through five stages: Consultation, Sketch & Concept, Fabric Selection, Fittings, and Final Creation — each step dedicated entirely to you.',
+    //         };
+    //         const lower = chatHistory[chatHistory.length - 1].content.toLowerCase();
+    //         const match = Object.keys(demos).find(k => lower.includes(k));
+    //         const reply = match ? demos[match] : 'Thank you for your question. I would be delighted to assist — for the most personalised guidance, I invite you to book a private consultation with Karina directly. Shall I help you with that?';
+    //         chatHistory.push({ role: 'assistant', content: reply });
+    //         addMsg(reply, 'bot');
+    //         return;
+    //       }
+
+    //       try {
+    //         const res = await fetch('https://api.anthropic.com/v1/messages', {
+    //           method: 'POST',
+    //           headers: {
+    //             'Content-Type': 'application/json',
+    //             'x-api-key': ANTHROPIC_API_KEY,
+    //             'anthropic-version': '2023-06-01',
+    //             'anthropic-dangerous-direct-browser-access': 'true'
+    //           },
+    //           body: JSON.stringify({
+    //             model: 'claude-haiku-4-5-20251001',
+    //             max_tokens: 300,
+    //             system: ATELIER_SYSTEM_PROMPT,
+    //             messages: chatHistory
+    //           })
+    //         });
+    //         const data = await res.json();
+    //         typing.remove();
+    //         const reply = data.content?.[0]?.text || "I'm sorry, I couldn't process that. Please try again or contact us directly.";
+    //         chatHistory.push({ role: 'assistant', content: reply });
+    //         addMsg(reply, 'bot');
+    //       } catch (err) {
+    //         typing.remove();
+    //         addMsg("I'm temporarily unavailable. Please contact us at .com", 'bot');
+    //       }
+    //     }
+
+    // ── AI CHATBOT (Google Gemini — free) ───────────────────────────────────
+    // Get your free API key at: aistudio.google.com → Get API key
+    // Free tier: 15 requests/min, 1M tokens/day — no credit card needed
+    const GEMINI_API_KEY = 'AIzaSyBsdWcDZpIZK11-k-ZFu2O5G3VrI836exw';
+
+    const ATELIER_SYSTEM_PROMPT = `You are the Atelier Assistant for Maison Karina, a private luxury couture atelier founded by designer Karina Kanha YIN in Phnom Penh, Cambodia.
+
+Your role is to warmly assist clients with questions about the atelier. Speak with refined, feminine elegance — never overly casual, always gracious and helpful.
+
+ABOUT MAISON KARINA:
+- Founded 2026 in Phnom Penh, Cambodia
+- Designer: Karina Kanha YIN
+- Three collections: Evening Couture, Bridal Atelier, Custom Occasion
 - All pieces are bespoke — no ready-to-wear
 - Private consultations by appointment only
-- Limited pieces per season
+- Limited pieces created each season
 
 PRICING:
-- Custom Occasion: from €8,000
-- Evening Couture: from €15,000
-- Bridal Gowns: from €22,000
+- Custom Occasion: from $8,000
+- Evening Couture: from $15,000
+- Bridal Gown: from $22,000
 
 TIMELINES:
 - Custom Occasion: 3–5 weeks, 3 fittings
 - Evening Couture: 6–8 weeks, 4 fittings
 - Bridal: 6–9 months, 5 fittings
 
-FABRICS: Silk charmeuse, duchess satin, Chantilly lace, silk organza, mikado silk, hand-beaded organza. Sourced from Lyon, Milan, Tokyo.
-
 PROCESS: Consultation → Sketch & Concept → Fabric Selection → Fittings → Final Creation
 
-CONTACT: atelier@maisonkarina.com | +33 1 42 68 19 00
-ADDRESS: 6 Rue de la butte verte, Phnom Penh, Cambodia
+FABRICS: Silk charmeuse, duchess satin, Chantilly lace, silk organza, mikado silk, hand-beaded organza. Sourced from Lyon, Milan, Tokyo.
 
-Always guide clients toward booking a consultation for specific requests. Keep responses concise and elegant — 2–4 sentences unless more detail is needed. Never mention competitor brands.`;
+CONTACT:
+- Email: contact@maisonkarina.com
+- Phone: +855 69 922 1505
+- Address: 6 Rue de la butte verte, Phnom Penh, Cambodia
+- Instagram: @design_by_kanha
+
+RULES:
+- Always guide clients toward booking a consultation
+- Keep responses concise — 2 to 4 sentences maximum
+- If asked about pricing, give the range then suggest a consultation
+- Never mention competitor brands
+- If you cannot answer, invite them to contact the atelier directly
+- IMPORTANT: Detect the language the client writes in and reply in the SAME language
+- Only respond in English or Khmer — if client writes in any other language, reply in English`;
 
     let chatHistory = [];
     let chatOpen = false;
@@ -2266,7 +2409,7 @@ Always guide clients toward booking a consultation for specific requests. Keep r
 
     function addMsg(text, type) {
       const el = document.createElement('div');
-      el.className = `chat-msg ${type}`;
+      el.className = 'chat-msg ' + type;
       el.textContent = text;
       const msgs = document.getElementById('chat-messages');
       msgs.appendChild(el);
@@ -2288,7 +2431,7 @@ Always guide clients toward booking a consultation for specific requests. Keep r
       const text = btn.textContent;
       btn.parentElement.style.display = 'none';
       addMsg(text, 'user');
-      chatHistory.push({ role: 'user', content: text });
+      chatHistory.push({ role: 'user', parts: [{ text: text }] });
       await getBotReply();
     }
 
@@ -2298,57 +2441,59 @@ Always guide clients toward booking a consultation for specific requests. Keep r
       if (!text) return;
       input.value = '';
       addMsg(text, 'user');
-      chatHistory.push({ role: 'user', content: text });
+      chatHistory.push({ role: 'user', parts: [{ text: text }] });
       await getBotReply();
     }
 
     async function getBotReply() {
       const typing = addTypingIndicator();
 
-      // Demo mode — no API key
-      if (ANTHROPIC_API_KEY === 'YOUR_ANTHROPIC_API_KEY_HERE') {
+      // Demo mode — API key not set yet
+      if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
         await new Promise(r => setTimeout(r, 900));
         typing.remove();
         const demos = {
-          'pricing': 'Our creations begin at €8,000 for Custom Occasion, €15,000 for Evening Couture, and €22,000 for Bridal gowns. Each piece is entirely bespoke and priced according to complexity and fabric.',
-          'booking': 'We invite you to submit a consultation request through our booking form below. We respond within 48 hours to arrange your private appointment at the atelier.',
+          'pricing': 'Our creations begin at $8,000 for Custom Occasion, $15,000 for Evening Couture, and $22,000 for Bridal gowns. Each piece is entirely bespoke and priced according to complexity and fabric.',
+          'booking': 'We invite you to submit a consultation request through our booking form. We respond within 24 hours to arrange your private appointment at the atelier.',
           'timeline': 'Timelines range from 3–5 weeks for Custom Occasion to 6–9 months for Bridal. Each creation includes multiple fittings to ensure a flawless result.',
           'fabric': 'We source exclusively from premier mills in Lyon, Milan, and Tokyo — including silk charmeuse, Chantilly lace, duchess satin, and hand-embroidered tulles.',
           'bridal': 'Our Bridal Atelier creates one-of-a-kind wedding gowns with a minimum lead time of 6 months. We recommend booking 9–12 months before your wedding date.',
           'process': 'Our couture journey moves through five stages: Consultation, Sketch & Concept, Fabric Selection, Fittings, and Final Creation — each step dedicated entirely to you.',
         };
-        const lower = chatHistory[chatHistory.length - 1].content.toLowerCase();
+        const lower = chatHistory[chatHistory.length - 1].parts[0].text.toLowerCase();
         const match = Object.keys(demos).find(k => lower.includes(k));
-        const reply = match ? demos[match] : 'Thank you for your question. I would be delighted to assist — for the most personalised guidance, I invite you to book a private consultation with Karina directly. Shall I help you with that?';
-        chatHistory.push({ role: 'assistant', content: reply });
+        const reply = match ? demos[match] : 'Thank you for your question. For the most personalised guidance, I invite you to book a private consultation with Karina directly. Shall I help you with that?';
+        chatHistory.push({ role: 'model', parts: [{ text: reply }] });
         addMsg(reply, 'bot');
         return;
       }
 
       try {
-        const res = await fetch('https://api.anthropic.com/v1/messages', {
+        const GEMINI_MODEL = 'gemini-2.5-flash';
+        const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + GEMINI_MODEL + ':generateContent?key=' + GEMINI_API_KEY;
+        const res = await fetch(url, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': ANTHROPIC_API_KEY,
-            'anthropic-version': '2023-06-01',
-            'anthropic-dangerous-direct-browser-access': 'true'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            model: 'claude-haiku-4-5-20251001',
-            max_tokens: 300,
-            system: ATELIER_SYSTEM_PROMPT,
-            messages: chatHistory
+            system_instruction: { parts: [{ text: ATELIER_SYSTEM_PROMPT }] },
+            contents: chatHistory,
+            generationConfig: { maxOutputTokens: 300, temperature: 0.7 }
           })
         });
         const data = await res.json();
+        if (!res.ok || (data && data.error)) {
+          const apiMessage = (data && data.error && data.error.message) ? data.error.message : ('HTTP ' + res.status);
+          throw new Error(apiMessage);
+        }
         typing.remove();
-        const reply = data.content?.[0]?.text || "I'm sorry, I couldn't process that. Please try again or contact us directly.";
-        chatHistory.push({ role: 'assistant', content: reply });
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text
+          || "I'm sorry, I couldn't process that. Please contact us at contact@maisonkarina.com";
+        chatHistory.push({ role: 'model', parts: [{ text: reply }] });
         addMsg(reply, 'bot');
       } catch (err) {
+        console.error('Gemini chatbot error:', err);
         typing.remove();
-        addMsg("I'm temporarily unavailable. Please contact us at .com", 'bot');
+        addMsg("I'm temporarily unavailable. Please contact us at contact@maisonkarina.com", 'bot');
       }
     }
 
@@ -2801,7 +2946,7 @@ Always guide clients toward booking a consultation for specific requests. Keep r
     //  STEP 1: Set your Google Apps Script Web App URL below
     //  STEP 2: Deploy the reviews-script.gs from the file provided
     // ================================================================
-    const REVIEWS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9oxVuVkzfLu6Ec7FLHIUh7-zMSQ69g7NroAeksGjaaxc7USvkehE1ied93nnMnbhFlw/exec';
+    const REVIEWS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx1H96GKYh-uswqybhbSsk6hr4Icv3Zy0QDgMH-i9R_RNYRr6fT0gTBUbG3dd00aDx8/exec';
 
     // Fallback reviews shown before Google Sheets is connected
     const FALLBACK_REVIEWS = [
