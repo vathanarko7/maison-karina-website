@@ -1346,21 +1346,101 @@
     .chat-msg {
       max-width: 85%;
       padding: 12px 16px;
-      font-size: 12px;
-      line-height: 1.7;
+      font-size: 13px;
+      line-height: 1.72;
+      border-radius: 14px;
     }
 
     .chat-msg.bot {
-      background: var(--beige);
-      color: var(--taupe);
+      background: #f1ece6;
+      color: #3f322f;
       align-self: flex-start;
-      border-left: 2px solid var(--rose);
+      border-left: 2px solid #c6a75e;
+      border-radius: 14px 14px 14px 4px;
     }
 
     .chat-msg.user {
       background: var(--taupe);
       color: var(--ivory);
       align-self: flex-end;
+      border-radius: 14px 14px 4px 14px;
+    }
+
+    .chat-msg .chat-link {
+      color: #8f6c2d;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      word-break: break-word;
+    }
+
+    .chat-msg.user .chat-link {
+      color: #f3dfb0;
+    }
+
+    .chat-msg.chat-action {
+      max-width: 92%;
+      background: #f6efe7;
+      color: #3f322f;
+      border: 1px solid rgba(198, 167, 94, .45);
+      border-left: 2px solid var(--gold);
+      padding: 12px;
+    }
+
+    .chat-action-title {
+      font-size: 11px;
+      letter-spacing: .05em;
+      margin-bottom: 8px;
+      color: #5a4a46;
+    }
+
+    .chat-action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chat-action-chip {
+      font-size: 10px;
+      padding: 6px 10px;
+      border: 1px solid rgba(198, 167, 94, .7);
+      color: #5a4a46;
+      background: transparent;
+      cursor: pointer;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .chat-action-chip:hover {
+      background: var(--rose);
+      border-color: var(--rose);
+      color: var(--ivory);
+    }
+
+    .chat-action-chip.retry {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #fff;
+    }
+
+    .chat-action-chip.retry:hover {
+      background: var(--taupe);
+      border-color: var(--taupe);
+    }
+
+    .chat-action-btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--gold);
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: .08em;
+    }
+
+    .chat-action-btn:hover {
+      background: var(--taupe);
     }
 
     .chat-suggestions {
@@ -1380,6 +1460,11 @@
       cursor: pointer;
       letter-spacing: .06em;
       transition: all .2s;
+    }
+
+    .chat-chip-link {
+      display: inline-block;
+      text-decoration: none;
     }
 
     .chat-chip:hover {
@@ -1403,6 +1488,10 @@
       font-size: 12px;
       font-weight: 300;
       color: var(--taupe);
+    }
+
+    .chat-input::placeholder {
+      color: rgba(63, 50, 47, .72);
     }
 
     .chat-send {
@@ -1654,6 +1743,40 @@
 
       #chat-box {
         width: calc(100vw - 32px);
+      }
+
+      .chat-messages {
+        height: 360px;
+        padding: 18px;
+      }
+
+      .chat-msg {
+        max-width: 90%;
+        font-size: 14px;
+        line-height: 1.75;
+        padding: 13px 15px;
+      }
+
+      .chat-msg.chat-action {
+        max-width: 95%;
+      }
+
+      .chat-action-title {
+        font-size: 12px;
+      }
+
+      .chat-action-chip,
+      .chat-action-btn {
+        font-size: 11px;
+      }
+
+      .chat-input {
+        font-size: 14px;
+        font-weight: 400;
+      }
+
+      .chat-send {
+        font-size: 16px;
       }
 
     }
@@ -2104,12 +2227,7 @@
         <div class="chat-msg bot">Welcome to Maison Karina. I'm here to answer any questions about our couture process,
           consultations, or collections. How may I assist you?</div>
       </div>
-      <div class="chat-suggestions" id="chat-chips">
-        <button type="button" class="chat-chip" onclick="sendChip(this)">Booking process</button>
-        <button type="button" class="chat-chip" onclick="sendChip(this)">Pricing</button>
-        <button type="button" class="chat-chip" onclick="sendChip(this)">Timeline</button>
-        <button type="button" class="chat-chip" onclick="sendChip(this)">Fabrics</button>
-      </div>
+      <div class="chat-suggestions" id="chat-chips"></div>
       <div class="chat-input-area">
         <input class="chat-input" id="chat-input" type="text" placeholder="Ask a question..."
           onkeydown="if(event.key==='Enter') sendMessage()">
@@ -2153,7 +2271,7 @@
 
     // ── GOOGLE CALENDAR BOOKING ──────────────────────────────────────────────
     // STEP 1: Paste your Google Apps Script Web App URL below
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHTSmHsYCQMvw8dHf5qzeN85Qaw0lubhZfH_D3nGsyMRpm3MYcm36FRyttXj0MA71EyQ/exec';
+    const BOOKING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHTSmHsYCQMvw8dHf5qzeN85Qaw0lubhZfH_D3nGsyMRpm3MYcm36FRyttXj0MA71EyQ/exec';
 
     async function handleSubmit(e) {
       e.preventDefault();
@@ -2185,7 +2303,7 @@
       };
 
       // If no Apps Script URL set yet, show success anyway (demo mode)
-      if (APPS_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+      if (BOOKING_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
         btn.textContent = "Request Received — We'll Be in Touch";
         btn.style.background = 'var(--rose)';
         status.style.display = 'block';
@@ -2196,7 +2314,7 @@
       }
 
       try {
-        const res = await fetch(APPS_SCRIPT_URL, {
+        const res = await fetch(BOOKING_SCRIPT_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain' },
           body: JSON.stringify(data)
@@ -2352,10 +2470,13 @@
     //       }
     //     }
 
-    // ── AI CHATBOT (Google Gemini — free) ───────────────────────────────────
-    // Get your free API key at: aistudio.google.com → Get API key
-    // Free tier: 15 requests/min, 1M tokens/day — no credit card needed
-    const GEMINI_API_KEY = 'AIzaSyBsdWcDZpIZK11-k-ZFu2O5G3VrI836exw';
+    // ── AI CHATBOT (Google Apps Script proxy) ───────────────────────────────
+    // Deploy scripts/chat-proxy.gs as a separate Web App project and paste URL.
+    // Keep Gemini API key in Script Properties, never in frontend code.
+    const CHAT_PROXY_URL = 'https://script.google.com/macros/s/AKfycbznczbeAPg2f3UryPm3zQ8c62KwnLViLL_fOza8WYSc6yZSbrCPiAgunVCpIqw52lFE/exec';
+    const CHAT_HISTORY_TURN_LIMIT = 6;
+    const CHAT_CHIP_THINK_MIN_MS = 2400;
+    const CHAT_CHIP_THINK_MAX_MS = 4200;
 
     const ATELIER_SYSTEM_PROMPT = `You are the Atelier Assistant for Maison Karina, a private luxury couture atelier founded by designer Karina Kanha YIN in Phnom Penh, Cambodia.
 
@@ -2391,7 +2512,7 @@ CONTACT:
 
 RULES:
 - Always guide clients toward booking a consultation
-- Keep responses concise — 2 to 4 sentences maximum
+- Keep responses concise — 2 sentences maximum (about 45 words)
 - If asked about pricing, give the range then suggest a consultation
 - Never mention competitor brands
 - If you cannot answer, invite them to contact the atelier directly
@@ -2399,7 +2520,21 @@ RULES:
 - Only respond in English or Khmer — if client writes in any other language, reply in English`;
 
     let chatHistory = [];
+    let lastUserMessage = '';
     let chatOpen = false;
+    const CHAT_DEMO_REPLIES = {
+      pricing: 'Our creations begin at $8,000 for Custom Occasion, $15,000 for Evening Couture, and $22,000 for Bridal. For an exact quote, we invite you to book a private consultation.',
+      timeline: 'Custom Occasion usually takes 3-5 weeks, Evening Couture 6-8 weeks, and Bridal 6-9 months. Timelines depend on complexity and fitting schedule.',
+      fabric: 'We source premium fabrics from Lyon, Milan, and Tokyo, including silk charmeuse, duchess satin, and Chantilly lace. We select materials based on your design vision.',
+      booking: 'Please submit your request through our booking form. We respond within 24 hours to arrange your private appointment.'
+    };
+    const CHAT_BASE_CHIPS = [
+      { id: 'pricing', label: 'Pricing', prompt: 'Pricing' },
+      { id: 'timeline', label: 'Timeline', prompt: 'Timeline' },
+      { id: 'fabric', label: 'Fabrics', prompt: 'Fabrics' },
+      { id: 'booking', label: 'Booking process', prompt: 'Booking process' }
+    ];
+    let chatRemainingChipIds = CHAT_BASE_CHIPS.map(function (chip) { return chip.id; });
 
     function toggleChat() {
       chatOpen = !chatOpen;
@@ -2410,11 +2545,56 @@ RULES:
     function addMsg(text, type) {
       const el = document.createElement('div');
       el.className = 'chat-msg ' + type;
-      el.textContent = text;
+      if (type === 'bot') {
+        el.innerHTML = linkifyChatText(text);
+      } else {
+        el.textContent = text;
+      }
       const msgs = document.getElementById('chat-messages');
       msgs.appendChild(el);
       msgs.scrollTop = msgs.scrollHeight;
       return el;
+    }
+
+    function escapeAttr(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function linkifyChatText(text) {
+      const src = String(text || '');
+      const tokenPattern = /(https?:\/\/[^\s]+)|([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})|((?:\+?\d[\d\s().-]{6,}\d))/gi;
+      let out = '';
+      let last = 0;
+      let match;
+
+      while ((match = tokenPattern.exec(src)) !== null) {
+        out += escapeHtml(src.slice(last, match.index));
+        const token = match[0];
+
+        if (match[1]) {
+          const url = token;
+          out += '<a class="chat-link" href="' + escapeAttr(url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(token) + '</a>';
+        } else if (match[2]) {
+          out += '<a class="chat-link" href="mailto:' + escapeAttr(token) + '">' + escapeHtml(token) + '</a>';
+        } else {
+          const dial = token.replace(/[^\d+]/g, '');
+          const digitsCount = dial.replace(/\D/g, '').length;
+          if (digitsCount >= 7) {
+            out += '<a class="chat-link" href="tel:' + escapeAttr(dial) + '">' + escapeHtml(token) + '</a>';
+          } else {
+            out += escapeHtml(token);
+          }
+        }
+
+        last = tokenPattern.lastIndex;
+      }
+
+      out += escapeHtml(src.slice(last));
+      return out.replace(/\n/g, '<br>');
     }
 
     function addTypingIndicator() {
@@ -2427,12 +2607,212 @@ RULES:
       return el;
     }
 
-    async function sendChip(btn) {
-      const text = btn.textContent;
-      btn.parentElement.style.display = 'none';
+    function shortenReply(text) {
+      const normalized = String(text || '').replace(/\s+/g, ' ').trim();
+      if (!normalized) return '';
+      const sentences = normalized.match(/[^.!?]+[.!?]+/g);
+      if (sentences && sentences.length > 2) {
+        return sentences.slice(0, 2).join(' ').trim();
+      }
+      if (!sentences && normalized.length > 260) {
+        return normalized.slice(0, 260).trim() + '...';
+      }
+      return normalized;
+    }
+
+    function delay(ms) {
+      return new Promise(function (resolve) { setTimeout(resolve, ms); });
+    }
+
+    function getChipThinkingDelayMs() {
+      var min = CHAT_CHIP_THINK_MIN_MS;
+      var max = CHAT_CHIP_THINK_MAX_MS;
+      return min + Math.floor(Math.random() * (max - min + 1));
+    }
+
+    function detectClientIntent(text) {
+      const lower = String(text || '').toLowerCase();
+      if (!lower) return '';
+      if (/(pricing|price|cost|quote|budget)/.test(lower)) return 'pricing';
+      if (/(timeline|timeframe|lead time|turnaround|how long|weeks|months)/.test(lower)) return 'timeline';
+      if (/(fabric|fabrics|material|materials|textile|textiles)/.test(lower)) return 'fabric';
+      if (/(booking process|\bbooking\b|\bbook\b|appointment|consultation)/.test(lower)) return 'booking';
+      return '';
+    }
+
+    function getClientIntentDemoReply(text) {
+      const intent = detectClientIntent(text);
+      if (!intent) return '';
+      return CHAT_DEMO_REPLIES[intent] || '';
+    }
+
+    function renderQuickChips(chips) {
+      const chipsWrap = document.getElementById('chat-chips');
+      if (!chipsWrap) return;
+
+      chipsWrap.innerHTML = '';
+
+      chips.forEach(function (chip) {
+        if (chip.type === 'link') {
+          const link = document.createElement('a');
+          link.className = 'chat-chip chat-chip-link';
+          link.href = chip.href;
+          link.textContent = chip.label;
+          link.addEventListener('click', function () {
+            if (chatOpen) toggleChat();
+          });
+          chipsWrap.appendChild(link);
+          return;
+        }
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chat-chip';
+        btn.textContent = chip.label;
+        btn.addEventListener('click', function () {
+          sendChipText(chip.prompt || chip.label);
+        });
+        chipsWrap.appendChild(btn);
+      });
+      chipsWrap.style.display = 'flex';
+    }
+
+    function getChipById(chipId) {
+      for (var i = 0; i < CHAT_BASE_CHIPS.length; i++) {
+        if (CHAT_BASE_CHIPS[i].id === chipId) return CHAT_BASE_CHIPS[i];
+      }
+      return null;
+    }
+
+    function getRemainingChipConfigs() {
+      return chatRemainingChipIds
+        .map(function (id) { return getChipById(id); })
+        .filter(Boolean);
+    }
+
+    function renderDirectBookingChip() {
+      renderQuickChips([{ label: 'Book Consultation', type: 'link', href: '#booking' }]);
+    }
+
+    function advanceChipProgress(intent, fromChipClick) {
+      if (!fromChipClick || !intent) return;
+
+      if (intent === 'booking') {
+        renderDirectBookingChip();
+        return;
+      }
+
+      chatRemainingChipIds = chatRemainingChipIds.filter(function (id) { return id !== intent; });
+      if (chatRemainingChipIds.length === 1 && chatRemainingChipIds[0] === 'booking') {
+        renderDirectBookingChip();
+        return;
+      }
+
+      if (chatRemainingChipIds.length > 0) {
+        renderQuickChips(getRemainingChipConfigs());
+      } else {
+        renderDirectBookingChip();
+      }
+    }
+
+    function getRecentChatHistory() {
+      const maxMessages = CHAT_HISTORY_TURN_LIMIT * 2;
+      return chatHistory.slice(-maxMessages);
+    }
+
+    function shouldShowBookingCta(userText, replyText) {
+      const merged = (String(userText || '') + ' ' + String(replyText || '')).toLowerCase();
+      return /(pricing|price|cost|quote|timeline|timeframe|lead time|turnaround|weeks|months|booking|book|consultation|appointment)/.test(merged);
+    }
+
+    function clearActionPanels(panelClass) {
+      const selector = panelClass ? '.chat-msg.chat-action.' + panelClass : '.chat-msg.chat-action';
+      document.querySelectorAll(selector).forEach(function (el) { el.remove(); });
+    }
+
+    function addBookingCta() {
+      clearActionPanels('conversion');
+      const msgs = document.getElementById('chat-messages');
+      const panel = document.createElement('div');
+      panel.className = 'chat-msg bot chat-action conversion';
+
+      const title = document.createElement('div');
+      title.className = 'chat-action-title';
+      title.textContent = 'Ready for next step?';
+      panel.appendChild(title);
+
+      const button = document.createElement('a');
+      button.className = 'chat-action-btn';
+      button.href = '#booking';
+      button.textContent = 'Book Consultation';
+      button.addEventListener('click', function () {
+        if (chatOpen) toggleChat();
+      });
+      panel.appendChild(button);
+
+      msgs.appendChild(panel);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    async function sendFallbackPrompt(text) {
       addMsg(text, 'user');
       chatHistory.push({ role: 'user', parts: [{ text: text }] });
-      await getBotReply();
+      lastUserMessage = text;
+      await getBotReply(text, { fromChip: true });
+    }
+
+    async function retryLastMessage() {
+      if (!lastUserMessage) return;
+      await sendFallbackPrompt(lastUserMessage);
+    }
+
+    function addFailureActions() {
+      clearActionPanels('failure');
+      const msgs = document.getElementById('chat-messages');
+      const panel = document.createElement('div');
+      panel.className = 'chat-msg bot chat-action failure';
+
+      const title = document.createElement('div');
+      title.className = 'chat-action-title';
+      title.textContent = 'Connection issue. Retry or use a quick option:';
+      panel.appendChild(title);
+
+      const row = document.createElement('div');
+      row.className = 'chat-action-row';
+
+      const retryBtn = document.createElement('button');
+      retryBtn.type = 'button';
+      retryBtn.className = 'chat-action-chip retry';
+      retryBtn.textContent = 'Retry';
+      retryBtn.addEventListener('click', function () { retryLastMessage(); });
+      row.appendChild(retryBtn);
+
+      ['Pricing', 'Timeline', 'Booking'].forEach(function (label) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chat-action-chip';
+        btn.textContent = label;
+        btn.addEventListener('click', function () { sendFallbackPrompt(label); });
+        row.appendChild(btn);
+      });
+
+      panel.appendChild(row);
+      msgs.appendChild(panel);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    async function sendChipText(text) {
+      const intent = detectClientIntent(text);
+      addMsg(text, 'user');
+      chatHistory.push({ role: 'user', parts: [{ text: text }] });
+      lastUserMessage = text;
+      await getBotReply(text, { fromChip: true });
+      advanceChipProgress(intent, true);
+    }
+
+    async function sendChip(btn) {
+      const text = btn.textContent;
+      await sendChipText(text);
     }
 
     async function sendMessage() {
@@ -2442,60 +2822,74 @@ RULES:
       input.value = '';
       addMsg(text, 'user');
       chatHistory.push({ role: 'user', parts: [{ text: text }] });
-      await getBotReply();
+      lastUserMessage = text;
+      await getBotReply(text, { fromChip: false });
     }
 
-    async function getBotReply() {
-      const typing = addTypingIndicator();
+    async function getBotReply(userText, options) {
+      clearActionPanels('failure');
+      const fromChip = !!(options && options.fromChip);
 
-      // Demo mode — API key not set yet
-      if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_GEMINI_API_KEY_HERE') {
-        await new Promise(r => setTimeout(r, 900));
-        typing.remove();
-        const demos = {
-          'pricing': 'Our creations begin at $8,000 for Custom Occasion, $15,000 for Evening Couture, and $22,000 for Bridal gowns. Each piece is entirely bespoke and priced according to complexity and fabric.',
-          'booking': 'We invite you to submit a consultation request through our booking form. We respond within 24 hours to arrange your private appointment at the atelier.',
-          'timeline': 'Timelines range from 3–5 weeks for Custom Occasion to 6–9 months for Bridal. Each creation includes multiple fittings to ensure a flawless result.',
-          'fabric': 'We source exclusively from premier mills in Lyon, Milan, and Tokyo — including silk charmeuse, Chantilly lace, duchess satin, and hand-embroidered tulles.',
-          'bridal': 'Our Bridal Atelier creates one-of-a-kind wedding gowns with a minimum lead time of 6 months. We recommend booking 9–12 months before your wedding date.',
-          'process': 'Our couture journey moves through five stages: Consultation, Sketch & Concept, Fabric Selection, Fittings, and Final Creation — each step dedicated entirely to you.',
-        };
-        const lower = chatHistory[chatHistory.length - 1].parts[0].text.toLowerCase();
-        const match = Object.keys(demos).find(k => lower.includes(k));
-        const reply = match ? demos[match] : 'Thank you for your question. For the most personalised guidance, I invite you to book a private consultation with Karina directly. Shall I help you with that?';
+      // Intent-first routing: use local replies for high-frequency client intents.
+      const localDemoReply = getClientIntentDemoReply(userText);
+      if (localDemoReply) {
+        const typingLocal = addTypingIndicator();
+        if (fromChip) {
+          await delay(getChipThinkingDelayMs());
+        } else {
+          await delay(700);
+        }
+        typingLocal.remove();
+        clearActionPanels('conversion');
+        const reply = shortenReply(localDemoReply);
         chatHistory.push({ role: 'model', parts: [{ text: reply }] });
         addMsg(reply, 'bot');
+        if (shouldShowBookingCta(userText, reply)) addBookingCta();
+        return;
+      }
+
+      const typing = addTypingIndicator();
+
+      // Demo mode — chat proxy URL not set yet
+      if (!CHAT_PROXY_URL || CHAT_PROXY_URL.indexOf('YOUR_') !== -1) {
+        await new Promise(r => setTimeout(r, 900));
+        typing.remove();
+        const reply = shortenReply('Thank you for your question. For tailored guidance, we invite you to book a private consultation with Karina.');
+        chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+        addMsg(reply, 'bot');
+        if (shouldShowBookingCta(userText, reply)) addBookingCta();
         return;
       }
 
       try {
-        const GEMINI_MODEL = 'gemini-2.5-flash';
-        const url = 'https://generativelanguage.googleapis.com/v1beta/models/' + GEMINI_MODEL + ':generateContent?key=' + GEMINI_API_KEY;
-        const res = await fetch(url, {
+        const payload = {
+          systemPrompt: ATELIER_SYSTEM_PROMPT,
+          contents: getRecentChatHistory()
+        };
+        const res = await fetch(CHAT_PROXY_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            system_instruction: { parts: [{ text: ATELIER_SYSTEM_PROMPT }] },
-            contents: chatHistory,
-            generationConfig: { maxOutputTokens: 300, temperature: 0.7 }
-          })
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(payload)
         });
         const data = await res.json();
-        if (!res.ok || (data && data.error)) {
-          const apiMessage = (data && data.error && data.error.message) ? data.error.message : ('HTTP ' + res.status);
+        if (!res.ok || !data || data.status !== 'success') {
+          const apiMessage = data && data.message ? data.message : ('HTTP ' + res.status);
           throw new Error(apiMessage);
         }
         typing.remove();
-        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text
-          || "I'm sorry, I couldn't process that. Please contact us at contact@maisonkarina.com";
+        const reply = shortenReply(data.reply) || "I'm sorry, I couldn't process that. Please contact us at contact@maisonkarina.com";
         chatHistory.push({ role: 'model', parts: [{ text: reply }] });
         addMsg(reply, 'bot');
+        if (shouldShowBookingCta(userText, reply)) addBookingCta();
       } catch (err) {
-        console.error('Gemini chatbot error:', err);
+        console.error('Chat proxy error:', err);
         typing.remove();
         addMsg("I'm temporarily unavailable. Please contact us at contact@maisonkarina.com", 'bot');
+        addFailureActions();
       }
     }
+
+    renderQuickChips(getRemainingChipConfigs());
 
     // ================================================================
     //  CLOUDINARY CONFIG
