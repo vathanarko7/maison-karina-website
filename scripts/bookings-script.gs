@@ -1,47 +1,63 @@
 // ============================================================
-// MAISON KARINA — Google Apps Script
-// Receives booking form data → creates Google Calendar event
-// → sends confirmation emails to client + atelier
+// MAISON KARINA - Google Apps Script
+// Receives booking form data - creates Google Calendar event
+// - sends confirmation emails to client + atelier
 //
 // SETUP INSTRUCTIONS (takes ~5 minutes):
 //
-// 1. Go to script.google.com — sign in with your Google account
+// 1. Go to script.google.com - sign in with your Google account
 // 2. Click "New project"
 // 3. Delete all existing code, paste THIS entire file
-// 4. Edit the CONFIG section below with your details
-// 5. Click Save (💾), then click "Deploy" → "New deployment"
+// 4. Set Script Properties:
+//    BOOKING_CALENDAR_ID (required)
+//    BOOKING_ATELIER_EMAIL (required)
+//    BOOKING_ATELIER_NAME (optional, default: Maison Karina)
+//    BOOKING_CONSULTATION_DURATION_MINUTES (optional, default: 60)
+//    BOOKING_DEFAULT_HOUR (optional, default: 8)
+//    BOOKING_DEFAULT_MINUTE (optional, default: 0)
+// 5. Click Save (disk icon), then click "Deploy" - "New deployment"
 // 6. Type: Web app
 // 7. Execute as: Me
 // 8. Who has access: Anyone
-// 9. Click "Deploy" → copy the Web App URL
+// 9. Click "Deploy" - copy the Web App URL
 // 10. Paste that URL into index.html where it says:
 //     const APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 //
-// FIRST RUN — Grant permissions:
-// 11. Click "Deploy" → "Test deployments" → open the URL
-//     Google will ask for calendar + gmail permissions — allow them
+// FIRST RUN - Grant permissions:
+// 11. Click "Deploy" - "Test deployments" - open the URL
+//     Google will ask for calendar + gmail permissions - allow them
 // ============================================================
 
-// ── CONFIG — edit these ──────────────────────────────────────
-const CONFIG = {
-  // Your Google Calendar ID (find in Calendar Settings → "Calendar ID")
-  // Usually your Gmail address for the main calendar
-  CALENDAR_ID: 'sovathana.soun@gmail.com',
-
-  // Your atelier email — receives a copy of every booking
-  ATELIER_EMAIL: 'contact@maisonkarina.com',
-
-  // Atelier name shown in emails
+// CONFIG - edit these
+const BOOKING_DEFAULTS = {
   ATELIER_NAME: 'Maison Karina',
-
-  // Default consultation duration in minutes
   CONSULTATION_DURATION_MINUTES: 60,
-
-  // Default time if client does not specify a preferred time (24h format)
-  DEFAULT_HOUR: 8, // 08:00 AM
+  DEFAULT_HOUR: 8,
   DEFAULT_MINUTE: 0,
 };
-// ────────────────────────────────────────────────────────────
+
+function getBookingConfig() {
+  const props = PropertiesService.getScriptProperties();
+  const calendarId = String(props.getProperty('BOOKING_CALENDAR_ID') || '').trim();
+  const atelierEmail = String(props.getProperty('BOOKING_ATELIER_EMAIL') || '').trim();
+  const atelierName = String(props.getProperty('BOOKING_ATELIER_NAME') || BOOKING_DEFAULTS.ATELIER_NAME).trim();
+  const duration = parseInt(props.getProperty('BOOKING_CONSULTATION_DURATION_MINUTES'), 10);
+  const hour = parseInt(props.getProperty('BOOKING_DEFAULT_HOUR'), 10);
+  const minute = parseInt(props.getProperty('BOOKING_DEFAULT_MINUTE'), 10);
+
+  if (!calendarId) throw new Error('Missing Script Property: BOOKING_CALENDAR_ID');
+  if (!atelierEmail) throw new Error('Missing Script Property: BOOKING_ATELIER_EMAIL');
+
+  return {
+    CALENDAR_ID: calendarId,
+    ATELIER_EMAIL: atelierEmail,
+    ATELIER_NAME: atelierName || BOOKING_DEFAULTS.ATELIER_NAME,
+    CONSULTATION_DURATION_MINUTES: Number.isNaN(duration) ? BOOKING_DEFAULTS.CONSULTATION_DURATION_MINUTES : duration,
+    DEFAULT_HOUR: Number.isNaN(hour) ? BOOKING_DEFAULTS.DEFAULT_HOUR : Math.max(0, Math.min(23, hour)),
+    DEFAULT_MINUTE: Number.isNaN(minute) ? BOOKING_DEFAULTS.DEFAULT_MINUTE : Math.max(0, Math.min(59, minute)),
+  };
+}
+// -
 
 /**
  * Handles POST requests from the booking form
@@ -73,6 +89,7 @@ function doGet(e) {
  * Core booking logic
  */
 function createBooking(data) {
+  const config = getBookingConfig();
   const {
     firstName = '',
     lastName = '',
@@ -85,15 +102,15 @@ function createBooking(data) {
 
   const clientName = `${firstName} ${lastName}`.trim();
 
-  // ── Parse preferred date ──────────────────────────────────
-  const startDate = resolveStartDate(preferredDate);
-  const endDate = new Date(startDate.getTime() + CONFIG.CONSULTATION_DURATION_MINUTES * 60 * 1000);
+// Parse preferred date
+  const startDate = resolveStartDate(preferredDate, config);
+  const endDate = new Date(startDate.getTime() + config.CONSULTATION_DURATION_MINUTES * 60 * 1000);
 
-  // ── Create Google Calendar event ──────────────────────────
-  const calendar = CalendarApp.getCalendarById(CONFIG.CALENDAR_ID);
-  if (!calendar) throw new Error('Calendar not found. Check CALENDAR_ID in CONFIG.');
+// Create Google Calendar event
+  const calendar = CalendarApp.getCalendarById(config.CALENDAR_ID);
+  if (!calendar) throw new Error('Calendar not found. Check BOOKING_CALENDAR_ID Script Property.');
 
-  const eventTitle = `✦ Couture Consultation — ${clientName} (${creationType})`;
+  const eventTitle = `Couture Consultation - ${clientName} (${creationType})`;
   const eventDescription = [
     `CLIENT: ${clientName}`,
     `EMAIL: ${email}`,
@@ -104,7 +121,7 @@ function createBooking(data) {
     `CLIENT VISION:`,
     vision || 'Not specified',
     ``,
-    `---`,
+    `Source: Website booking form`,
     `Booked via maison-karina-website.vercel.app`
   ].join('\n');
 
@@ -118,21 +135,21 @@ function createBooking(data) {
     event.addGuest(email);
   }
 
-  // ── Send confirmation email to CLIENT ─────────────────────
+// Send confirmation email to CLIENT
   if (email) {
-    const clientSubject = `Your Maison Karina Consultation Request — ${clientName}`;
-    const clientBody = buildClientEmail(clientName, creationType, startDate, vision);
+    const clientSubject = `Your Maison Karina Consultation Request - ${clientName}`;
+    const clientBody = buildClientEmail(clientName, creationType, startDate, vision, config);
     GmailApp.sendEmail(email, clientSubject, clientBody, {
-      htmlBody: buildClientEmailHtml(clientName, creationType, startDate, vision),
-      name: CONFIG.ATELIER_NAME,
-      replyTo: CONFIG.ATELIER_EMAIL
+      htmlBody: buildClientEmailHtml(clientName, creationType, startDate, vision, config),
+      name: config.ATELIER_NAME,
+      replyTo: config.ATELIER_EMAIL
     });
   }
 
-  // ── Send notification email to ATELIER ───────────────────
-  const atelierSubject = `New Consultation Request — ${clientName} (${creationType})`;
+// Send notification email to ATELIER
+  const atelierSubject = `New Consultation Request - ${clientName} (${creationType})`;
   const atelierBody = buildAtelierEmail(clientName, email, phone, creationType, startDate, vision);
-  GmailApp.sendEmail(CONFIG.ATELIER_EMAIL, atelierSubject, atelierBody, {
+  GmailApp.sendEmail(config.ATELIER_EMAIL, atelierSubject, atelierBody, {
     name: 'Maison Karina Booking System'
   });
 
@@ -144,9 +161,9 @@ function createBooking(data) {
   };
 }
 
-// ── Email templates ──────────────────────────────────────────
+// Email templates
 
-function buildClientEmail(name, type, date, vision) {
+function buildClientEmail(name, type, date, vision, config) {
   return `Dear ${name},
 
 Thank you for reaching out to Maison Karina.
@@ -155,14 +172,14 @@ We have received your consultation request for ${type} and a member of our ateli
 
 Proposed date: ${formatDate(date)}
 
-If you have any questions in the meantime, please do not hesitate to contact us at ${CONFIG.ATELIER_EMAIL}.
+If you have any questions in the meantime, please do not hesitate to contact us at ${config.ATELIER_EMAIL}.
 
 With warmth,
 Maison Karina
 6 Rue de la butte verte, 75008 Phnom Penh`;
 }
 
-function buildClientEmailHtml(name, type, date, vision) {
+function buildClientEmailHtml(name, type, date, vision, config) {
   return `
 <!DOCTYPE html>
 <html>
@@ -182,7 +199,7 @@ function buildClientEmailHtml(name, type, date, vision) {
       <p style="font-size:13px;color:#5A4A46;margin:4px 0;"><strong>Proposed Date:</strong> ${formatDate(date)}</p>
     </div>
     <p style="font-size:14px;color:#5A4A46;line-height:1.8;">A member of our team will be in touch within 24 hours to confirm your appointment and answer any questions.</p>
-    <p style="font-size:14px;color:#5A4A46;line-height:1.8;">For immediate assistance, please contact us at <a href="mailto:${CONFIG.ATELIER_EMAIL}" style="color:#C6A75E;">${CONFIG.ATELIER_EMAIL}</a>.</p>
+    <p style="font-size:14px;color:#5A4A46;line-height:1.8;">For immediate assistance, please contact us at <a href="mailto:${config.ATELIER_EMAIL}" style="color:#C6A75E;">${config.ATELIER_EMAIL}</a>.</p>
     <p style="font-size:14px;color:#5A4A46;line-height:1.8;margin-top:32px;">With warmth,<br><em>Maison Karina</em></p>
     <div style="border-top:1px solid #EDE8E0;margin-top:40px;padding-top:24px;text-align:center;">
       <p style="font-size:10px;color:#8A7470;letter-spacing:.12em;">6 Rue de la butte verte, 75008 Phnom Penh<br>By Appointment Only</p>
@@ -204,14 +221,14 @@ PREFERRED DATE: ${formatDate(date)}
 VISION / MESSAGE:
 ${vision || 'Not specified'}
 
----
+Next step:
 A Google Calendar event has been created for ${formatDate(date)}.
 Please confirm or reschedule directly with the client.`;
 }
 
-// ── Helpers ──────────────────────────────────────────────────
+// Helpers
 
-function resolveStartDate(preferredDate) {
+function resolveStartDate(preferredDate, config) {
   let startDate;
   if (preferredDate) {
     startDate = new Date(preferredDate);
@@ -222,7 +239,7 @@ function resolveStartDate(preferredDate) {
     startDate = getNextDay();
   }
 
-  startDate.setHours(CONFIG.DEFAULT_HOUR, CONFIG.DEFAULT_MINUTE, 0, 0);
+  startDate.setHours(config.DEFAULT_HOUR, config.DEFAULT_MINUTE, 0, 0);
   return startDate;
 }
 
@@ -237,3 +254,5 @@ function getNextDay() {
   d.setDate(d.getDate() + 1);
   return d;
 }
+
+

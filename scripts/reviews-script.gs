@@ -1,51 +1,98 @@
 // ============================================================
-//  MAISON KARINA — Reviews Google Apps Script
+//  MAISON KARINA - Reviews Google Apps Script
 //
 //  SETUP:
-//  1. Go to sheets.google.com → New spreadsheet
-//     Name it: Maison Karina — Reviews
+//  1. Go to sheets.google.com - New spreadsheet
+//     Name it: Maison Karina - Reviews
 //     Copy the ID from the URL:
 //     https://docs.google.com/spreadsheets/d/COPY_THIS_PART/edit
 //
-//  2. Paste that ID into SPREADSHEET_ID below
+//  2. Set Script Properties:
+//     REVIEWS_SPREADSHEET_ID (required)
+//     REVIEWS_SHEET_NAME (optional, default: Reviews)
+//     REVIEWS_ATELIER_EMAIL (optional, for notification emails)
+//     REVIEWS_MIN_STARS (optional, default: 4)
+//     REVIEWS_MIN_WORDS (optional, default: 10)
+//     REVIEWS_MAX_DISPLAY (optional, default: 6)
+//     REVIEWS_SORT (optional: newest|shuffle, default: newest)
 //
-//  3. Go to script.google.com → New project
+//  3. Go to script.google.com - New project
 //     Paste this entire file, delete existing code
 //
-//  4. Click Run → setupSheet()
-//     (safe to run multiple times — never creates duplicates)
+//  4. Click Run - setupSheet()
+//     (safe to run multiple times - never creates duplicates)
 //
-//  5. Deploy → New deployment → Web app
+//  5. Deploy - New deployment - Web app
 //     - Execute as: Me
 //     - Who has access: Anyone
 //
 //  6. Copy the Web App URL and paste it in BOTH:
-//       index.html        → REVIEWS_SCRIPT_URL
-//       leave-review.html → REVIEWS_SCRIPT_URL
+//       index.html        - REVIEWS_SCRIPT_URL
+//       leave-review.html - REVIEWS_SCRIPT_URL
 //
 //  TO APPROVE A REVIEW:
-//  Open the Google Sheet → set "Approved" column to: YES
+//  Open the Google Sheet - set "Approved" column to: YES
 //  Review appears on your site immediately on next page load.
 // ============================================================
 
-var SPREADSHEET_ID = "1J3YRW-sZFCCqd4IibkTioIhzRr53a0gMIxUX1IL-4rY"; // ← paste your Sheet ID here
-var SHEET_NAME = "Reviews";
+var REVIEWS_DEFAULTS = {
+  SHEET_NAME: "Reviews",
+  MIN_STARS: 4,
+  MIN_WORDS: 10,
+  MAX_DISPLAY: 6,
+  SORT: "newest",
+};
 
-// ── SETUP: run once to configure the sheet ────────────────────
+function getReviewsConfig() {
+  var props = PropertiesService.getScriptProperties();
+  var spreadsheetId = String(props.getProperty("REVIEWS_SPREADSHEET_ID") || "").trim();
+  var sheetName = String(props.getProperty("REVIEWS_SHEET_NAME") || REVIEWS_DEFAULTS.SHEET_NAME).trim();
+  var atelierEmail = String(props.getProperty("REVIEWS_ATELIER_EMAIL") || "").trim();
+
+  var minStars = parseInt(props.getProperty("REVIEWS_MIN_STARS"), 10);
+  var minWords = parseInt(props.getProperty("REVIEWS_MIN_WORDS"), 10);
+  var maxDisplay = parseInt(props.getProperty("REVIEWS_MAX_DISPLAY"), 10);
+  var sort = String(props.getProperty("REVIEWS_SORT") || REVIEWS_DEFAULTS.SORT).toLowerCase().trim();
+
+  if (!spreadsheetId) {
+    throw new Error("Missing Script Property: REVIEWS_SPREADSHEET_ID");
+  }
+  if (!sheetName) {
+    sheetName = REVIEWS_DEFAULTS.SHEET_NAME;
+  }
+  if (sort !== "shuffle" && sort !== "newest") {
+    sort = REVIEWS_DEFAULTS.SORT;
+  }
+
+  return {
+    SPREADSHEET_ID: spreadsheetId,
+    SHEET_NAME: sheetName,
+    ATELIER_EMAIL: atelierEmail,
+    RULES: {
+      MIN_STARS: isNaN(minStars) ? REVIEWS_DEFAULTS.MIN_STARS : Math.max(1, Math.min(5, minStars)),
+      MIN_WORDS: isNaN(minWords) ? REVIEWS_DEFAULTS.MIN_WORDS : Math.max(1, minWords),
+      MAX_DISPLAY: isNaN(maxDisplay) ? REVIEWS_DEFAULTS.MAX_DISPLAY : Math.max(1, maxDisplay),
+      SORT: sort,
+    },
+  };
+}
+
+// SETUP: run once to configure the sheet
 function setupSheet() {
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  var sheet = ss.getSheetByName(SHEET_NAME);
+  var config = getReviewsConfig();
+  var ss = SpreadsheetApp.openById(config.SPREADSHEET_ID);
+  var sheet = ss.getSheetByName(config.SHEET_NAME);
 
   // Create the tab if it doesn't exist yet
   if (!sheet) {
-    sheet = ss.insertSheet(SHEET_NAME);
-    Logger.log("Created new sheet tab: " + SHEET_NAME);
+    sheet = ss.insertSheet(config.SHEET_NAME);
+    Logger.log("Created new sheet tab: " + config.SHEET_NAME);
   }
 
-  // Check if already configured — skip if headers exist
+  // Check if already configured - skip if headers exist
   var firstCell = sheet.getRange(1, 1).getValue();
   if (firstCell === "Timestamp") {
-    Logger.log("Already configured — nothing to do. URL: " + ss.getUrl());
+    Logger.log("Already configured - nothing to do. URL: " + ss.getUrl());
     return;
   }
 
@@ -97,7 +144,7 @@ function setupSheet() {
         5,
         "Wearing my gown felt like stepping into the most confident version of myself.",
         "YES",
-        "Sample review — feel free to delete",
+        "Sample review - feel free to delete",
       ],
     ]);
 
@@ -105,16 +152,10 @@ function setupSheet() {
 }
 
 // ================================================================
-//  DISPLAY RULES — adjust these values any time, then redeploy
+//  DISPLAY RULES - adjust these values any time, then redeploy
 // ================================================================
-var RULES = {
-  MIN_STARS: 4, // only show 4 or 5 star reviews
-  MIN_WORDS: 10, // minimum word count to be displayed
-  MAX_DISPLAY: 6, // max reviews shown on the homepage
-  SORT: "newest", // 'newest' = newest first | 'shuffle' = random each load
-};
 
-// ── GET: fetch approved reviews ────────────────────────────────
+// GET: fetch approved reviews
 function doGet(e) {
   var action = e && e.parameter && e.parameter.action;
   if (action === "getReviews") return getApprovedReviews();
@@ -126,6 +167,7 @@ function doGet(e) {
 
 function getApprovedReviews() {
   try {
+    var config = getReviewsConfig();
     var sheet = getSheet();
     var data = sheet.getDataRange().getValues();
     if (data.length < 2)
@@ -157,13 +199,13 @@ function getApprovedReviews() {
       if (!text || !name) continue;
 
       // Rule 1: minimum star rating
-      if (stars < RULES.MIN_STARS) continue;
+      if (stars < config.RULES.MIN_STARS) continue;
 
       // Rule 2: minimum word count
       var words = text.split(/\s+/).filter(function (w) {
         return w.length > 0;
       }).length;
-      if (words < RULES.MIN_WORDS) continue;
+      if (words < config.RULES.MIN_WORDS) continue;
 
       reviews.push({
         name: name,
@@ -175,7 +217,7 @@ function getApprovedReviews() {
     }
 
     // Rule 3: sort
-    if (RULES.SORT === "newest") {
+    if (config.RULES.SORT === "newest") {
       reviews.sort(function (a, b) {
         return b.date - a.date;
       });
@@ -184,7 +226,7 @@ function getApprovedReviews() {
     }
 
     // Rule 4: cap at MAX_DISPLAY
-    reviews = reviews.slice(0, RULES.MAX_DISPLAY);
+    reviews = reviews.slice(0, config.RULES.MAX_DISPLAY);
 
     // Strip internal date before sending to browser
     reviews = reviews.map(function (r) {
@@ -197,7 +239,7 @@ function getApprovedReviews() {
   }
 }
 
-// ── POST: save a new review submission ─────────────────────────
+// POST: save a new review submission
 // Note: browser fetch() with mode:'no-cors' sends an opaque POST.
 // Apps Script receives and saves it normally even though the
 // browser cannot read the response back.
@@ -250,17 +292,17 @@ function saveReview(data) {
   return buildResponse({ status: "success", message: "Review received." });
 }
 
-// ── Email notification ─────────────────────────────────────────
-var ATELIER_EMAIL = "sovathana.soun@gmail.com"; // ← replace with your email
+// Email notification
 
 function notifyNewReview(data) {
   try {
-    if (!ATELIER_EMAIL || ATELIER_EMAIL === "YOUR_EMAIL@gmail.com") {
-      Logger.log("ATELIER_EMAIL not set — skipping email notification.");
+    var config = getReviewsConfig();
+    if (!config.ATELIER_EMAIL) {
+      Logger.log("REVIEWS_ATELIER_EMAIL not set - skipping email notification.");
       return;
     }
     var subject =
-      "New review — " + (data.name || "a client") + " — Maison Karina";
+      "New review - " + (data.name || "a client") + " - Maison Karina";
     var body =
       "A new review is waiting for your approval.\n\n" +
       "Name:   " +
@@ -276,30 +318,24 @@ function notifyNewReview(data) {
       (data.text || "") +
       "\n\n" +
       'To approve: open your Google Sheet and set "Approved" to YES.\n\n' +
-      "---\nMailson Karina — Automated Review Notification";
-    GmailApp.sendEmail(ATELIER_EMAIL, subject, body);
-    Logger.log("Notification sent to: " + ATELIER_EMAIL);
+      "Maison Karina - Automated Review Notification";
+    GmailApp.sendEmail(config.ATELIER_EMAIL, subject, body);
+    Logger.log("Notification sent to: " + config.ATELIER_EMAIL);
   } catch (e) {
     Logger.log("Email notification failed: " + e.message);
   }
 }
-
-// ── Helpers ────────────────────────────────────────────────────
+// Helpers
 function getSheet() {
-  if (!SPREADSHEET_ID || SPREADSHEET_ID === "YOUR_SPREADSHEET_ID_HERE") {
-    throw new Error(
-      "SPREADSHEET_ID not set. Paste your Google Sheet ID at the top of the script.",
-    );
-  }
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  var sheet = ss.getSheetByName(SHEET_NAME);
+  var config = getReviewsConfig();
+  var ss = SpreadsheetApp.openById(config.SPREADSHEET_ID);
+  var sheet = ss.getSheetByName(config.SHEET_NAME);
   if (!sheet)
     throw new Error(
-      'Sheet "' + SHEET_NAME + '" not found. Run setupSheet() first.',
+      'Sheet "' + config.SHEET_NAME + '" not found. Run setupSheet() first.',
     );
   return sheet;
 }
-
 function sanitize(str) {
   return String(str || "")
     .trim()
@@ -324,23 +360,22 @@ function buildResponse(obj) {
   );
 }
 
-// ── SHEET PROTECTION ──────────────────────────────────────────
+// SHEET PROTECTION
 // Run protectSheet() ONCE after setupSheet().
 //
 // Rules:
-//   Row 1 (headers)          → HARD BLOCK — cannot edit at all
-//   Col A (Timestamp) rows 2+→ HARD BLOCK — set by script automatically
-//   Col E (Stars) rows 2+    → HARD BLOCK — set by script automatically
-//   Col B (Name) rows 2+     → WARNING — can override to fix typos
-//   Col C (City) rows 2+     → WARNING — can override to fix typos
-//   Col D (Email) rows 2+    → WARNING — can override to fix typos
-//   Col F (Review) rows 2+   → WARNING — can override to fix typos
-//   Col G (Approved) rows 2+ → FREE — set YES / NO / PENDING
-//   Col H (Notes) rows 2+    → FREE — write internal notes
+//   Row 1 (headers)          - HARD BLOCK - cannot edit at all
+//   Col A (Timestamp) rows 2+ - HARD BLOCK - set by script automatically
+//   Col E (Stars) rows 2+    - HARD BLOCK - set by script automatically
+//   Col B (Name) rows 2+     - WARNING - can override to fix typos
+//   Col C (City) rows 2+     - WARNING - can override to fix typos
+//   Col D (Email) rows 2+    - WARNING - can override to fix typos
+//   Col F (Review) rows 2+   - WARNING - can override to fix typos
+//   Col G (Approved) rows 2+ - FREE - set YES / NO / PENDING
+//   Col H (Notes) rows 2+    - FREE - write internal notes
 function protectSheet() {
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  var sheet = ss.getSheetByName(SHEET_NAME);
-  if (!sheet) throw new Error("Sheet not found. Run setupSheet() first.");
+  var sheet = getSheet();
+  var ss = sheet.getParent();
 
   // Remove all existing protections first
   sheet
@@ -357,11 +392,11 @@ function protectSheet() {
   var lastRow = Math.max(sheet.getMaxRows(), 1000);
   var me = Session.getEffectiveUser();
 
-  // ── 1. HARD BLOCK: Row 1 (entire header row) ─────────────────
+// 1. HARD BLOCK: Row 1 (entire header row)
   var p1 = sheet
     .getRange("1:1")
     .protect()
-    .setDescription("Headers — hard blocked");
+    .setDescription("Headers - hard blocked");
   p1.addEditor(me);
   p1.removeEditors(
     p1.getEditors().filter(function (u) {
@@ -369,11 +404,11 @@ function protectSheet() {
     }),
   );
 
-  // ── 2. HARD BLOCK: Column A rows 2+ (Timestamp) ─────────────
+// 2. HARD BLOCK: Column A rows 2+ (Timestamp)
   var p2 = sheet
     .getRange(2, 1, lastRow - 1, 1)
     .protect()
-    .setDescription("Timestamp — hard blocked, set by script");
+    .setDescription("Timestamp - hard blocked, set by script");
   p2.addEditor(me);
   p2.removeEditors(
     p2.getEditors().filter(function (u) {
@@ -381,11 +416,11 @@ function protectSheet() {
     }),
   );
 
-  // ── 3. HARD BLOCK: Column E rows 2+ (Stars) ─────────────────
+// 3. HARD BLOCK: Column E rows 2+ (Stars)
   var p3 = sheet
     .getRange(2, 5, lastRow - 1, 1)
     .protect()
-    .setDescription("Stars — hard blocked, set by script");
+    .setDescription("Stars - hard blocked, set by script");
   p3.addEditor(me);
   p3.removeEditors(
     p3.getEditors().filter(function (u) {
@@ -393,35 +428,35 @@ function protectSheet() {
     }),
   );
 
-  // ── 4. WARNING: Column B rows 2+ (Name) ─────────────────────
+// 4. WARNING: Column B rows 2+ (Name)
   var p4 = sheet
     .getRange(2, 2, lastRow - 1, 1)
     .protect()
-    .setDescription("Name — warning before editing");
+    .setDescription("Name - warning before editing");
   p4.setWarningOnly(true);
 
-  // ── 5. WARNING: Column C rows 2+ (City) ─────────────────────
+// 5. WARNING: Column C rows 2+ (City)
   var p5 = sheet
     .getRange(2, 3, lastRow - 1, 1)
     .protect()
-    .setDescription("City — warning before editing");
+    .setDescription("City - warning before editing");
   p5.setWarningOnly(true);
 
-  // ── 6. WARNING: Column D rows 2+ (Email) ────────────────────
+// 6. WARNING: Column D rows 2+ (Email)
   var p6 = sheet
     .getRange(2, 4, lastRow - 1, 1)
     .protect()
-    .setDescription("Email — warning before editing");
+    .setDescription("Email - warning before editing");
   p6.setWarningOnly(true);
 
-  // ── 7. WARNING: Column F rows 2+ (Review text) ──────────────
+// 7. WARNING: Column F rows 2+ (Review text)
   var p7 = sheet
     .getRange(2, 6, lastRow - 1, 1)
     .protect()
-    .setDescription("Review — warning before editing");
+    .setDescription("Review - warning before editing");
   p7.setWarningOnly(true);
 
-  // Columns G (Approved) and H (Notes) from row 2+ — no protection, fully free
+  // Columns G (Approved) and H (Notes) from row 2+ - no protection, fully free
 
   Logger.log("Protection applied:");
   Logger.log(
@@ -433,12 +468,11 @@ function protectSheet() {
   Logger.log("  FREE       : Col G (Approved), Col H (Notes)");
 }
 
-// ── REMOVE ALL PROTECTION ────────────────────────────────────
+// REMOVE ALL PROTECTION
 // Run this if you need to do bulk edits, then run protectSheet() again.
 function removeProtection() {
-  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  var sheet = ss.getSheetByName(SHEET_NAME);
-  if (!sheet) throw new Error("Sheet not found.");
+  var sheet = getSheet();
+  var ss = sheet.getParent();
 
   sheet
     .getProtections(SpreadsheetApp.ProtectionType.RANGE)
@@ -453,3 +487,5 @@ function removeProtection() {
 
   Logger.log("All protections removed. Run protectSheet() again when done.");
 }
+
+

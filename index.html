@@ -1473,6 +1473,18 @@
       border-color: var(--rose);
     }
 
+    .chat-chip.chat-chip-demo {
+      border-color: rgba(198, 167, 94, .6);
+      color: #8f6c2d;
+      background: rgba(198, 167, 94, .08);
+    }
+
+    .chat-chip.chat-chip-demo:hover {
+      background: var(--gold);
+      color: #fff;
+      border-color: var(--gold);
+    }
+
     .chat-input-area {
       display: flex;
       border-top: 1px solid rgba(90, 74, 70, .1);
@@ -2472,7 +2484,7 @@
 
     // ── AI CHATBOT (Google Apps Script proxy) ───────────────────────────────
     // Deploy scripts/chat-proxy.gs as a separate Web App project and paste URL.
-    // Keep Gemini API key in Script Properties, never in frontend code.
+    // Keep the Groq API key in Script Properties, never in frontend code.
     const CHAT_PROXY_URL = 'https://script.google.com/macros/s/AKfycbznczbeAPg2f3UryPm3zQ8c62KwnLViLL_fOza8WYSc6yZSbrCPiAgunVCpIqw52lFE/exec';
     const CHAT_HISTORY_TURN_LIMIT = 6;
     const CHAT_CHIP_THINK_MIN_MS = 2400;
@@ -2516,8 +2528,10 @@ RULES:
 - If asked about pricing, give the range then suggest a consultation
 - Never mention competitor brands
 - If you cannot answer, invite them to contact the atelier directly
-- IMPORTANT: Detect the language the client writes in and reply in the SAME language
-- Only respond in English or Khmer — if client writes in any other language, reply in English`;
+- IMPORTANT: Base the reply language on the LATEST user message, not earlier chat history
+- If the latest message is English-dominant, reply only in English
+- If the latest message is Khmer-dominant, reply only in Khmer
+- If the latest message is mixed or unclear, prefer English`;
 
     let chatHistory = [];
     let lastUserMessage = '';
@@ -2534,6 +2548,7 @@ RULES:
       { id: 'fabric', label: 'Fabrics', prompt: 'Fabrics' },
       { id: 'booking', label: 'Booking process', prompt: 'Booking process' }
     ];
+    const CHAT_DEMO_CHIP = { id: 'love-demo', label: 'Something just for you 🦋' };
     let chatRemainingChipIds = CHAT_BASE_CHIPS.map(function (chip) { return chip.id; });
 
     function toggleChat() {
@@ -2640,10 +2655,115 @@ RULES:
       return '';
     }
 
+    function getImmediateLocalReply(text) {
+      const source = String(text || '').trim();
+      const lower = source.toLowerCase();
+      const isKhmer = isKhmerText(source);
+      if (!source) return '';
+
+      if (/^(hello|hi|hey|good morning|good afternoon|good evening|how are you)[!.?,\s]*$/i.test(source)) {
+        return isKhmer
+          ? 'សូមស្វាគមន៍មកកាន់ Maison Karina។ ខ្ញុំអាចជួយអំពីតម្លៃ រយៈពេល ក្រណាត់ និងការកក់ពេលប្រឹក្សាផ្ទាល់បាន។'
+          : 'Welcome to Maison Karina. I can help with pricing, timelines, fabrics, or booking a private consultation.';
+      }
+
+      if (/^(thank you|thanks|thank you so much|thanks so much)[!.?,\s]*$/i.test(source)) {
+        return isKhmer
+          ? 'ដោយក្តីរីករាយ។ ប្រសិនបើអ្នកចង់ ខ្ញុំអាចជួយអំពីតម្លៃ រយៈពេល ក្រណាត់ ឬការកក់ពេលប្រឹក្សាផ្ទាល់។'
+          : 'It is my pleasure. If helpful, I can guide you on pricing, timelines, fabrics, or booking a private consultation.';
+      }
+
+      if (/^(help|what can you do|what do you do)[!.?,\s]*$/i.test(lower)) {
+        return isKhmer
+          ? 'ខ្ញុំអាចជួយអំពីតម្លៃ រយៈពេល ក្រណាត់ និងដំណើរការកក់។ សម្រាប់ការណែនាំផ្ទាល់ខ្លួន អ្នកអាចប្រើជម្រើសរហ័សខាងក្រោម ឬកក់ពេលប្រឹក្សាផ្ទាល់បាន។'
+          : 'I can help with pricing, timelines, fabrics, and the booking process. For tailored guidance, you may use the quick options below or book a private consultation.';
+      }
+
+      return '';
+    }
+
     function getClientIntentDemoReply(text) {
       const intent = detectClientIntent(text);
       if (!intent) return '';
       return CHAT_DEMO_REPLIES[intent] || '';
+    }
+
+    function isKhmerText(text) {
+      return /[\u1780-\u17FF]/.test(String(text || ''));
+    }
+
+    function detectPreferredReplyLanguage(text) {
+      const source = String(text || '').trim();
+      if (!source) return 'english';
+
+      const khmerCount = (source.match(/[\u1780-\u17FF]/g) || []).length;
+      const latinCount = (source.match(/[A-Za-z]/g) || []).length;
+
+      if (khmerCount > latinCount) return 'khmer';
+      return 'english';
+    }
+
+    function buildRuntimeSystemPrompt(userText) {
+      const language = detectPreferredReplyLanguage(userText);
+      const strictRule = language === 'khmer'
+        ? 'STRICT LANGUAGE RULE FOR THIS REPLY:\n- The latest user message is Khmer-dominant. Reply only in Khmer.\n- Do not switch to English because of earlier chat history.'
+        : 'STRICT LANGUAGE RULE FOR THIS REPLY:\n- The latest user message is English-dominant. Reply only in English.\n- Do not switch to Khmer because of earlier chat history.';
+      return ATELIER_SYSTEM_PROMPT + '\n\n' + strictRule;
+    }
+
+    function getResilientFallbackReply(text) {
+      const source = String(text || '').trim();
+      const lower = source.toLowerCase();
+      const isKhmer = isKhmerText(source);
+      if (!source) return '';
+
+      const intentReply = getClientIntentDemoReply(source);
+      if (intentReply) return intentReply;
+
+      if (/(compliment me|compliment|say something nice|make me smile|encourage me|praise me)/.test(lower)) {
+        return isKhmer
+          ? 'អ្នកមានរសជាតិដ៏ស្រស់ស្អាតរួចហើយ ហើយ Maison Karina នឹងរីករាយក្នុងការបង្កើតអ្វីមួយដែលពិសេសសម្រាប់អ្នក។ ប្រសិនបើអ្នកចង់ ខ្ញុំអាចជួយអំពីតម្លៃ រយៈពេល ឬការកក់ពេលប្រឹក្សា។'
+          : 'You already have beautiful taste, and Maison Karina would be delighted to create something equally memorable for you. If you wish, I can also help with pricing, timelines, or booking a consultation.';
+      }
+
+      if (/(hello|hi|hey|good morning|good afternoon|good evening|how are you)/.test(lower)) {
+        return isKhmer
+          ? 'សូមស្វាគមន៍មកកាន់ Maison Karina។ ខ្ញុំអាចជួយអំពីតម្លៃ រយៈពេល ក្រណាត់ និងការកក់ពេលប្រឹក្សាផ្ទាល់បាន។'
+          : 'Welcome to Maison Karina. I can help with pricing, timelines, fabrics, or booking a private consultation.';
+      }
+
+      if (/(thank you|thanks|appreciate)/.test(lower)) {
+        return isKhmer
+          ? 'ដោយក្តីរីករាយ។ ប្រសិនបើអ្នកចង់ ខ្ញុំអាចជួយអំពីតម្លៃ រយៈពេល ក្រណាត់ ឬការកក់ពេលប្រឹក្សាផ្ទាល់។'
+          : 'It is my pleasure. If helpful, I can guide you on pricing, timelines, fabrics, or booking a private consultation.';
+      }
+
+      if (/(email|contact|phone|call|whatsapp|instagram|address|location|where are you|visit|atelier)/.test(lower)) {
+        return isKhmer
+          ? 'អ្នកអាចទាក់ទង Maison Karina តាម contact@maisonkarina.com។ ការប្រឹក្សាផ្ទាល់ធ្វើឡើងតាមការណាត់ទុកជាមុន ហើយអ្នកអាចប្រើបែបបទកក់ខាងក្រោមបាន។'
+          : 'You can reach Maison Karina at contact@maisonkarina.com. Private consultations are by appointment only, and you may also use the booking form below.';
+      }
+
+      if (/(help|what can you do|what do you do)/.test(lower)) {
+        return isKhmer
+          ? 'ខ្ញុំអាចជួយអំពីតម្លៃ រយៈពេល ក្រណាត់ និងដំណើរការកក់។ សម្រាប់ការណែនាំផ្ទាល់ខ្លួន អ្នកអាចប្រើជម្រើសរហ័សខាងក្រោម ឬកក់ពេលប្រឹក្សាផ្ទាល់បាន។'
+          : 'I can help with pricing, timelines, fabrics, and the booking process. For tailored guidance, you may use the quick options below or book a private consultation.';
+      }
+
+      return isKhmer
+        ? 'ខ្ញុំនៅតែអាចជួយអំពីតម្លៃ រយៈពេល ក្រណាត់ ឬការកក់ពេលប្រឹក្សាផ្ទាល់បាន។ សម្រាប់ការណែនាំផ្ទាល់ខ្លួន សូមសាកល្បងម្ដងទៀត ឬប្រើជម្រើសរហ័សខាងក្រោម។'
+        : 'I can still help with pricing, timelines, fabrics, or booking a private consultation. For more tailored guidance, please try again or use one of the quick options below.';
+    }
+
+    function getFailureActionTitle(errorText) {
+      const lower = String(errorText || '').toLowerCase();
+      if (/(quota|rate limit|billing|resource exhausted|too many requests|429|limit exceeded)/.test(lower)) {
+        return 'AI assistant is temporarily unavailable. Retry or use a quick option:';
+      }
+      if (/(failed to fetch|network|connection|load failed)/.test(lower)) {
+        return 'Connection issue. Retry or use a quick option:';
+      }
+      return 'Live assistant is temporarily unavailable. Retry or use a quick option:';
     }
 
     function renderQuickChips(chips) {
@@ -2674,6 +2794,16 @@ RULES:
         });
         chipsWrap.appendChild(btn);
       });
+
+      const demoBtn = document.createElement('button');
+      demoBtn.type = 'button';
+      demoBtn.className = 'chat-chip chat-chip-demo';
+      demoBtn.textContent = CHAT_DEMO_CHIP.label;
+      demoBtn.addEventListener('click', function () {
+        sendLoveDemoMessage();
+      });
+      chipsWrap.appendChild(demoBtn);
+
       chipsWrap.style.display = 'flex';
     }
 
@@ -2688,6 +2818,40 @@ RULES:
       return chatRemainingChipIds
         .map(function (id) { return getChipById(id); })
         .filter(Boolean);
+    }
+
+    function pickRandom(list) {
+      if (!Array.isArray(list) || !list.length) return '';
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function generateLoveDemoMessage() {
+      const hearts = ['💖', '💗', '💕', '💘', '❤️', '🩷', '💜', '💙'];
+
+      const openings = [
+        'Oun Karina, you are the most beautiful woman, and my heart feels like a little butterfly whenever I think of you.',
+        'Oun Karina, you are the most beautiful woman in my world, and loving you feels like the sweetest dream.',
+        'Oun Karina, you are the most beautiful woman, and you fill my heart with such soft happiness.'
+      ];
+
+      const closings = [
+        'I love you to the moon and back, my sweet soul.',
+        'My heart loves you to the moon and back, always and softly.',
+        'You are my dream, my happiness, and the gentlest part of my soul.'
+      ];
+
+      return [pickRandom(openings), pickRandom(closings)].join(' ') + ' ' + pickRandom(hearts);
+    }
+
+    async function sendLoveDemoMessage() {
+      clearActionPanels('failure');
+      clearActionPanels('conversion');
+
+      const typing = addTypingIndicator();
+      await delay(getChipThinkingDelayMs());
+      typing.remove();
+
+      addMsg(generateLoveDemoMessage(), 'bot');
     }
 
     function renderDirectBookingChip() {
@@ -2766,7 +2930,7 @@ RULES:
       await sendFallbackPrompt(lastUserMessage);
     }
 
-    function addFailureActions() {
+    function addFailureActions(errorText) {
       clearActionPanels('failure');
       const msgs = document.getElementById('chat-messages');
       const panel = document.createElement('div');
@@ -2774,7 +2938,7 @@ RULES:
 
       const title = document.createElement('div');
       title.className = 'chat-action-title';
-      title.textContent = 'Connection issue. Retry or use a quick option:';
+      title.textContent = getFailureActionTitle(errorText);
       panel.appendChild(title);
 
       const row = document.createElement('div');
@@ -2830,6 +2994,19 @@ RULES:
       clearActionPanels('failure');
       const fromChip = !!(options && options.fromChip);
 
+      const immediateLocalReply = getImmediateLocalReply(userText);
+      if (immediateLocalReply) {
+        const typingLocal = addTypingIndicator();
+        await delay(500);
+        typingLocal.remove();
+        clearActionPanels('conversion');
+        const reply = shortenReply(immediateLocalReply);
+        chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+        addMsg(reply, 'bot');
+        if (shouldShowBookingCta(userText, reply)) addBookingCta();
+        return;
+      }
+
       // Intent-first routing: use local replies for high-frequency client intents.
       const localDemoReply = getClientIntentDemoReply(userText);
       if (localDemoReply) {
@@ -2854,7 +3031,7 @@ RULES:
       if (!CHAT_PROXY_URL || CHAT_PROXY_URL.indexOf('YOUR_') !== -1) {
         await new Promise(r => setTimeout(r, 900));
         typing.remove();
-        const reply = shortenReply('Thank you for your question. For tailored guidance, we invite you to book a private consultation with Karina.');
+        const reply = shortenReply(getResilientFallbackReply(userText));
         chatHistory.push({ role: 'model', parts: [{ text: reply }] });
         addMsg(reply, 'bot');
         if (shouldShowBookingCta(userText, reply)) addBookingCta();
@@ -2863,7 +3040,7 @@ RULES:
 
       try {
         const payload = {
-          systemPrompt: ATELIER_SYSTEM_PROMPT,
+          systemPrompt: buildRuntimeSystemPrompt(userText),
           contents: getRecentChatHistory()
         };
         const res = await fetch(CHAT_PROXY_URL, {
@@ -2884,8 +3061,17 @@ RULES:
       } catch (err) {
         console.error('Chat proxy error:', err);
         typing.remove();
-        addMsg("I'm temporarily unavailable. Please contact us at contact@maisonkarina.com", 'bot');
-        addFailureActions();
+        clearActionPanels('conversion');
+        const errorText = String((err && err.message) ? err.message : err || '');
+        const fallbackReply = shortenReply(getResilientFallbackReply(userText));
+        if (fallbackReply) {
+          chatHistory.push({ role: 'model', parts: [{ text: fallbackReply }] });
+          addMsg(fallbackReply, 'bot');
+          if (shouldShowBookingCta(userText, fallbackReply)) addBookingCta();
+        } else {
+          addMsg('Our live assistant is temporarily unavailable. Please contact us at contact@maisonkarina.com', 'bot');
+          addFailureActions(errorText);
+        }
       }
     }
 
